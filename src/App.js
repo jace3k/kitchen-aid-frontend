@@ -6,6 +6,7 @@ import Navigation from './scenes/Navigation'
 import Home from './scenes/Home'
 import { green, red } from '@material-ui/core/colors'
 import CreateRetreat from './scenes/CreateRetreat'
+import ShowReteat from './scenes/ShowReteat'
 
 
 const theme = createMuiTheme({
@@ -30,6 +31,7 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/create" component={CreateRetreat} />
+              <Route exact path="/retreat/:id" component={ShowReteat} />
             </Switch>
           </Router>
         </ThemeProvider>

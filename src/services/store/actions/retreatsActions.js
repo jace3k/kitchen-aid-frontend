@@ -6,6 +6,8 @@ import {
   CREATE_RETREAT_STARTED,
   CREATE_RETREAT_SUCCEED,
   CREATE_RETREAT_FAILED,
+
+  CLEAR_CREATE_RETREAT
 } from "../../constants"
 
 import { RetreatsAPI } from '../../api'
@@ -51,4 +53,8 @@ export const createRetreat = (retreatName) => dispatch => {
       console.log('RetreatsAPI.new() [ERROR]', err)
       dispatch({ type: CREATE_RETREAT_FAILED, error: err.message })
     })
+}
+
+export const clearCreatedRetreat = () => dispatch => {
+  dispatch({type: CLEAR_CREATE_RETREAT})
 }

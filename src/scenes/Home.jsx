@@ -19,7 +19,7 @@ const useStyles = makeStyles({
 const RetreatListItem = ({ retreat }) => {
   const classes = useStyles()
   return (
-    <Link to={`/retreat/${retreat.id}`} className={classes.clean} key={`retreat-list-item-${retreat.id}`}>
+    <Link to={`/retreat/${retreat.id}`} className={classes.clean}>
       <Card style={{ padding: '1em', margin: '1em', cursor: 'pointer' }}>
         <Typography><b>{retreat.name}</b> Meals: {retreat.meals.length} Carts: {retreat.carts.length}</Typography>
       </Card>
@@ -42,7 +42,7 @@ class Home extends Component {
     const { isLoading, retreats, error } = this.props.retreatsState
 
     const retreatsListItems = retreats
-      ? retreats.data.map(retreat => <RetreatListItem retreat={retreat} />)
+      ? retreats.data.map(retreat => <RetreatListItem retreat={retreat} key={`rrr-${retreat.id}`} />)
       : null
 
     const retreatsComponent = (

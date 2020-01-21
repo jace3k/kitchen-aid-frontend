@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import TextField from '@material-ui/core/TextField'
 import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
-import { createRetreat } from '../services/store/actions/retreatsActions'
+import { createRetreat, clearCreatedRetreat } from '../services/store/actions/retreatsActions'
 import { Redirect } from 'react-router-dom'
 
 
@@ -24,6 +24,7 @@ class CreateRetreat extends Component {
   render() {
     const { isLoading } = this.props.retreatsState
     if (this.props.retreatsState.createdRetreat) {
+      this.props.clearCreatedRetreat()
       return <Redirect to="/" />
     }
     return (
@@ -52,7 +53,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = ({
-  createRetreat
+  createRetreat,
+  clearCreatedRetreat
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateRetreat);

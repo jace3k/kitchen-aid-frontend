@@ -5,6 +5,7 @@ import {
   CREATE_RETREAT_STARTED,
   CREATE_RETREAT_SUCCEED,
   CREATE_RETREAT_FAILED,
+  CLEAR_CREATE_RETREAT,
 } from '../../constants'
 
 export default (state = {}, action) => {
@@ -52,6 +53,13 @@ export default (state = {}, action) => {
         createdRetreat: null,
         isLoading: false,
         error: action.error,
+      }
+    case CLEAR_CREATE_RETREAT:
+      return {
+        ...state,
+        createdRetreat: null,
+        isLoading: false,
+        error: null
       }
     default:
       return state
