@@ -5,15 +5,27 @@ import {
   CREATE_RETREAT_STARTED,
   CREATE_RETREAT_SUCCEED,
   CREATE_RETREAT_FAILED,
+  
   CLEAR_CREATE_RETREAT,
+
+  FETCH_RETREAT_STARTED,
+  FETCH_RETREAT_SUCCEED,
+  FETCH_RETREAT_FAILED,
 } from '../../constants'
 
-export default (state = {}, action) => {
+const initialState = {
+  retreats: [],
+  retreat: {},
+  isLoading: true,
+  error: null,
+}
+
+export default (state = initialState, action) => {
   switch(action.type) {
     case FETCH_RETREATS_STARTED:
       return {
         ...state,
-        retreats: null,
+        retreats: [],
         error: null,
         isLoading: true,
       }
@@ -21,7 +33,7 @@ export default (state = {}, action) => {
     case FETCH_RETREATS_SUCCEED:
       return {
         ...state,
-        retreats: action.retreats,
+        retreats: action.retreats.data,
         isLoading: false,
         error: null,
       }
@@ -29,7 +41,7 @@ export default (state = {}, action) => {
     case FETCH_RETREATS_FAILED:
       return {
         ...state,
-        retreats: null,
+        retreats: [],
         isLoading: false,
         error: action.error
       }
@@ -43,7 +55,7 @@ export default (state = {}, action) => {
     case CREATE_RETREAT_SUCCEED:
       return {
         ...state,
-        createdRetreat: action.createdRetreat,
+        createdRetreat: action.createdRetreat.data,
         isLoading: false,
         error: null,
       }
@@ -61,6 +73,27 @@ export default (state = {}, action) => {
         isLoading: false,
         error: null
       }
+      case FETCH_RETREAT_STARTED:
+        return {
+          ...state,
+          retreat: null,
+          isLoading: true,
+          error: null,
+        }
+      case FETCH_RETREAT_SUCCEED:
+        return {
+          ...state,
+          retreat: action.retreat.data,
+          isLoading: false,
+          error: null,
+        }
+      case FETCH_RETREAT_FAILED:
+        return {
+          ...state,
+          retreat: null,
+          isLoading: false,
+          error: action.error,
+        }
     default:
       return state
   }

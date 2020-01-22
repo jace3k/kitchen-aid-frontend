@@ -7,38 +7,28 @@ import {
   CREATE_RETREAT_SUCCEED,
   CREATE_RETREAT_FAILED,
 
-  CLEAR_CREATE_RETREAT
+  CLEAR_CREATE_RETREAT,
+
+  FETCH_RETREAT_STARTED,
+  FETCH_RETREAT_SUCCEED,
+  FETCH_RETREAT_FAILED,
 } from "../../constants"
 
 import { RetreatsAPI } from '../../api'
 
 export const fetchRetreats = () => dispatch => {
-  dispatch(fetchRetreatsStarted())
+  dispatch({ type: FETCH_RETREATS_STARTED })
 
   RetreatsAPI.all()
     .then(res => {
       console.log('RetreatsAPI.all() [SUCCESS]', res)
-      dispatch(fetchRetreatsSucceed(res))
+      dispatch({ type: FETCH_RETREATS_SUCCEED, retreats: res })
     })
     .catch(err => {
       console.log('RetreatsAPI.all() [ERROR]', err)
-      dispatch(fetchRetreatsFailed(err))
+      dispatch({ type: FETCH_RETREATS_FAILED, error: err.message })
     })
 }
-
-export const fetchRetreatsStarted = () => ({
-  type: FETCH_RETREATS_STARTED
-})
-
-export const fetchRetreatsSucceed = (retreats) => ({
-  type: FETCH_RETREATS_SUCCEED,
-  retreats
-})
-
-export const fetchRetreatsFailed = (error) => ({
-  type: FETCH_RETREATS_FAILED,
-  error: error.message
-})
 
 
 export const createRetreat = (retreatName) => dispatch => {
@@ -56,5 +46,19 @@ export const createRetreat = (retreatName) => dispatch => {
 }
 
 export const clearCreatedRetreat = () => dispatch => {
-  dispatch({type: CLEAR_CREATE_RETREAT})
+  dispatch({ type: CLEAR_CREATE_RETREAT })
+}
+
+export const fetchRetreat = (id) => dispatch => {
+  dispatch({ type: FETCH_RETREAT_STARTED })
+
+  RetreatsAPI.single(id)
+    .then(res => {
+      console.log('RetreatsAPI.single() [SUCCESS]', res)
+      dispatch({ type: FETCH_RETREAT_SUCCEED, retreat: res })
+    })
+    .catch(err => {
+      console.log('RetreatsAPI.single() [ERROR]', err)
+      dispatch({ type: FETCH_RETREAT_FAILED, error: err.message })
+    })
 }

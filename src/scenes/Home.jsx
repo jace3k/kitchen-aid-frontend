@@ -42,7 +42,7 @@ class Home extends Component {
     const { isLoading, retreats, error } = this.props.retreatsState
 
     const retreatsListItems = retreats
-      ? retreats.data.map(retreat => <RetreatListItem retreat={retreat} key={`rrr-${retreat.id}`} />)
+      ? retreats.map(retreat => <RetreatListItem retreat={retreat} key={`rrr-${retreat.id}`} />)
       : null
 
     const retreatsComponent = (
