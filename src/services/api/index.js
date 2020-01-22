@@ -15,3 +15,7 @@ export const RetreatsAPI = {
   single: (id) => apiClient.get(`retreat/${id}/`),
   new: (name) => apiClient.post('retreat/', { name }),
 }
+
+export const DishesAPI = {
+  forMeal: (id) => apiClient.get(`meal/${id}/get_dishes`)
+}
