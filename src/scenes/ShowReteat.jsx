@@ -10,22 +10,22 @@ import { Typography } from '@material-ui/core'
 import DishExpansionPanel from './DishExpansionPanel'
 import Error from './Error'
 
-
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     display: 'flex',
     height: '80vh',
+    borderTop: `1px solid ${theme.palette.divider}`,
+    
   },
   tabs: {
-
+    width: '20em',
+    borderRight: `1px solid ${theme.palette.divider}`
   },
   tabPane: {
     width: '100%'
   }
 }));
-
-
 
 const TabPane = ({ children, value, index, className }) => {
   return <Typography
@@ -63,16 +63,18 @@ const ShowRetreat = (props) => {
           <div className={classes.root}>
             <Tabs
               orientation="vertical"
+              className={classes.tabs}
               variant="scrollable"
               onChange={handleChange}
               role="tabpanel"
               value={value}
+              indicatorColor="primary"
             >
               {retreat.meals && retreat.meals.map((meal, i) => (
                 <Tab label={`${meal.date} - ${meal.type}`}
                   id={`vertical-tab-${i}`}
                   key={`vertical-tab-${i}`}
-                  className={classes.tabs} />
+                   />
               ))}
             </Tabs>
             {retreat.meals && retreat.meals.map((meal, i) => (
@@ -81,7 +83,10 @@ const ShowRetreat = (props) => {
                 className={classes.tabPane}
                 value={value}
                 index={i}>
-                  <DishExpansionPanel mealId={meal.id} />
+                  <DishExpansionPanel 
+                    mealId={meal.id} 
+                    mealType={meal.type} 
+                    mealDate={meal.date} />
               </TabPane>
             ))}
 

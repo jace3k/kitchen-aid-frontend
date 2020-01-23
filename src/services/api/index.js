@@ -1,8 +1,8 @@
 import axios from "axios"
 
 const apiClient = axios.create({
-  // baseURL: 'http://damodarlepski.pythonanywhere.com/cookbook/',
-  baseURL: 'http://127.0.0.1:8000/cookbook',
+  baseURL: 'http://damodarlepski.pythonanywhere.com/cookbook/',
+  //baseURL: 'http://127.0.0.1:8000/cookbook',
   auth: { username: 'admin', password: 'admin' },
 })
 
