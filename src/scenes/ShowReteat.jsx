@@ -44,19 +44,18 @@ const ShowRetreat = (props) => {
   const dispatch = useDispatch()
   const [value, setValue] = React.useState(0)
   const { isLoading, retreat, error } = useSelector(state => state.retreats)
-  console.log("RETREAT SINGLE:", retreat)
 
   useEffect(() => {
-    console.log('USE EFFECT')
     dispatch(fetchRetreat(id))
-  }, []);
+  }, [dispatch, id]);
 
 
   const handleChange = (_, newValue) => {
     setValue(newValue);
   }
-
+  console.log("SHOW RETREATS", props)
   return (
+    
     <div>
       {(!isLoading && !error) && (
         <>
@@ -69,15 +68,16 @@ const ShowRetreat = (props) => {
               role="tabpanel"
               value={value}
             >
-              {retreat.meals.map((meal, i) => (
+              {retreat.meals && retreat.meals.map((meal, i) => (
                 <Tab label={`${meal.date} - ${meal.type}`}
                   id={`vertical-tab-${i}`}
                   key={`vertical-tab-${i}`}
                   className={classes.tabs} />
               ))}
             </Tabs>
-            {retreat.meals.map((meal, i) => (
+            {retreat.meals && retreat.meals.map((meal, i) => (
               <TabPane
+                key={`tab-pane-key-${i}`}
                 className={classes.tabPane}
                 value={value}
                 index={i}>

@@ -27,17 +27,16 @@ export default function DishExpansionPanel({ mealId }) {
   const dispatch = useDispatch()
   const { dishes, isLoading, error } = useSelector(state => state.dishes)
   useEffect(() => {
+    console.log('USE EFFECT: DishExpansionPanel ')
     dispatch(fetchDishesForMeal(mealId))
-  }, [])
-
-  console.log("DISH EXPANSION COMPONENT", dishes)
+  }, [dispatch, mealId])
 
   return (
     <div style={{ padding: '0.5em', width: '100%' }}>
 
       {(!isLoading && !error) && (
-        dishes.map(dish => (
-          <ExpansionPanel elevation={3}>
+        dishes.map((dish, i) => (
+          <ExpansionPanel elevation={3} key={`expansion-panel-dish-key-${i}`}>
             <ExpansionPanelSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"

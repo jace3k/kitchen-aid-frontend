@@ -38,7 +38,6 @@ class Home extends Component {
     // }
   }
   render() {
-    console.log('PROPS', this.props)
     const { isLoading, retreats, error } = this.props.retreatsState
 
     const retreatsListItems = retreats
