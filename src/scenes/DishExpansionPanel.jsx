@@ -1,15 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import Typography from '@material-ui/core/Typography'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchDishesForMeal } from '../services/store/actions/dishesActions'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import Divider from '@material-ui/core/Divider'
-import Error from './Error'
 import IngredientsTable from './IngredientsTable'
 
 const useStyles = makeStyles(theme => ({
@@ -32,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     padding: 0,
   },
   column: {
-    flexBasis: '33.33%',
+    flexBasis: '50%',
   }
 }));
 
@@ -42,46 +38,36 @@ const mealTypeMap = {
   'FE': 'Feast',
 }
 
-export default function DishExpansionPanel({ mealId, mealType, mealDate }) {
+export default function DishExpansionPanel({ dishes, mealType }) {
   const classes = useStyles()
-  const dispatch = useDispatch()
-  const { dishes, isLoading, error } = useSelector(state => state.dishes)
-  useEffect(() => {
-    dispatch(fetchDishesForMeal(mealId))
-  }, [dispatch, mealId])
 
   return (
     <div style={{ width: '100%' }}>
-      <h3>{mealTypeMap[mealType]} dishes for {mealDate}</h3>
-      {(!isLoading && !error) && (
-        dishes.map((dish, i) => (
-          <ExpansionPanel elevation={2}
-            key={`expansion-panel-dish-key-${i}`}
-            className={classes.expansionPanel}
+      <h3>{mealTypeMap[mealType]}</h3>
+      {dishes.map((dish, i) => (
+        <ExpansionPanel elevation={2}
+          key={`expansion-panel-dish-key-${i}`}
+          className={classes.expansionPanel}
+        >
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
           >
-            <ExpansionPanelSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <div className={classes.column}>
-                <Typography className={classes.heading}>{dish.name}</Typography>
-              </div>
-              <div className={classes.column}>
-                <Typography className={classes.secondaryHeading}>Size: {dish.size}</Typography>
-              </div>
-            </ExpansionPanelSummary>
-            <Divider />
-            <ExpansionPanelDetails className={classes.details}>
-              <IngredientsTable ingredients={dish.ingredients} dishId={dish.id} />
-            </ExpansionPanelDetails>
-            <Divider />
-          </ExpansionPanel>
-        ))
-      )}
-      {isLoading && <CircularProgress />}
-      {(!isLoading && error) && <Error error={error} />}
-      {(!isLoading && !error && dishes.length === 0) && <div>No dishes yet.</div>}
+            <div className={classes.column}>
+              <Typography className={classes.heading}>{dish.name}</Typography>
+            </div>
+            <div className={classes.column}>
+              <Typography className={classes.secondaryHeading}>Size: {dish.size}</Typography>
+            </div>
+          </ExpansionPanelSummary>
+          <Divider />
+          <ExpansionPanelDetails className={classes.details}>
+            <IngredientsTable ingredients={dish.ingredients} dishId={dish.id} />
+          </ExpansionPanelDetails>
+          <Divider />
+        </ExpansionPanel>
+      ))}
     </div>
   )
 }

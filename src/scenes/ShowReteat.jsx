@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchRetreat } from '../services/store/actions/retreatsActions'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Box from '@material-ui/core/Box'
-import { Typography } from '@material-ui/core'
+import { Typography, Paper } from '@material-ui/core'
 import DishExpansionPanel from './DishExpansionPanel'
 import Error from './Error'
 
@@ -16,14 +16,18 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     height: '80vh',
     borderTop: `1px solid ${theme.palette.divider}`,
-    
   },
   tabs: {
     width: '20em',
     borderRight: `1px solid ${theme.palette.divider}`
   },
   tabPane: {
-    width: '100%'
+    width: '100%',
+  },
+  div: {
+    width: '25em',
+    float: 'left',
+    margin: '1em'
   }
 }));
 
@@ -40,22 +44,57 @@ const TabPane = ({ children, value, index, className }) => {
 
 const ShowRetreat = (props) => {
   const classes = useStyles()
-  const { id } = props.match.params
+  const { id, mealDate } = props.match.params
   const dispatch = useDispatch()
   const [value, setValue] = React.useState(0)
   const { isLoading, retreat, error } = useSelector(state => state.retreats)
+  const [mealsByDateState, setMealsByDateState] = React.useState({})
+
+  const setPathMealDate = useCallback((mealDate) => {
+    const pathname = `/retreat/${id}`
+    props.history.push(`${pathname}/${mealDate}`)
+  }, [id, props.history])
 
   useEffect(() => {
     dispatch(fetchRetreat(id))
   }, [dispatch, id]);
 
+  useEffect(() => {
+    const mealsByDate = {}
+    if (retreat && retreat.meals) {
+      retreat.meals.map(ret => {
+        if (!mealsByDate[ret.date]) {
+          mealsByDate[ret.date] = []
+        }
+        mealsByDate[ret.date].push(ret)
+        return null
+      })
+
+      if (mealDate) {
+        let indexOfMealDate = 0
+        Object.keys(mealsByDate).map((date, i) => {
+          if (date === mealDate) {
+            indexOfMealDate = i
+          }
+          return null
+        })
+        setValue(indexOfMealDate)
+        setMealsByDateState(mealsByDate)
+      }
+
+      if (!mealDate && retreat.meals.length !== 0) {
+        const firstMealDate = Object.keys(mealsByDate)[0]
+        setPathMealDate(firstMealDate)
+      }
+    }
+  }, [retreat, mealDate, setPathMealDate]);
 
   const handleChange = (_, newValue) => {
     setValue(newValue);
   }
   console.log("SHOW RETREATS", props)
+
   return (
-    
     <div>
       {(!isLoading && !error) && (
         <>
@@ -70,23 +109,28 @@ const ShowRetreat = (props) => {
               value={value}
               indicatorColor="primary"
             >
-              {retreat.meals && retreat.meals.map((meal, i) => (
-                <Tab label={`${meal.date} - ${meal.type}`}
+              {retreat.meals && Object.entries(mealsByDateState).map(([mealDate, meals], i) => (
+                <Tab label={`${mealDate} (${meals.length})`}
                   id={`vertical-tab-${i}`}
                   key={`vertical-tab-${i}`}
-                   />
+                  onClick={() => setPathMealDate(mealDate)}
+                />
               ))}
             </Tabs>
-            {retreat.meals && retreat.meals.map((meal, i) => (
+
+            {retreat.meals && Object.entries(mealsByDateState).map(([date, meals], i) => (
               <TabPane
                 key={`tab-pane-key-${i}`}
                 className={classes.tabPane}
                 value={value}
                 index={i}>
-                  <DishExpansionPanel 
-                    mealId={meal.id} 
-                    mealType={meal.type} 
-                    mealDate={meal.date} />
+                {meals.map((meal, i) => <div className={classes.div} key={`paper-meal-${i}`}>
+                  <Paper variant="outlined" square>
+                    <DishExpansionPanel
+                      dishes={meal.dishes}
+                      mealType={meal.type} />
+                  </Paper>
+                </div>)}
               </TabPane>
             ))}
 

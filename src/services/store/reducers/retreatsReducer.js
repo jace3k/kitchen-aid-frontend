@@ -24,7 +24,7 @@ export default (state = initialState, action) => {
   switch(action.type) {
     case FETCH_RETREATS_STARTED:
       return {
-        ...state,
+        ...initialState,
         retreats: [],
         error: null,
         isLoading: true,
