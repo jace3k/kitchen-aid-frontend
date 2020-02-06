@@ -10,6 +10,8 @@ export const RetreatsAPI = {
   all: () => apiClient.get('retreat'),
   single: (id) => apiClient.get(`retreat/${id}/`),
   new: (name) => apiClient.post('retreat/', { name }),
+  update: (id, name) => apiClient.put(`retreat/${id}/`,  { name }),
+  delete: (id) => apiClient.delete(`retreat/${id}/`),
 }
 
 export const DishesAPI = {

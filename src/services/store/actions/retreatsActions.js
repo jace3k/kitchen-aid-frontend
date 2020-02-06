@@ -12,6 +12,14 @@ import {
   FETCH_RETREAT_STARTED,
   FETCH_RETREAT_SUCCEED,
   FETCH_RETREAT_FAILED,
+
+  UPDATE_RETREAT_STARTED,
+  UPDATE_RETREAT_SUCCEED,
+  UPDATE_RETREAT_FAILED,
+
+  DELETE_RETREAT_STARTED,
+  DELETE_RETREAT_SUCCEED,
+  DELETE_RETREAT_FAILED,
 } from "../../constants"
 
 import { RetreatsAPI } from '../../api'
@@ -42,6 +50,34 @@ export const createRetreat = (retreatName) => dispatch => {
     .catch(err => {
       console.log('RetreatsAPI.new() [ERROR]', err)
       dispatch({ type: CREATE_RETREAT_FAILED, error: err.message })
+    })
+}
+
+export const updateRetreat = (id, name) => dispatch => {
+  dispatch({ type: UPDATE_RETREAT_STARTED })
+
+  RetreatsAPI.update(id, name)
+    .then(res => {
+      console.log('RetreatsAPI.update() [SUCCESS]', res)
+      dispatch({ type: UPDATE_RETREAT_SUCCEED, createdRetreat: res })
+    })
+    .catch(err => {
+      console.log('RetreatsAPI.update() [ERROR]', err)
+      dispatch({ type: UPDATE_RETREAT_FAILED, error: err.message })
+    })
+}
+
+export const deleteRetreat = (id) => dispatch => {
+  dispatch({ type: DELETE_RETREAT_STARTED })
+
+  RetreatsAPI.delete(id)
+    .then(res => {
+      console.log('RetreatsAPI.delete() [SUCCESS]', res)
+      dispatch({ type: DELETE_RETREAT_SUCCEED, createdRetreat: res })
+    })
+    .catch(err => {
+      console.log('RetreatsAPI.delete() [ERROR]', err)
+      dispatch({ type: DELETE_RETREAT_FAILED, error: err.message })
     })
 }
 

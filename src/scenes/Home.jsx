@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { fetchRetreats } from '../services/store/actions/retreatsActions'
+import { connect, useDispatch, useSelector } from 'react-redux'
+import { fetchRetreats, updateRetreat, deleteRetreat, clearCreatedRetreat } from '../services/store/actions/retreatsActions'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import { Card, Typography } from '@material-ui/core'
+import { Card, Typography, Button, CardContent, CardActions, Divider, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
+import { useState } from 'react'
+import { useEffect } from 'react'
 
 const useStyles = makeStyles({
   clean: {
@@ -13,22 +15,93 @@ const useStyles = makeStyles({
   },
   flex1: {
     flex: 1
-  }
+  },
+  retreatCard: {
+    padding: '1em',
+    margin: '1em',
+    cursor: 'pointer',
+    width: '22em',
+    float: 'left',
+  },
 });
 
-const RetreatListItem = ({ retreat }) => {
-  const classes = useStyles()
+
+const EditInput = ({ name, handleChange, updateClick }) => {
   return (
-    <Link to={`/retreat/${retreat.id}`} className={classes.clean}>
-      <Card style={{ padding: '1em', margin: '1em', cursor: 'pointer' }}>
-        <Typography><b>{retreat.name}</b> Meals: {retreat.meals.length} Carts: {retreat.carts.length}</Typography>
-      </Card>
-    </Link>
+    <form onSubmit={e => {
+      e.preventDefault()
+      updateClick()
+    }}>
+      <TextField
+        label="Name"
+        value={name}
+        onChange={handleChange}
+      />
+    </form>
+  )
+}
+
+const RetreatListItem = ({ retreat, handleOpenDialog }) => {
+  const classes = useStyles()
+  const dispatch = useDispatch()
+  const createdRetreat = useSelector(state => state.retreats.createdRetreat)
+  const [editMode, setEditMode] = useState(false)
+
+  const [currentName, setCurrentName] = useState(retreat.name)
+
+  const handleEditInputChange = event => {
+    setCurrentName(event.target.value)
+  }
+
+  const updateClick = () => {
+    setEditMode(false)
+    dispatch(updateRetreat(retreat.id, currentName))
+  }
+
+  useEffect(() => {
+    if (createdRetreat) {
+      dispatch(clearCreatedRetreat())
+      console.log('EDITED!')
+      dispatch(fetchRetreats())
+    }
+  }, [createdRetreat, dispatch])
+
+  return (
+    <Card className={classes.retreatCard}>
+      <CardContent>
+        {editMode ? <EditInput name={currentName} handleChange={handleEditInputChange} updateClick={updateClick} /> : <Link to={`/retreat/${retreat.id}`} className={classes.clean}>
+          <Typography variant="h5" component="h2">
+            {retreat.name}
+          </Typography>
+          <Typography color="textSecondary">
+            Meals: {retreat.meals.length}
+          </Typography>
+          <Typography color="textSecondary">
+            Carts: {retreat.carts.length}
+          </Typography>
+        </Link>}
+      </CardContent>
+      <Divider />
+      <CardActions>
+        {
+          editMode
+            ? (
+              <>
+                <Button size="small" color="primary" onClick={updateClick}>Ok</Button>
+                <Button size="small" color="secondary" onClick={() => setEditMode(false)}>Cancel</Button>
+              </>
+            )
+            : <Button size="small" color="default" onClick={() => setEditMode(true)}>Edit</Button>
+        }
+        <Button size="small" color="secondary" onClick={handleOpenDialog}>Delete</Button>
+      </CardActions>
+    </Card>
   )
 }
 
 
 class Home extends Component {
+  state = { dialogOpen: false, retreatToBeDeleted: null }
   componentDidMount() {
     // if (!this.props.retreatsState.retreats) {
     this.props.fetchRetreats()
@@ -37,11 +110,22 @@ class Home extends Component {
     //   console.log('Already loaded.')
     // }
   }
+
   render() {
-    const { isLoading, retreats, error } = this.props.retreatsState
+    const { isLoading, retreats, error, createdRetreat } = this.props.retreatsState
+    console.log('RETREATS STORE', this.props.retreatsState)
+    const { dialogOpen, retreatToBeDeleted } = this.state
+    const { clearCreatedRetreat, deleteRetreat, fetchRetreats } = this.props
+
+    if (createdRetreat) {
+      clearCreatedRetreat()
+      fetchRetreats()
+    }
+
+    const dialogHandleClose = () => this.setState({ dialogOpen: false })
 
     const retreatsListItems = retreats
-      ? retreats.map(retreat => <RetreatListItem retreat={retreat} key={`rrr-${retreat.id}`} />)
+      ? retreats.map(retreat => <RetreatListItem retreat={retreat} key={`rrr-${retreat.id}`} handleOpenDialog={() => this.setState({ dialogOpen: true, retreatToBeDeleted: retreat.id })} />)
       : null
 
     const retreatsComponent = (
@@ -56,6 +140,28 @@ class Home extends Component {
         {
           isLoading ? <CircularProgress disableShrink /> : retreatsComponent
         }
+        <Dialog
+          open={dialogOpen}
+          onClose={dialogHandleClose}
+        >
+          <DialogTitle>
+            Are you sure?
+          </DialogTitle>
+          <DialogContent>
+            Retreat will be deleted permamently.
+          </DialogContent>
+          <DialogActions>
+            <Button color="primary" onClick={() => {
+              deleteRetreat(retreatToBeDeleted)
+              dialogHandleClose()
+            }}>
+              OK
+            </Button>
+            <Button color="secondary" onClick={dialogHandleClose}>
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     )
   }
@@ -66,7 +172,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = ({
-  fetchRetreats
+  fetchRetreats,
+  updateRetreat,
+  deleteRetreat,
+  clearCreatedRetreat,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
