@@ -6,9 +6,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Box from '@material-ui/core/Box'
-import { Typography, Paper } from '@material-ui/core'
+import { Typography, Paper, Button } from '@material-ui/core'
 import DishExpansionPanel from './DishExpansionPanel'
 import Error from './Error'
+import DialogAddMeal from './DialogAddMeal'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
   },
   div: {
-    width: '25em',
+    width: '28em',
     float: 'left',
     margin: '1em'
   }
@@ -49,6 +50,7 @@ const ShowRetreat = (props) => {
   const [value, setValue] = React.useState(0)
   const { isLoading, retreat, error } = useSelector(state => state.retreats)
   const [mealsByDateState, setMealsByDateState] = React.useState({})
+  const [newMealOpen, setNewMealOpen] = React.useState(false)
 
   const setPathMealDate = useCallback((mealDate) => {
     const pathname = `/retreat/${id}`
@@ -99,6 +101,9 @@ const ShowRetreat = (props) => {
       {(!isLoading && !error) && (
         <>
           <h2>{retreat.name}</h2>
+          <div><Button color="primary" onClick={() => {
+            setNewMealOpen(true)
+          }}>New meal</Button></div>
           <div className={classes.root}>
             <Tabs
               orientation="vertical"
@@ -128,7 +133,9 @@ const ShowRetreat = (props) => {
                   <Paper variant="outlined" square>
                     <DishExpansionPanel
                       dishes={meal.dishes}
-                      mealType={meal.type} />
+                      mealType={meal.type}
+                      mealId={meal.id}
+                      servings={meal.servings} />
                   </Paper>
                 </div>)}
               </TabPane>
@@ -140,6 +147,13 @@ const ShowRetreat = (props) => {
 
       {isLoading && <CircularProgress />}
       {(!isLoading && error) && <Error error={error} />}
+      {
+        <DialogAddMeal
+          newMealOpen={newMealOpen}
+          setNewMealOpen={setNewMealOpen}
+          mealDate={mealDate}
+        />
+      }
     </div>
   )
 }
