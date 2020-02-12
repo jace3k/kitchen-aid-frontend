@@ -37,3 +37,17 @@
     transform: rotate(360deg);
   }
 }
+
+
+.paperDish {
+  cursor: pointer;
+  padding: 1em;
+  margin: .5em;
+  transition: all 400ms;
+}
+
+.paperDish:hover {
+  transition: all 400ms;
+  background-color: gainsboro;
+  text-decoration: underline;
+}
