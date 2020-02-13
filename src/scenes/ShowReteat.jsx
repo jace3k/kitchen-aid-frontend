@@ -49,6 +49,7 @@ const ShowRetreat = (props) => {
   const dispatch = useDispatch()
   const [value, setValue] = React.useState(0)
   const { isLoading, retreat, error } = useSelector(state => state.retreats)
+  const mealsState = useSelector(state => state.meals)
   const [mealsByDateState, setMealsByDateState] = React.useState({})
   const [newMealOpen, setNewMealOpen] = React.useState(false)
 
@@ -57,9 +58,10 @@ const ShowRetreat = (props) => {
     props.history.push(`${pathname}/${mealDate}`)
   }, [id, props.history])
 
+
   useEffect(() => {
     dispatch(fetchRetreat(id))
-  }, [dispatch, id]);
+  }, [mealsState.createdMeal, dispatch, id])
 
   useEffect(() => {
     const mealsByDate = {}
@@ -135,7 +137,9 @@ const ShowRetreat = (props) => {
                       dishes={meal.dishes}
                       mealType={meal.type}
                       mealId={meal.id}
-                      servings={meal.servings} />
+                      mealDate={meal.date}
+                      servings={meal.servings}
+                      retreatId={id} />
                   </Paper>
                 </div>)}
               </TabPane>
@@ -149,6 +153,7 @@ const ShowRetreat = (props) => {
       {(!isLoading && error) && <Error error={error} />}
       {
         <DialogAddMeal
+          retreatId={id}
           newMealOpen={newMealOpen}
           setNewMealOpen={setNewMealOpen}
           mealDate={mealDate}

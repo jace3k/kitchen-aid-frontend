@@ -10,10 +10,18 @@ export const RetreatsAPI = {
   all: () => apiClient.get('retreat'),
   single: (id) => apiClient.get(`retreat/${id}/`),
   new: (name) => apiClient.post('retreat/', { name }),
-  update: (id, name) => apiClient.put(`retreat/${id}/`,  { name }),
+  update: (id, name) => apiClient.put(`retreat/${id}/`, { name }),
   delete: (id) => apiClient.delete(`retreat/${id}/`),
 }
 
+export const MealsAPI = {
+  new: (meal) => apiClient.post('meal/', meal),
+  delete: (id) => apiClient.delete(`meal/${id}/`),
+  update: (id, meal) => apiClient.put(`meal/${id}/`, { ...meal }),
+}
+
 export const DishesAPI = {
-  forMeal: (id) => apiClient.get(`meal/${id}/get_dishes`)
+  forMeal: (id) => apiClient.get(`meal/${id}/get_dishes`),
+  new: dish => apiClient.post('dish/', { ...dish }),
+  delete: id => apiClient.delete(`dish/${id}/`)
 }
