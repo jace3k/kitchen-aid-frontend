@@ -7,6 +7,10 @@ import { useState } from 'react'
 import CloseIcon from '@material-ui/icons/Close'
 import CakeIcon from '@material-ui/icons/Cake'
 import TrashIcon from '@material-ui/icons/Delete'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteMeal, updateMealServings } from '../services/store/actions/mealsActions'
+import { createDish, fetchDishesForMeal, deleteDish } from '../services/store/actions/dishesActions'
+import { useEffect } from 'react'
 
 
 const useStyles = makeStyles(theme => ({
@@ -50,14 +54,25 @@ const mealTypeMap = {
   'FE': 'Feast',
 }
 
-export default function DishExpansionPanel({ dishes, mealType, mealId, servings }) {
+export default function DishExpansionPanel({ mealType, mealId, servings, mealDate, retreatId }) {
   const classes = useStyles()
+  const dispatch = useDispatch()
   const [addDishVisible, setAddDishVisible] = useState(false)
   const [ingredientsModalVisible, setIngredientsModalVisible] = useState(false)
   const [areYouSureRemoveMeal, setAreYouSureRemoveMeal] = useState(false)
   const [servingsOpened, setServingsOpened] = useState(null)
   const [currentDish, setCurrentDish] = useState({})
   const [servingsValue, setServingsValue] = useState(servings)
+  const [addDishName, setAddDishName] = useState("")
+  const [addDishSize, setAddDishSize] = useState("")
+  const createdDish = useSelector(state => state.dishes.createdDish)
+  const dishes = useSelector(state => state.dishes.dishes[mealId])
+  const dishLoading = useSelector(state => state.dishes.isLoading)
+  console.log('dishes', dishes, dishLoading)
+
+  useEffect(() => {
+    dispatch(fetchDishesForMeal(mealId))
+  }, [dispatch, mealId, createdDish])
 
   const openDishModal = (dish) => {
     setCurrentDish(dish)
@@ -66,12 +81,37 @@ export default function DishExpansionPanel({ dishes, mealType, mealId, servings 
 
   const handleCloseServingsEdit = e => {
     setServingsOpened(null)
-    // put to the backend here{servingsValue}
+    dispatch(updateMealServings(mealId, {
+      servings: servingsValue,
+      date: mealDate,
+      type: mealType,
+      retreat: retreatId,
+    }))
   }
 
   const handleChangeServingsEdit = e => {
     setServingsValue(e.target.value)
   }
+
+  const handleRemoveMeal = () => {
+    setAreYouSureRemoveMeal(false)
+    dispatch(deleteMeal(mealId))
+  }
+
+  const handleAddDish = () => {
+    dispatch(createDish({
+      meal: mealId,
+      name: addDishName,
+      size: addDishSize,
+    }))
+  }
+
+  const handleRemoveDish = (id) => {
+    dispatch(deleteDish(id))
+  }
+
+  const handleChangeAddDishName = e => setAddDishName(e.target.value)
+  const handleChangeAddDishSize = e => setAddDishSize(e.target.value)
 
   return (
     <div style={{ width: '100%' }}>
@@ -80,9 +120,10 @@ export default function DishExpansionPanel({ dishes, mealType, mealId, servings 
           <h3>{`${mealTypeMap[mealType]}`}</h3>
         </Grid>
         <Grid item sm={4}>
-          <Button color="textSecondary" onClick={(e) => {
+          <Button color="default" onClick={(e) => {
             setServingsOpened(e.currentTarget)
           }}>Servings: {servings}</Button>
+
           <Popover
             open={!!servingsOpened}
             anchorEl={servingsOpened}
@@ -103,7 +144,7 @@ export default function DishExpansionPanel({ dishes, mealType, mealId, servings 
           {addDishVisible && <Button size="small" color="secondary" variant="text" onClick={() => setAddDishVisible(false)}>Nope</Button>}
           {areYouSureRemoveMeal && (
             <ButtonGroup size="small" variant="text" color="secondary">
-              <Button onClick={() => setAreYouSureRemoveMeal(false)}>Yes</Button>
+              <Button onClick={handleRemoveMeal}>Yes</Button>
               <Button onClick={() => setAreYouSureRemoveMeal(false)}>No</Button>
             </ButtonGroup>
           )}
@@ -121,11 +162,11 @@ export default function DishExpansionPanel({ dishes, mealType, mealId, servings 
           }
         </Grid>
       </Grid>
-
-      {dishes.map((dish, i) => (
+      {dishes && dishes.map((dish, i) => (
         <Paper
           className={"paperDish"}
           variant="outlined"
+          key={`dishes-paper-key-${i}`}
         >
           <Grid container alignItems="center">
             <Grid item xs={6} onClick={() => openDishModal(dish)}>
@@ -135,7 +176,7 @@ export default function DishExpansionPanel({ dishes, mealType, mealId, servings 
               <Typography color="textSecondary">Size: {dish.size}</Typography>
             </Grid>
             <Grid item xs={2}>
-              <IconButton size="small">
+              <IconButton size="small" onClick={() => handleRemoveDish(dish.id)}>
                 <CloseIcon />
               </IconButton>
             </Grid>
@@ -148,13 +189,26 @@ export default function DishExpansionPanel({ dishes, mealType, mealId, servings 
           <Paper>
             <Grid container alignItems="center">
               <Grid item sm={4} className={classes.addNewDish}>
-                <TextField label="Dish name" variant="outlined" size="small" />
+                <TextField
+                  label="Dish name"
+                  variant="outlined"
+                  size="small"
+                  value={addDishName}
+                  onChange={handleChangeAddDishName}
+                />
               </Grid>
               <Grid item sm={4} className={classes.addNewDish}>
-                <TextField label="Size" variant="outlined" size="small" />
+                <TextField
+                  label="Size"
+                  variant="outlined"
+                  size="small"
+                  value={addDishSize}
+                  onChange={handleChangeAddDishSize}
+                  type="number"
+                />
               </Grid>
               <Grid item sm={4} className={classes.addNewDish}>
-                <Button variant="outlined">Add</Button>
+                <Button variant="outlined" disabled={dishLoading} onClick={handleAddDish}>Add</Button>
               </Grid>
             </Grid>
           </Paper>
