@@ -1,8 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import IngredientsTable from './IngredientsTable'
-import { Button, Grid, Paper, TextField, Dialog, DialogTitle, DialogContent, IconButton, ButtonGroup, Popover } from '@material-ui/core'
+import { Button, Grid, Paper, TextField, IconButton, ButtonGroup, Popover } from '@material-ui/core'
 import { useState } from 'react'
 import CloseIcon from '@material-ui/icons/Close'
 import CakeIcon from '@material-ui/icons/Cake'
@@ -54,30 +53,22 @@ const mealTypeMap = {
   'FE': 'Feast',
 }
 
-export default function DishExpansionPanel({ mealType, mealId, servings, mealDate, retreatId }) {
+export default function DishExpansionPanel({ mealType, mealId, servings, mealDate, retreatId, openIngredientsPanel }) {
   const classes = useStyles()
   const dispatch = useDispatch()
   const [addDishVisible, setAddDishVisible] = useState(false)
-  const [ingredientsModalVisible, setIngredientsModalVisible] = useState(false)
   const [areYouSureRemoveMeal, setAreYouSureRemoveMeal] = useState(false)
   const [servingsOpened, setServingsOpened] = useState(null)
-  const [currentDish, setCurrentDish] = useState({})
   const [servingsValue, setServingsValue] = useState(servings)
   const [addDishName, setAddDishName] = useState("")
   const [addDishSize, setAddDishSize] = useState("")
   const createdDish = useSelector(state => state.dishes.createdDish)
   const dishes = useSelector(state => state.dishes.dishes[mealId])
   const dishLoading = useSelector(state => state.dishes.isLoading)
-  console.log('dishes', dishes, dishLoading)
 
   useEffect(() => {
     dispatch(fetchDishesForMeal(mealId))
   }, [dispatch, mealId, createdDish])
-
-  const openDishModal = (dish) => {
-    setCurrentDish(dish)
-    setIngredientsModalVisible(true)
-  }
 
   const handleCloseServingsEdit = e => {
     setServingsOpened(null)
@@ -112,6 +103,7 @@ export default function DishExpansionPanel({ mealType, mealId, servings, mealDat
 
   const handleChangeAddDishName = e => setAddDishName(e.target.value)
   const handleChangeAddDishSize = e => setAddDishSize(e.target.value)
+  const handleOpenIngredientsSidePanel = dish => openIngredientsPanel(dish)
 
   return (
     <div style={{ width: '100%' }}>
@@ -169,10 +161,10 @@ export default function DishExpansionPanel({ mealType, mealId, servings, mealDat
           key={`dishes-paper-key-${i}`}
         >
           <Grid container alignItems="center">
-            <Grid item xs={6} onClick={() => openDishModal(dish)}>
+            <Grid item xs={6} onClick={() => handleOpenIngredientsSidePanel(dish)}>
               <Typography>{dish.name}</Typography>
             </Grid>
-            <Grid item xs={4} onClick={() => openDishModal(dish)}>
+            <Grid item xs={4} onClick={() => handleOpenIngredientsSidePanel(dish)}>
               <Typography color="textSecondary">Size: {dish.size}</Typography>
             </Grid>
             <Grid item xs={2}>
@@ -214,20 +206,6 @@ export default function DishExpansionPanel({ mealType, mealId, servings, mealDat
           </Paper>
         </div>
       )}
-
-      <div>
-        <Dialog
-          open={ingredientsModalVisible}
-          onClose={() => setIngredientsModalVisible(false)}
-        >
-          <DialogTitle>
-            Ingredients
-            </DialogTitle>
-          <DialogContent>
-            <IngredientsTable ingredients={currentDish.ingredients} dishId={currentDish.id} />
-          </DialogContent>
-        </Dialog>
-      </div>
     </div>
   )
 }

@@ -61,7 +61,6 @@ const RetreatListItem = ({ retreat, handleOpenDialog }) => {
   useEffect(() => {
     if (createdRetreat) {
       dispatch(clearCreatedRetreat())
-      console.log('EDITED!')
       dispatch(fetchRetreats())
     }
   }, [createdRetreat, dispatch])

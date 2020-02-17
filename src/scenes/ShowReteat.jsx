@@ -10,6 +10,7 @@ import { Typography, Paper, Button } from '@material-ui/core'
 import DishExpansionPanel from './DishExpansionPanel'
 import Error from './Error'
 import DialogAddMeal from './DialogAddMeal'
+import IngredientsSidePanel from './IngredientsSidePanel'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,13 +53,19 @@ const ShowRetreat = (props) => {
   const mealsState = useSelector(state => state.meals)
   const [mealsByDateState, setMealsByDateState] = React.useState({})
   const [newMealOpen, setNewMealOpen] = React.useState(false)
+  const [sidePanelOpened, setSidePanelOpened] = React.useState(false)
+  const [currentDish, setCurrentDish] = React.useState({})
 
   const setPathMealDate = useCallback((mealDate) => {
     const pathname = `/retreat/${id}`
     props.history.push(`${pathname}/${mealDate}`)
   }, [id, props.history])
 
-
+  const handleCloseSidePanelIngredients = () => setSidePanelOpened(false)
+  const handleOpenSidePanelIngredients = (dish) => {
+    setSidePanelOpened(true)
+    setCurrentDish(dish)
+  }
   useEffect(() => {
     dispatch(fetchRetreat(id))
   }, [mealsState.createdMeal, dispatch, id])
@@ -139,12 +146,18 @@ const ShowRetreat = (props) => {
                       mealId={meal.id}
                       mealDate={meal.date}
                       servings={meal.servings}
-                      retreatId={id} />
+                      retreatId={id}
+                      openIngredientsPanel={handleOpenSidePanelIngredients}
+                    />
                   </Paper>
                 </div>)}
               </TabPane>
             ))}
-
+            <IngredientsSidePanel
+              open={sidePanelOpened}
+              handleClose={handleCloseSidePanelIngredients}
+              dish={currentDish}
+            />
           </div>
         </>
       )}
