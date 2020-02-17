@@ -25,3 +25,10 @@ export const DishesAPI = {
   new: dish => apiClient.post('dish/', { ...dish }),
   delete: id => apiClient.delete(`dish/${id}/`)
 }
+
+export const IngredientsAPI = {
+  forDish: id => apiClient.get(`dish/${id}/get_ingredients/`),
+  new: ingredient => apiClient.post('ingredient/', [{ ...ingredient }]),
+  update: (id, ingredient) => apiClient.put(`ingredient/${id}/`, { ...ingredient }),
+  delete: id => apiClient.delete(`ingredient/${id}/`)
+}
