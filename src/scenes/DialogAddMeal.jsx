@@ -53,20 +53,20 @@ export default function DialogAddMeal({ newMealOpen, setNewMealOpen, mealDate, r
         fullWidth={true}
       >
         <DialogTitle>
-          New meal
+          Nowy posiłek
           </DialogTitle>
         <DialogContent>
           <Grid container alignItems="center" justify="center" spacing={2}>
             <Grid item sm={12} className={classes.gridItem}>
               <ButtonGroup color="primary">
-                <Button variant={isThisType('BR')} onClick={() => handleSelectType('BR')}>Breakfast</Button>
-                <Button variant={isThisType('LU')} onClick={() => handleSelectType('LU')}>Lunch</Button>
-                <Button variant={isThisType('FE')} onClick={() => handleSelectType('FE')}>Feast</Button>
+                <Button variant={isThisType('BR')} onClick={() => handleSelectType('BR')}>Sniadanie</Button>
+                <Button variant={isThisType('LU')} onClick={() => handleSelectType('LU')}>Obiad</Button>
+                <Button variant={isThisType('FE')} onClick={() => handleSelectType('FE')}>Kolacja</Button>
               </ButtonGroup>
             </Grid>
             <Grid item sm={6}>
               <TextField
-                label={"Date"}
+                label={"Data"}
                 // defaultValue={mealDate}
                 value={selectedDate}
                 onChange={handleChangeDate}
@@ -75,7 +75,7 @@ export default function DialogAddMeal({ newMealOpen, setNewMealOpen, mealDate, r
             </Grid>
             <Grid item sm={6}>
               <TextField
-                label={"Servings"}
+                label={"Porcje"}
                 value={selectedServings}
                 onChange={handleChangeServings}
                 type="number"
@@ -85,8 +85,8 @@ export default function DialogAddMeal({ newMealOpen, setNewMealOpen, mealDate, r
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button color="primary" onClick={handleCreate}>Create</Button>
-          <Button color="secondary" onClick={handleClose}>Cancel</Button>
+          <Button color="primary" onClick={handleCreate}>Utwórz</Button>
+          <Button color="secondary" onClick={handleClose}>Anuluj</Button>
         </DialogActions>
       </Dialog>
     </div>

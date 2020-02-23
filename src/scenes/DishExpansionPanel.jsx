@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography'
 import { Button, Grid, Paper, TextField, IconButton, ButtonGroup, Popover } from '@material-ui/core'
 import { useState } from 'react'
 import CloseIcon from '@material-ui/icons/Close'
-import CakeIcon from '@material-ui/icons/Cake'
+import CakeIcon from '@material-ui/icons/AddBox'
 import TrashIcon from '@material-ui/icons/Delete'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteMeal, updateMealServings } from '../services/store/actions/mealsActions'
@@ -48,9 +48,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const mealTypeMap = {
-  'BR': 'Breakfast',
-  'LU': 'Lunch',
-  'FE': 'Feast',
+  'BR': 'Śniadanie',
+  'LU': 'Obiad',
+  'FE': 'Kolacja',
 }
 
 export default function DishExpansionPanel({ mealType, mealId, servings, mealDate, retreatId, openIngredientsPanel }) {
@@ -114,7 +114,7 @@ export default function DishExpansionPanel({ mealType, mealId, servings, mealDat
         <Grid item sm={4}>
           <Button color="default" onClick={(e) => {
             setServingsOpened(e.currentTarget)
-          }}>Servings: {servings}</Button>
+          }}>Porcje: {servings}</Button>
 
           <Popover
             open={!!servingsOpened}
@@ -123,7 +123,7 @@ export default function DishExpansionPanel({ mealType, mealId, servings, mealDat
           >
             <TextField
               size="small"
-              label="Servings"
+              label="Porcje"
               variant="outlined"
               className={classes.servingsEdit}
               value={servingsValue}
@@ -136,15 +136,15 @@ export default function DishExpansionPanel({ mealType, mealId, servings, mealDat
           {addDishVisible && <Button size="small" color="secondary" variant="text" onClick={() => setAddDishVisible(false)}>Nope</Button>}
           {areYouSureRemoveMeal && (
             <ButtonGroup size="small" variant="text" color="secondary">
-              <Button onClick={handleRemoveMeal}>Yes</Button>
-              <Button onClick={() => setAreYouSureRemoveMeal(false)}>No</Button>
+              <Button onClick={handleRemoveMeal}>Tak</Button>
+              <Button onClick={() => setAreYouSureRemoveMeal(false)}>Nie</Button>
             </ButtonGroup>
           )}
 
           {(!addDishVisible && !areYouSureRemoveMeal) && (
             <ButtonGroup size="small" variant="text">
               <Button size="small" onClick={() => setAddDishVisible(true)}>
-                +<CakeIcon />
+                <CakeIcon />
               </Button>
               <Button onClick={() => setAreYouSureRemoveMeal(true)}>
                 <TrashIcon />
@@ -165,7 +165,7 @@ export default function DishExpansionPanel({ mealType, mealId, servings, mealDat
               <Typography>{dish.name}</Typography>
             </Grid>
             <Grid item xs={4} onClick={() => handleOpenIngredientsSidePanel(dish)}>
-              <Typography color="textSecondary">Size: {dish.size}</Typography>
+              <Typography color="textSecondary">Rozmiar: {dish.size}</Typography>
             </Grid>
             <Grid item xs={2}>
               <IconButton size="small" onClick={() => handleRemoveDish(dish.id)}>
@@ -182,7 +182,7 @@ export default function DishExpansionPanel({ mealType, mealId, servings, mealDat
             <Grid container alignItems="center">
               <Grid item sm={4} className={classes.addNewDish}>
                 <TextField
-                  label="Dish name"
+                  label="Nazwa dania"
                   variant="outlined"
                   size="small"
                   value={addDishName}
@@ -191,7 +191,7 @@ export default function DishExpansionPanel({ mealType, mealId, servings, mealDat
               </Grid>
               <Grid item sm={4} className={classes.addNewDish}>
                 <TextField
-                  label="Size"
+                  label="Rozmiar"
                   variant="outlined"
                   size="small"
                   value={addDishSize}
@@ -200,7 +200,7 @@ export default function DishExpansionPanel({ mealType, mealId, servings, mealDat
                 />
               </Grid>
               <Grid item sm={4} className={classes.addNewDish}>
-                <Button variant="outlined" disabled={dishLoading} onClick={handleAddDish}>Add</Button>
+                <Button variant="outlined" disabled={dishLoading} onClick={handleAddDish}>Dodaj</Button>
               </Grid>
             </Grid>
           </Paper>

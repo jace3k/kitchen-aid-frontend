@@ -33,7 +33,7 @@ const EditInput = ({ name, handleChange, updateClick }) => {
       updateClick()
     }}>
       <TextField
-        label="Name"
+        label="Nazwa"
         value={name}
         onChange={handleChange}
       />
@@ -73,10 +73,10 @@ const RetreatListItem = ({ retreat, handleOpenDialog }) => {
             {retreat.name}
           </Typography>
           <Typography color="textSecondary">
-            Meals: {retreat.meals.length}
+            Posiłki: {retreat.meals.length}
           </Typography>
           <Typography color="textSecondary">
-            Carts: {retreat.carts.length}
+            Koszyki: {retreat.carts.length}
           </Typography>
         </Link>}
       </CardContent>
@@ -87,12 +87,12 @@ const RetreatListItem = ({ retreat, handleOpenDialog }) => {
             ? (
               <>
                 <Button size="small" color="primary" onClick={updateClick}>Ok</Button>
-                <Button size="small" color="secondary" onClick={() => setEditMode(false)}>Cancel</Button>
+                <Button size="small" color="secondary" onClick={() => setEditMode(false)}>Anuluj</Button>
               </>
             )
-            : <Button size="small" color="default" onClick={() => setEditMode(true)}>Edit</Button>
+            : <Button size="small" color="default" onClick={() => setEditMode(true)}>Edytuj</Button>
         }
-        <Button size="small" color="secondary" onClick={handleOpenDialog}>Delete</Button>
+        <Button size="small" color="secondary" onClick={handleOpenDialog}>Usuń</Button>
       </CardActions>
     </Card>
   )
@@ -144,10 +144,10 @@ class Home extends Component {
           onClose={dialogHandleClose}
         >
           <DialogTitle>
-            Are you sure?
+            Jesteś pewien?
           </DialogTitle>
           <DialogContent>
-            Retreat will be deleted permamently.
+            Retreat zostanie usunięty bezpowrotnie.
           </DialogContent>
           <DialogActions>
             <Button color="primary" onClick={() => {
@@ -157,7 +157,7 @@ class Home extends Component {
               OK
             </Button>
             <Button color="secondary" onClick={dialogHandleClose}>
-              Cancel
+              Anuluj
             </Button>
           </DialogActions>
         </Dialog>

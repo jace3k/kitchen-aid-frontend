@@ -29,9 +29,9 @@ class CreateRetreat extends Component {
     }
     return (
       <div>
-        <h3>Create new Retreat</h3>
+        <h3>Uwtórz nowy Retreat</h3>
         <div>
-          <TextField id="standard-basic" label="Retreat name" variant="outlined" onChange={this.handleChange} />
+          <TextField id="standard-basic" label="Nazwa" variant="outlined" onChange={this.handleChange} />
         </div>
         <br />
         <div>
@@ -39,7 +39,7 @@ class CreateRetreat extends Component {
             onClick={this.handleSubmit} 
             disabled={this.state.retreatName === '' || isLoading}
             type="submit"
-            >Create</Button>
+            >Utwórz</Button>
         </div>
 
 

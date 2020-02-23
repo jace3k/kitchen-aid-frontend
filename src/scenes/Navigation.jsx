@@ -4,8 +4,8 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import grey from '@material-ui/core/colors/grey'
-import { IconButton } from '@material-ui/core'
-import PlusIcon from '@material-ui/icons/Add'
+import { Button } from '@material-ui/core'
+import PlusIcon from '@material-ui/icons/AddBox'
 import { Link } from "react-router-dom"
 
 
@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 });
 
 
-export default (props) => {
+export default () => {
   const classes = useStyles()
 
   return (
@@ -47,14 +47,14 @@ export default (props) => {
         </Typography>
 
         <div className={classes.flex1}>
-         <Link to='/create'>
-            <IconButton>
+         <Link to='/create' className={classes.clean}>
+            <Button>
               <PlusIcon />
-            </IconButton>
+              Utwórz retreat
+            </Button>
           </Link>
         </div>
       </Toolbar>
-
     </AppBar>
   )
 }
