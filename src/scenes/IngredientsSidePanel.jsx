@@ -8,10 +8,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchIngredientsForDish, createIngredient, updateIngredient, deleteIngredient } from '../services/store/actions/ingredientsActions'
 
 const columns = [
-  { title: 'Ingredient name', field: 'name' },
-  { title: 'Margin', field: 'margin', type: 'numeric' },
-  { title: 'Part', field: 'part', type: 'numeric' },
-  { title: 'Calculated total', field: 'calculated_total', type: 'numeric', editable: 'never' }
+  { title: 'Nazwa', field: 'name' },
+  { title: 'Margines', field: 'margin', type: 'numeric' },
+  { title: 'Część', field: 'part', type: 'numeric' },
+  { title: 'Całość', field: 'calculated_total', type: 'numeric', editable: 'never' }
   // {
   //   title: 'Birth Place',
   //   field: 'birthCity',
@@ -62,11 +62,12 @@ export default function IngredientsSidePanel({ open, handleClose, dish }) {
             <h4>{dish.name}</h4>
           </Grid>
           <Grid item md={2}>
-            <h5>Options</h5>
+            {/* <h5>Options</h5> */}
           </Grid>
           <Grid item md={12} className={classes.borderTop}>
             <div className={classes.width100}>
               <MaterialTable
+                title={"Składniki"}
                 isLoading={ingredientsState.isLoading}
                 options={{
                   search: false,

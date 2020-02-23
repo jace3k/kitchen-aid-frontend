@@ -11,6 +11,7 @@ import DishExpansionPanel from './DishExpansionPanel'
 import Error from './Error'
 import DialogAddMeal from './DialogAddMeal'
 import IngredientsSidePanel from './IngredientsSidePanel'
+import AddIcon from '@material-ui/icons/AddBox'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -112,7 +113,10 @@ const ShowRetreat = (props) => {
           <h2>{retreat.name}</h2>
           <div><Button color="primary" onClick={() => {
             setNewMealOpen(true)
-          }}>New meal</Button></div>
+          }}>
+            <AddIcon />
+              Nowy posiłek
+            </Button></div>
           <div className={classes.root}>
             <Tabs
               orientation="vertical"
