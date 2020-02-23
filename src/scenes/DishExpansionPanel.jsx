@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
 const mealTypeMap = {
   'BR': 'Śniadanie',
   'LU': 'Obiad',
-  'FE': 'Kolacja',
+  'FE': 'Uczta',
 }
 
 export default function DishExpansionPanel({ mealType, mealId, servings, mealDate, retreatId, openIngredientsPanel }) {

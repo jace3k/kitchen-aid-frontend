@@ -61,7 +61,7 @@ export default function DialogAddMeal({ newMealOpen, setNewMealOpen, mealDate, r
               <ButtonGroup color="primary">
                 <Button variant={isThisType('BR')} onClick={() => handleSelectType('BR')}>Sniadanie</Button>
                 <Button variant={isThisType('LU')} onClick={() => handleSelectType('LU')}>Obiad</Button>
-                <Button variant={isThisType('FE')} onClick={() => handleSelectType('FE')}>Kolacja</Button>
+                <Button variant={isThisType('FE')} onClick={() => handleSelectType('FE')}>Uczta</Button>
               </ButtonGroup>
             </Grid>
             <Grid item sm={6}>
