@@ -1,0 +1,14 @@
+/* 
+
+*.css files are global and classes can be used just as string in className. 
+*.module.css files have to be imported in component and used as a variables.
+ 
+*/
+
+body {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.center {
+  text-align: center;
+}
