@@ -1,15 +1,18 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { simpleAction } from '/store/actions/simpleAction';
+import { ApplicationState } from 'store'
+import { simpleValuefetchRequest } from 'store/simple/actions'
 
-const Home = () => {
-  const exampleStore = useSelector(state => state.simpleReducer)
+interface HomeProps {}
+
+const Home: React.FC<HomeProps> = () => {
+  const simpleState = useSelector((state: ApplicationState) => state.simple)
   const dispatch = useDispatch();
 
-  console.log(exampleStore);
+  console.log(simpleState);
 
   const handleClick = () => {
-    dispatch(simpleAction())
+    dispatch(simpleValuefetchRequest())
   }
 
   return (
@@ -17,15 +20,15 @@ const Home = () => {
       <h1 className="center">Home</h1>
       <h4 className="center">
         {
-          exampleStore.isLoading
+          simpleState.loading
             ? 'Loading...'
-            : `Simple value: ${exampleStore.simpleValue}`
+            : `Simple value: ${simpleState.simpleValue}`
         }
       </h4>
       <div className="center">
         <button
           onClick={handleClick}
-          disabled={exampleStore.isLoading}
+          disabled={simpleState.loading}
         >
           Simulate request using redux
       </button>

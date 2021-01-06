@@ -1,14 +1,17 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const webpack = require('webpack');
+require('webpack');
+const path = require('path')
 
 module.exports = {
+  entry: './src/index.tsx',
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
+        include: /src/,
         use: {
-          loader: "babel-loader"
+          loader: "ts-loader"
         }
       },
       {
@@ -33,7 +36,8 @@ module.exports = {
             }
           }
         ],
-        include: /\.module\.css$/
+        include: /\.module\.css$/,
+        exclude: /node_modules/,
       },
       {
         test: /\.(css|scss)$/,
@@ -52,7 +56,7 @@ module.exports = {
     }),
   ],
   output: {
-    filename: '[name].[contentHash:4].bundle.js',
+    filename: '[name].[contenthash:4].bundle.js',
     publicPath: '/',
   },
   devServer: {
@@ -60,5 +64,12 @@ module.exports = {
     port: 8080,
     historyApiFallback: true,
     publicPath: '/',
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    alias: {
+      components: path.resolve(__dirname, 'src/components'),
+      store: path.resolve(__dirname, 'src/store'),
+    }
   }
 };
