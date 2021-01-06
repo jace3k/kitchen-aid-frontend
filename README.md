@@ -17,13 +17,13 @@ Simple react skeleton app with basic configuration created from scratch (without
 
 > Start development:
 ```
-npm start
+yarn start
 ```
 
 > Run production build:
 
 ```
-npm run build
+yarn build
 ```
 *`dist` folder will be the output*
 
