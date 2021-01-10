@@ -1,19 +1,8 @@
 # React app skeleton
 
-Simple react skeleton app with basic configuration created from scratch (without *create-react-app*).
+Kitchen App!
 
-## What is included:
-- Redux with redux thunk,
-- React router,
-- Axios,
-- Complete file structure,
-- Defined example reducer and action,
-- Based fully on Hooks,
-- Using yarn,
-- Typescript.
-
-
-## How to run
+This app will help you organize your kitchen!
 
 > Start development:
 ```
@@ -28,3 +17,9 @@ yarn build
 *`dist` folder will be the output*
 
 ___
+
+
+##### TODO
+* add material ui
+* add login form & handle login
+* add home page

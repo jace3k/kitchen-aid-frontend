@@ -9,3 +9,12 @@ export const SimpleApi = {
     return new Promise(task)
   }
 }
+
+export const UserApi = {
+  login: (username: string, password: string) => {
+    const task = (resolve: (value?: unknown) => void) => {
+      setTimeout(() => resolve({ token: "fake_token" }), 1000)
+    }
+    return new Promise(task)
+  }
+}
