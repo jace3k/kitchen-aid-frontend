@@ -1,4 +1,4 @@
-# React app skeleton
+# Kitchen Aid 
 
 Kitchen App!
 
