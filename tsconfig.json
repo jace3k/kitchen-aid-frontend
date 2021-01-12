@@ -25,6 +25,7 @@
       "components/*": ["src/components/*"],
       "store/*": ["src/store/*"],
       "store": ["src/store"],
+      "utils/*": ["src/utils/*"],
     },
     "noImplicitAny": true,
   },

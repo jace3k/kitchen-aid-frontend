@@ -12,8 +12,15 @@ export const SimpleApi = {
 
 export const UserApi = {
   login: (username: string, password: string) => {
-    const task = (resolve: (value?: unknown) => void) => {
-      setTimeout(() => resolve({ token: "fake_token" }), 1000)
+    const task = (resolve: (value?: unknown) => void, reject: (value?: unknown) => void) => {
+      setTimeout(() => {
+        if (username === 'test' && password === 'test') {
+          resolve({ token: "fake_token" })
+        }
+        else {
+          reject('Incorrect username or password')
+        }
+      }, 1000)
     }
     return new Promise(task)
   }

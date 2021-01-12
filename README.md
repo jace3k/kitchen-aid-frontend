@@ -20,6 +20,6 @@ ___
 
 
 ##### TODO
-* add material ui
-* add login form & handle login
+* add languages
 * add home page
+* add admin page

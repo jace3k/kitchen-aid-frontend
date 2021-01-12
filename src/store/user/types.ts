@@ -10,6 +10,8 @@ export enum UserActionTypes {
   LOGIN_REQUEST = '@@user/LOGIN_REQUEST',
   LOGIN_SUCCESS = '@@user/LOGIN_SUCCESS',
   LOGIN_ERROR = '@@user/LOGIN_ERROR',
+
+  TOGGLE_DARK_MODE = '@@user/TOGGLE_DARK_MODE',
 }
 
 export interface LoginRequestType {
@@ -30,9 +32,14 @@ interface LoginhErrorType {
 
 export type LoginType = LoginRequestType | LoginSuccessType | LoginhErrorType
 
+export type ToggleDarkModeType = {
+  type: typeof UserActionTypes.TOGGLE_DARK_MODE,
+}
+export type UserStateActionTypes = LoginType | ToggleDarkModeType
 export interface UserState {
   readonly loading: boolean,
   readonly error: string | null,
   readonly authorized: boolean,
   readonly user: User | null,
+  readonly darkMode: boolean,
 }
