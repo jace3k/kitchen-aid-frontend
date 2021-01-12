@@ -1,14 +1,15 @@
 import { Reducer } from 'redux'
-import { UserState, UserActionTypes, LoginType } from './types'
+import { UserState, UserActionTypes, UserStateActionTypes } from './types'
 
 const initialState: UserState = {
   loading: false,
   error: null,
   authorized: false,
   user: null,
+  darkMode: true,
 }
 
-const reducer: Reducer<UserState, LoginType> = (state = initialState, action) => {
+const reducer: Reducer<UserState, UserStateActionTypes> = (state = initialState, action) => {
   switch (action.type) {
     case UserActionTypes.LOGIN_REQUEST:
       return {
@@ -31,6 +32,11 @@ const reducer: Reducer<UserState, LoginType> = (state = initialState, action) =>
         error: action.error,
         authorized: false,
         user: null,
+      }
+    case UserActionTypes.TOGGLE_DARK_MODE:
+      return {
+        ...state,
+        darkMode: !state.darkMode,
       }
     default:
       return state
