@@ -11,6 +11,10 @@ import { userReducer } from './user/reducer'
 import { UserState } from './user/types'
 import userSaga from './user/saga'
 
+import { retreatReducer } from './retreats/reducer'
+import { RetreatsState } from './retreats/types'
+import retreatsSaga from './retreats/saga'
+
 
 ////////////////////////////////////////////////
 // When adding new store object, add it to application state and saga below.
@@ -18,17 +22,20 @@ import userSaga from './user/saga'
 export interface ApplicationState {
   simple: SimpleState,
   user: UserState,
+  retreats: RetreatsState,
 }
 
 const rootReducer = combineReducers<ApplicationState>({
   simple: simpleReducer,
   user: userReducer,
+  retreats: retreatReducer,
 })
 
 function* rootSaga() {
   yield all([
     simpleSaga(),
     userSaga(),
+    retreatsSaga(),
   ])
 }
 

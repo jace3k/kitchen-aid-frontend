@@ -1,26 +1,24 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
-import Navigation from './Navigation'
-import Home from './Home'
+import Navigation from './Navigation/Navigation'
+
 import About from './About'
 import NotFound from './NotFound'
 import Login from './Login/Login'
+import Retreats from './Retreats/Retreats'
+import Notifications from './Notifications/Notifications'
 
 import { useSelector } from 'react-redux'
 import { ApplicationState } from 'store'
 import { ThemeProvider, createMuiTheme, CssBaseline } from '@material-ui/core'
 import { getPalette } from 'utils/palette'
-import Notifications from './Notifications/Notifications'
 
 const App: React.FC = () => {
   const authorized = useSelector((state: ApplicationState) => state.user.authorized)
   const isDarkMode = useSelector((state: ApplicationState) => state.user.darkMode)
   const theme = createMuiTheme({
     palette: getPalette(isDarkMode),
-    // typography: {
-    //   fontFamily: 'Nunito, sans-serif'
-    // }
   })
 
   let RouterComponent: () => any
@@ -29,9 +27,10 @@ const App: React.FC = () => {
     RouterComponent = () => (
       <Router>
         <Route path="/" component={Navigation} />
+        <Redirect from="/" to="/retreats" />
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/about" component={About} />
+          <Route path="/retreats" component={Retreats} />
+          <Route exact path="/ingredients" component={About} />
           <Route path="/" component={NotFound} />
         </Switch>
       </Router>
@@ -43,7 +42,7 @@ const App: React.FC = () => {
         <Switch>
           <Route exact path="/" component={Login} />
           {/* <Route exact path="/admin" component={Admin} /> */}
-          <Route path="/" component={NotFound} />
+          <Redirect from="*" to="/" />
         </Switch>
       </Router>
     )
