@@ -25,7 +25,7 @@ const Login = () => {
       </Typography>
       <div />
       <Card>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate autoComplete="off">
           <CardContent className={classes.formContainer}>
             <Typography variant='h5' className={classes.formTitle}>
               Kitchen Aid
