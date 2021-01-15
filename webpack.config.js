@@ -72,5 +72,8 @@ module.exports = {
       store: path.resolve(__dirname, 'src/store'),
       utils: path.resolve(__dirname, 'src/utils'),
     }
+  },
+  optimization: {
+    noEmitOnErrors: true
   }
 };

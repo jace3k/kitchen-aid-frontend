@@ -4,9 +4,10 @@ import { UserState, UserActionTypes, UserStateActionTypes } from './types'
 const initialState: UserState = {
   loading: false,
   error: null,
-  authorized: false,
+  authorized: true,
   user: null,
   darkMode: true,
+  language: "pl",
 }
 
 const reducer: Reducer<UserState, UserStateActionTypes> = (state = initialState, action) => {
@@ -37,6 +38,11 @@ const reducer: Reducer<UserState, UserStateActionTypes> = (state = initialState,
       return {
         ...state,
         darkMode: !state.darkMode,
+      }
+    case UserActionTypes.CHANGE_LANGUAGE:
+      return {
+        ...state,
+        language: action.language,
       }
     default:
       return state

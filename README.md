@@ -20,12 +20,12 @@ ___
 
 
 ##### TODO
-* add languages
-* retreats page - mobile friendly
-* retreats page - "more" button menu actions
+* ~add languages~
+* ~retreats page - mobile friendly~
+* ~retreats page - "more" button menu actions~
 * retreats page - "add new" button
 * retreats page - sorting & filtering
 * retreats page - details
-* navigation - menu - logout option / darkmode switcher
+* navigation - menu - logout option / darkmode switcher / language chooser
 * footer
 * add admin page

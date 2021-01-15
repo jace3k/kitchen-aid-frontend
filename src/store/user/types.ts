@@ -1,3 +1,4 @@
+import { LanguageType } from "utils/translations"
 
 // type fetched from api
 export interface User {
@@ -12,6 +13,7 @@ export enum UserActionTypes {
   LOGIN_ERROR = '@@user/LOGIN_ERROR',
 
   TOGGLE_DARK_MODE = '@@user/TOGGLE_DARK_MODE',
+  CHANGE_LANGUAGE = '@@user/CHANGE_LANGUAGE',
 }
 
 export interface LoginRequestType {
@@ -25,21 +27,33 @@ interface LoginSuccessType {
   user: User,
 }
 
-interface LoginhErrorType {
+interface LoginErrorType {
   type: typeof UserActionTypes.LOGIN_ERROR,
   error: string,
 }
 
-export type LoginType = LoginRequestType | LoginSuccessType | LoginhErrorType
+export type LoginType = LoginRequestType | LoginSuccessType | LoginErrorType
 
 export type ToggleDarkModeType = {
   type: typeof UserActionTypes.TOGGLE_DARK_MODE,
 }
-export type UserStateActionTypes = LoginType | ToggleDarkModeType
+
+export type ChangeLanguageType = {
+  type: typeof UserActionTypes.CHANGE_LANGUAGE,
+  language: LanguageType,
+}
+
+
+export type UserStateActionTypes =
+    LoginType
+  | ToggleDarkModeType
+  | ChangeLanguageType
+
 export interface UserState {
   readonly loading: boolean,
   readonly error: string | null,
   readonly authorized: boolean,
   readonly user: User | null,
   readonly darkMode: boolean,
+  readonly language: LanguageType,
 }

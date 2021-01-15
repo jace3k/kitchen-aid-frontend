@@ -4,6 +4,7 @@ import { Button, Card, CardActions, CardContent, TextField, Typography, Snackbar
 import { useStyles } from './styles'
 import { ApplicationState } from 'store'
 import { loginRequest } from 'store/user/actions'
+import Token from 'components/Token'
 
 const Login = () => {
   const classes = useStyles()
@@ -20,18 +21,18 @@ const Login = () => {
   return (
     <div className={classes.container}>
       <Typography className={classes.title} variant="h1">
-        Welcome in
-        <div className={classes.bold}>Kitchen Aid!</div>
+        <Token value="welcomeIn" />
+        <div className={classes.bold}><Token value="kitchenAid" />!</div>
       </Typography>
       <div />
       <Card>
         <form onSubmit={handleSubmit} noValidate autoComplete="off">
           <CardContent className={classes.formContainer}>
             <Typography variant='h5' className={classes.formTitle}>
-              Kitchen Aid
+              <Token value="kitchenAid" />
             </Typography>
             <TextField
-              label='username'
+              label={<Token value="username" />}
               variant='outlined'
               className={classes.littleMargin}
               size='small'
@@ -42,7 +43,7 @@ const Login = () => {
             />
 
             <TextField
-              label='password'
+              label={<Token value="password" />}
               type='password'
               variant='outlined'
               className={classes.littleMargin}
@@ -60,7 +61,7 @@ const Login = () => {
               color='primary'
               disabled={loading || password === '' || username === ''}
             >
-              Login
+              <Token value="login" />
             </Button>
           </CardActions>
         </form>
