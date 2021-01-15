@@ -1,9 +1,11 @@
 import React from 'react'
 import { Tab } from '@material-ui/core';
+import { TranslationTokensType } from 'utils/translations';
+import Token from 'components/Token';
 
 interface LinkTabProps {
   to: string,
-  label: string,
+  label: TranslationTokensType,
   history: any,
   key: string,
 }
@@ -12,7 +14,7 @@ const LinkTab: React.FC<LinkTabProps> = props => {
   return (
     <Tab
       style={{ fontWeight: 'bolder' }}
-      label={props.label}
+      label={<Token value={props.label} />}
       onClick={(event: any) => {
         event.preventDefault();
         props.history.push(props.to)

@@ -31,6 +31,7 @@ const App: React.FC = () => {
         <Switch>
           <Route path="/retreats" component={Retreats} />
           <Route exact path="/ingredients" component={About} />
+          <Route exact path="/meals" component={About} />
           <Route path="/" component={NotFound} />
         </Switch>
       </Router>

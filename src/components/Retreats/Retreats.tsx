@@ -20,7 +20,7 @@ const Retreats = () => {
 
 
   return (
-    <Container>
+    <Container style={{ minWidth: 300 }}>
       {loading && <LinearProgress />}
       <List>
         {allRetreats.map((retreat, index) => <RetreatListItem retreat={retreat} disabled={loading} key={id(index)} />)}
