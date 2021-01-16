@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Fab, LinearProgress, List, Tooltip, Zoom } from '@material-ui/core'
+import { Container, Fab, LinearProgress, List, Tooltip } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { ApplicationState } from 'store'
 import { fetchAllRetreatsRequest } from 'store/retreats/actions'
