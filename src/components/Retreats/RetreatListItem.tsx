@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { IconButton, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Menu, MenuItem } from '@material-ui/core'
+import { IconButton, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Tooltip } from '@material-ui/core'
 import RetreatIcon from '@material-ui/icons/Assignment'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import { Retreat } from 'store/retreats/types'
@@ -48,18 +48,20 @@ const RetreatListItem: React.FC<RetreatListItemProps> = ({ retreat, disabled }) 
         open={menuOpen}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={handleEditDialogOpen}><Token value="edit" /></MenuItem>
+        <MenuItem onClick={handleEditDialogOpen}><Token value="editName" /></MenuItem>
         <MenuItem onClick={handleMenuClose}><Token value="delete" /></MenuItem>
       </Menu>
-      <RetreatDialogEdit open={editDialogOpen} onClose={handleEditDialogClose} retreat={retreat}  />
+      <RetreatDialogEdit open={editDialogOpen} onClose={handleEditDialogClose} retreat={retreat} />
       <ListItemIcon>
         <RetreatIcon />
       </ListItemIcon>
       <ListItemText primary={retreat.name} secondary={secondaryTitle} />
       <ListItemSecondaryAction>
-        <IconButton onClick={handleMenuOpen}>
-          <MoreIcon />
-        </IconButton>
+        <Tooltip title={<Token value="more" />}>
+          <IconButton onClick={handleMenuOpen}>
+            <MoreIcon />
+          </IconButton>
+        </Tooltip>
       </ListItemSecondaryAction>
     </ListItem>
   )
