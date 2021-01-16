@@ -19,4 +19,7 @@ export interface ITranslations {
   ok: string,
   update: string,
   editName: string,
+  addNewRetreat: string,
+  create: string,
+  more: string,
 }

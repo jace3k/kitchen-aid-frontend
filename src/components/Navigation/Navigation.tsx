@@ -41,7 +41,7 @@ const Navigation: React.FC<RouteComponentProps> = props => {
       <Paper square>
         <Toolbar variant="dense">
           {isDesktopSize ? <KitchenIcon /> : <IconButton onClick={handleSidebarOpen}><HamburgerIcon /></IconButton>}
-          <div style={{ marginRight: 25, flexGrow: 1 }} />
+          <div style={{ marginRight: 25, flexGrow: isDesktopSize ? 0 : 1 }} />
           {isDesktopSize && (
             <Tabs
               value={tabIndex}

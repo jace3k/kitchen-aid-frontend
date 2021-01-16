@@ -6,15 +6,27 @@ import { Retreat } from 'store/retreats/types'
 interface RetreatDialogEdit {
   open: boolean,
   onClose: () => void,
-  retreat: Retreat,
+  retreat?: Retreat,
 }
 
 const RetreatDialogEdit: React.FC<RetreatDialogEdit> = ({ open, onClose, retreat }) => {
-  const [retreatName, setRetreatName] = useState(retreat.name)
+  const [retreatName, setRetreatName] = useState(retreat ? retreat.name : '')
+
+  const BtnUpdate = () => (
+    <Button onClick={onClose} color="primary">
+      <Token value="update" />
+    </Button>
+  )
+
+  const BtnCreate = () => (
+    <Button onClick={onClose} color="primary">
+      <Token value="create" />
+    </Button>
+  )
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth>
-      <DialogTitle><Token value="editName" /></DialogTitle>
+      <DialogTitle><Token value={retreat ? "editName" : "addNewRetreat"} /></DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
@@ -29,9 +41,7 @@ const RetreatDialogEdit: React.FC<RetreatDialogEdit> = ({ open, onClose, retreat
         <Button onClick={onClose} color="secondary">
           <Token value="cancel" />
         </Button>
-        <Button onClick={onClose} color="primary">
-        <Token value="update" />
-        </Button>
+        {retreat ? <BtnUpdate /> : <BtnCreate />}
       </DialogActions>
     </Dialog>
   )

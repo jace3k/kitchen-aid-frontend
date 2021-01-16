@@ -4,7 +4,7 @@ import { UserState, UserActionTypes, UserStateActionTypes } from './types'
 const initialState: UserState = {
   loading: false,
   error: null,
-  authorized: false,
+  authorized: true,
   user: null,
   darkMode: true,
   language: "pl",

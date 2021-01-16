@@ -21,4 +21,7 @@ export const en: ITranslations = {
   update: 'Update',
   ok: 'Ok',
   editName: 'Edit name',
+  addNewRetreat: 'Add new retreat',
+  create: 'Create',
+  more: 'More',
 }
