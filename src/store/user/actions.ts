@@ -5,6 +5,9 @@ export const loginRequest = (username: string, password: string): LoginType => (
 export const loginSuccess = (user: User): LoginType => ({ type: UserActionTypes.LOGIN_SUCCESS, user })
 export const loginFailed = (error: string): LoginType => ({ type: UserActionTypes.LOGIN_ERROR, error })
 
-export const toggleDarkMode = (): ToggleDarkModeType => ({ type: UserActionTypes.TOGGLE_DARK_MODE })
+export const tryLogin = (): LoginType => ({ type: UserActionTypes.LOGIN_LOCAL })
+export const logout = (): LoginType => ({ type: UserActionTypes.LOGOUT })
+
+export const toggleDarkMode = (isDarkMode: boolean): ToggleDarkModeType => ({ type: UserActionTypes.TOGGLE_DARK_MODE, isDarkMode })
 
 export const changeLanguage = (language: LanguageType): ChangeLanguageType => ({ type: UserActionTypes.CHANGE_LANGUAGE, language })

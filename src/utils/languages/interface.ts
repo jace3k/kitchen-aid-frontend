@@ -22,4 +22,11 @@ export interface ITranslations {
   addNewRetreat: string,
   create: string,
   more: string,
+  logout: string,
+  polish: string,
+  english: string,
+  language: string,
+  settings: string,
+  darkMode: string,
+  languageChanged: string,
 }

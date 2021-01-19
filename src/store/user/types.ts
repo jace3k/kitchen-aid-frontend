@@ -5,12 +5,25 @@ export interface User {
   username: string,
   displayName: string,
   role: string,
+  exp: number,
+}
+
+export interface LoginResponseSuccess {
+  token: string,
+  status: number,
+}
+
+export interface LoginResponseFailed {
+  message: string,
+  status: number,
 }
 
 export enum UserActionTypes {
   LOGIN_REQUEST = '@@user/LOGIN_REQUEST',
   LOGIN_SUCCESS = '@@user/LOGIN_SUCCESS',
   LOGIN_ERROR = '@@user/LOGIN_ERROR',
+  LOGIN_LOCAL = '@@user/LOGIN_LOCAL',
+  LOGOUT = '@@user/LOGOUT',
 
   TOGGLE_DARK_MODE = '@@user/TOGGLE_DARK_MODE',
   CHANGE_LANGUAGE = '@@user/CHANGE_LANGUAGE',
@@ -32,10 +45,19 @@ interface LoginErrorType {
   error: string,
 }
 
-export type LoginType = LoginRequestType | LoginSuccessType | LoginErrorType
+interface LoginLocalType {
+  type: typeof UserActionTypes.LOGIN_LOCAL,
+}
+
+interface LogoutType {
+  type: typeof UserActionTypes.LOGOUT,
+}
+
+export type LoginType = LoginRequestType | LoginSuccessType | LoginErrorType | LoginLocalType | LogoutType
 
 export type ToggleDarkModeType = {
   type: typeof UserActionTypes.TOGGLE_DARK_MODE,
+  isDarkMode: boolean,
 }
 
 export type ChangeLanguageType = {
@@ -45,7 +67,7 @@ export type ChangeLanguageType = {
 
 
 export type UserStateActionTypes =
-    LoginType
+  LoginType
   | ToggleDarkModeType
   | ChangeLanguageType
 

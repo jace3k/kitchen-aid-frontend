@@ -12,11 +12,13 @@ const Notifications = () => {
   const [notificationOpened, setNotificationOpened] = useState(false)
   const [currentMessage, setCurrentMessage] = useState<TranslationTokensType>('empty')
   const [severity, setSeverity] = useState<SeverityProp>('info')
-  const handleCloseNotification = () => setNotificationOpened(false)
+  const [isInitial, setIsInitial] = useState(true)
 
   const userErrorState = useSelector((state: ApplicationState) => state.user.error)
   const userAuthorizedState = useSelector((state: ApplicationState) => state.user.authorized)
+  // const userLanguageState = useSelector((state: ApplicationState) => state.user.language)
 
+  const handleCloseNotification = () => setNotificationOpened(false)
 
   useEffect(() => {
     if (userErrorState) {
@@ -35,6 +37,17 @@ const Notifications = () => {
     }
   }, [userAuthorizedState])
 
+  // useEffect(() => {
+  //   if (isInitial) {
+  //     setIsInitial(false)
+  //     return
+  //   }
+    
+  //   setCurrentMessage('languageChanged')
+  //   setNotificationOpened(true)
+  //   setSeverity('success')
+  // }, [userLanguageState])
+
   return (
     <Snackbar
       open={notificationOpened}
@@ -42,7 +55,7 @@ const Notifications = () => {
         vertical: 'bottom',
         horizontal: 'center',
       }}
-      autoHideDuration={3000}
+      autoHideDuration={5000}
       onClose={handleCloseNotification}
     >
       <Alert variant="filled" severity={severity}>

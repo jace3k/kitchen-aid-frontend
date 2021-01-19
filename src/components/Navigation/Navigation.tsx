@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { AppBar, IconButton, Paper, Tabs, Theme, Toolbar, useMediaQuery } from '@material-ui/core'
-import SettingsIcon from '@material-ui/icons/Settings'
 import KitchenIcon from '@material-ui/icons/Restaurant'
 import HamburgerIcon from '@material-ui/icons/Menu'
 import { RouteComponentProps } from 'react-router-dom'
@@ -8,6 +7,9 @@ import LinkTab from './LinkTab'
 import * as routes from 'utils/routes'
 import { TranslationTokensType } from 'utils/translations'
 import Sidebar from './Sidebar'
+import DarkModeSwitcher from 'components/DarkModeSwitcher/DarkModeSwitcher'
+import SettingsMenuButton from 'components/SettingsMenu/SettingsMenuButton'
+import LanguageChooser from 'components/LanguageChooser/LanguageChooser'
 
 type ITabNavigationUrls = {
   url: string,
@@ -27,7 +29,7 @@ const Navigation: React.FC<RouteComponentProps> = props => {
   const handleSidebarClose = () => setSidebarOpen(false)
   const handleSidebarOpen = () => setSidebarOpen(true)
 
-  const isDesktopSize = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
+  const isDesktopSize = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
   useEffect(() => {
     const rootPathName = props.history.location.pathname.split('/')[1]
@@ -60,9 +62,8 @@ const Navigation: React.FC<RouteComponentProps> = props => {
               )}
             </Tabs>
           )}
-          <IconButton>
-            <SettingsIcon />
-          </IconButton>
+          <DarkModeSwitcher />
+          <SettingsMenuButton />
         </Toolbar>
       </Paper>
       {!isDesktopSize && <Sidebar open={sidebarOpen} onClose={handleSidebarClose} history={props.history} />}

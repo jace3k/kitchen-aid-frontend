@@ -24,4 +24,11 @@ export const en: ITranslations = {
   addNewRetreat: 'Add new retreat',
   create: 'Create',
   more: 'More',
+  logout: 'Logout',
+  polish: 'Polish',
+  english: 'English',
+  language: 'Language',
+  settings: 'Settings',
+  darkMode: 'Dark mode',
+  languageChanged: 'Language changed',
 }

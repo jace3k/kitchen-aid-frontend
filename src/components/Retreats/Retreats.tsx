@@ -23,7 +23,6 @@ const Retreats = () => {
   const handleAddNewRetreatClose = () => setNewRetreatOpen(false)
 
   useEffect(() => {
-    console.log('useEffect, retreats')
     fetchAllRetreats()
   }, [])
 
