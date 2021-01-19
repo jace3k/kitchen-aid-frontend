@@ -24,4 +24,11 @@ export const pl: ITranslations = {
   addNewRetreat: 'Dodaj nowe wydarzenie',
   create: 'Utwórz',
   more: 'Więcej',
+  logout: 'Wyloguj',
+  polish: 'Polski',
+  english: 'Angielski',
+  language: 'Język',
+  settings: 'Ustawienia',
+  darkMode: 'Ciemny motyw',
+  languageChanged: 'Język został zmieniony',
 }

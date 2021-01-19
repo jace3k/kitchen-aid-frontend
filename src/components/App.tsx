@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
 import Navigation from './Navigation/Navigation'
@@ -9,17 +9,30 @@ import Login from './Login/Login'
 import Retreats from './Retreats/Retreats'
 import Notifications from './Notifications/Notifications'
 
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ApplicationState } from 'store'
 import { ThemeProvider, createMuiTheme, CssBaseline } from '@material-ui/core'
 import { getPalette } from 'utils/palette'
+import storage from 'utils/storage'
+import { changeLanguage, tryLogin, toggleDarkMode } from 'store/user/actions'
 
 const App: React.FC = () => {
+  const dispatch = useDispatch()
   const authorized = useSelector((state: ApplicationState) => state.user.authorized)
   const isDarkMode = useSelector((state: ApplicationState) => state.user.darkMode)
   const theme = createMuiTheme({
     palette: getPalette(isDarkMode),
   })
+
+  useEffect(() => {
+    const currentLanguage = storage.getLanguage()
+    dispatch(changeLanguage(currentLanguage))
+
+    const darkMode = storage.isDarkMode()
+    dispatch(toggleDarkMode(darkMode))
+
+    dispatch(tryLogin())
+  }, [])
 
   let RouterComponent: () => any
 

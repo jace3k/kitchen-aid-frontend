@@ -26,6 +26,6 @@ ___
 * retreats page - ~"add new" button~
 * retreats page - sorting & filtering
 * retreats page - details
-* navigation - menu - logout option / darkmode switcher / language chooser
-* footer
+* ~navigation - menu - logout option / darkmode switcher / language chooser~
+* ~login/logout with local storage~
 * add admin page

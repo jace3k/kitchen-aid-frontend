@@ -34,10 +34,17 @@ const reducer: Reducer<UserState, UserStateActionTypes> = (state = initialState,
         authorized: false,
         user: null,
       }
+    case UserActionTypes.LOGOUT:
+      return {
+        ...state,
+        user: null,
+        authorized: false,
+        error: null,
+      }
     case UserActionTypes.TOGGLE_DARK_MODE:
       return {
         ...state,
-        darkMode: !state.darkMode,
+        darkMode: action.isDarkMode,
       }
     case UserActionTypes.CHANGE_LANGUAGE:
       return {
