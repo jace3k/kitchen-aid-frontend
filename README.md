@@ -23,9 +23,9 @@ ___
 * ~add languages~
 * ~retreats page - mobile friendly~
 * ~retreats page - "more" button menu actions~
-* retreats page - ~"add new" button~
-* retreats page - sorting & filtering
-* retreats page - details
+* ~retreats page - "add new" button~
+* ~retreats page - details~
 * ~navigation - menu - logout option / darkmode switcher / language chooser~
 * ~login/logout with local storage~
+* retreats detail - sorting & filtering meals
 * add admin page

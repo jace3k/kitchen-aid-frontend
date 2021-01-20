@@ -8,8 +8,9 @@ import AddIcon from '@material-ui/icons/Add'
 import { useStyles } from './styles'
 import Token from 'components/Token'
 import RetreatDialogEdit from './RetreatDialogEdit'
+import { RouteComponentProps } from 'react-router-dom'
 
-const Retreats = () => {
+const Retreats: React.FC<RouteComponentProps> = ({ history }) => {
   const classes = useStyles()
   const [newRetreatOpen, setNewRetreatOpen] = useState(false)
 
@@ -32,7 +33,13 @@ const Retreats = () => {
       <Container style={{ minWidth: 300 }}>
 
         <List>
-          {allRetreats.map((retreat, index) => <RetreatListItem retreat={retreat} disabled={loading} key={id(index)} />)}
+          {allRetreats.map((retreat, index) =>
+            <RetreatListItem
+              retreat={retreat}
+              disabled={loading}
+              key={id(index)}
+              history={history}
+            />)}
         </List>
         <Tooltip title={<Token value="addNewRetreat" />} placement='left'>
           <Fab color="primary" className={classes.fab} onClick={handleAddNewRetreatOpen}>

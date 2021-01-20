@@ -15,6 +15,7 @@ import { ThemeProvider, createMuiTheme, CssBaseline } from '@material-ui/core'
 import { getPalette } from 'utils/palette'
 import storage from 'utils/storage'
 import { changeLanguage, tryLogin, toggleDarkMode } from 'store/user/actions'
+import RetreatDetail from './Retreats/RetreatDetail'
 
 const App: React.FC = () => {
   const dispatch = useDispatch()
@@ -40,9 +41,11 @@ const App: React.FC = () => {
     RouterComponent = () => (
       <Router>
         <Route path="/" component={Navigation} />
-        <Redirect from="/" to="/retreats" />
+        {/* <Redirect exact from="/" to="/retreats" /> */}
         <Switch>
-          <Route path="/retreats" component={Retreats} />
+          <Route exact path="/" component={Retreats} />
+          <Route exact path="/retreats" component={Retreats} />
+          <Route exact path="/retreats/:id" component={RetreatDetail} />
           <Route exact path="/ingredients" component={About} />
           <Route exact path="/meals" component={About} />
           <Route path="/" component={NotFound} />
@@ -56,7 +59,7 @@ const App: React.FC = () => {
         <Switch>
           <Route exact path="/" component={Login} />
           {/* <Route exact path="/admin" component={Admin} /> */}
-          <Redirect from="*" to="/" />
+          {/* <Redirect from="*" to="/" /> */}
         </Switch>
       </Router>
     )

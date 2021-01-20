@@ -31,4 +31,6 @@ export const en: ITranslations = {
   settings: 'Settings',
   darkMode: 'Dark mode',
   languageChanged: 'Language changed',
+  cartsCounter: 'Available shopping carts. Click to open shopping carts',
+  mealsCounter: 'Available meals',
 }

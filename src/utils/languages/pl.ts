@@ -31,4 +31,6 @@ export const pl: ITranslations = {
   settings: 'Ustawienia',
   darkMode: 'Ciemny motyw',
   languageChanged: 'Język został zmieniony',
+  cartsCounter: 'Dostępna ilość koszyków zakupowych. Kliknij aby włączyć koszyki',
+  mealsCounter: 'Dostępna ilość posiłków',
 }

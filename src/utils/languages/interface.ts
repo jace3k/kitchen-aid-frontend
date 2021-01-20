@@ -29,4 +29,6 @@ export interface ITranslations {
   settings: string,
   darkMode: string,
   languageChanged: string,
+  cartsCounter: string,
+  mealsCounter: string,
 }

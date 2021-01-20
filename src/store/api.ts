@@ -1,15 +1,15 @@
-import { retreats } from "utils/fakeData"
-import { RetreatResponse } from "./retreats/types"
+import { retreats, mealRows } from "utils/fakeData"
+import { MealRowResponse, RetreatResponse } from "./retreats/types"
 
 // payload
 // {
 //   "role": "worker",
 //   "username": "johndoe",
 //   "displayName": "John Doe",
-//   "exp": 1612224000000, (Tue Feb 02 2021 01:00:00 GMT+0100)
+//   "exp": 1612224000, (Tue Feb 02 2021 01:00:00 GMT+0100)
 // }
 // secret: 123456
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoid29ya2VyIiwidXNlcm5hbWUiOiJqb2huRG9lIiwiZGlzcGxheU5hbWUiOiJKb2huIERvZSIsImV4cCI6MTYxMTA5MTcyNzcwMH0.8m505kB51YbSwHr9ZB9sRbDXA6geZOqyIOsr48G988M"
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoid29ya2VyIiwidXNlcm5hbWUiOiJqb2huRG9lIiwiZGlzcGxheU5hbWUiOiJKb2huIERvZSIsImV4cCI6MTYxMjIyNDAwMH0._eSK0XopCxPDBQstLW9AdGa7VyWJujQlGz1ZsiQODSE"
 
 export const SimpleApi = {
   get: () => {
@@ -41,7 +41,18 @@ export const RetreatsApi = {
     return new Promise<RetreatResponse>((resolve, reject) => {
       setTimeout(() => {
         resolve({ retreats, status: 'OK' })
-      }, 2000)
+      }, 1000)
+    })
+  },
+  getMeals: (retreatId: number): Promise<MealRowResponse> => {
+    return new Promise<MealRowResponse>((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          mealRows: mealRows.filter(x => x.retreatId === retreatId),
+          retreat: retreats.find(x => x.id === retreatId) || null,
+          status: 'OK'
+        })
+      }, 1000)
     })
   }
 }
