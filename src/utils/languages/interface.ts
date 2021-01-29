@@ -31,4 +31,12 @@ export interface ITranslations {
   languageChanged: string,
   cartsCounter: string,
   mealsCounter: string,
+  editIngredient: string,
+  addNewIngredient: string,
+  ingredientNameLabel: string,
+  ingredientDefaultPriceLabel: string,
+  actions: string,
+  removeConfirmTitle: string,
+  ingredient: string,
+  loadingData: string,
 }

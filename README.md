@@ -27,5 +27,11 @@ ___
 * ~retreats page - details~
 * ~navigation - menu - logout option / darkmode switcher / language chooser~
 * ~login/logout with local storage~
+* ~ingredients - list/edit/remove/new~
+* ingredients - pagination/filtering/sorting
+* logout redirect to /
+
+####### Future
+* Blocking delete ingredients when are used in some dish
 * retreats detail - sorting & filtering meals
 * add admin page

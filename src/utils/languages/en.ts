@@ -33,4 +33,12 @@ export const en: ITranslations = {
   languageChanged: 'Language changed',
   cartsCounter: 'Available shopping carts. Click to open shopping carts',
   mealsCounter: 'Available meals',
+  editIngredient: 'Edit ingredient',
+  addNewIngredient: 'Add new ingredient',
+  ingredientNameLabel: 'Ingredient name',
+  ingredientDefaultPriceLabel: 'Ingredient default price',
+  actions: 'Actions',
+  removeConfirmTitle: 'Warning! Item will be deleted permamently',
+  ingredient: 'Ingredient',
+  loadingData: 'Loading data, please wait',
 }

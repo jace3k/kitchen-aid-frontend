@@ -7,7 +7,10 @@ import About from './About'
 import NotFound from './NotFound'
 import Login from './Login/Login'
 import Retreats from './Retreats/Retreats'
+import RetreatDetail from './Retreats/RetreatDetail'
+import Ingredients from './Ingredients/Ingredients'
 import Notifications from './Notifications/Notifications'
+import Loader from './Loader/Loader'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { ApplicationState } from 'store'
@@ -15,7 +18,6 @@ import { ThemeProvider, createMuiTheme, CssBaseline } from '@material-ui/core'
 import { getPalette } from 'utils/palette'
 import storage from 'utils/storage'
 import { changeLanguage, tryLogin, toggleDarkMode } from 'store/user/actions'
-import RetreatDetail from './Retreats/RetreatDetail'
 
 const App: React.FC = () => {
   const dispatch = useDispatch()
@@ -41,12 +43,13 @@ const App: React.FC = () => {
     RouterComponent = () => (
       <Router>
         <Route path="/" component={Navigation} />
+        <Route path="/" component={Loader} />
         {/* <Redirect exact from="/" to="/retreats" /> */}
         <Switch>
           <Route exact path="/" component={Retreats} />
           <Route exact path="/retreats" component={Retreats} />
           <Route exact path="/retreats/:id" component={RetreatDetail} />
-          <Route exact path="/ingredients" component={About} />
+          <Route exact path="/ingredients" component={Ingredients} />
           <Route exact path="/meals" component={About} />
           <Route path="/" component={NotFound} />
         </Switch>

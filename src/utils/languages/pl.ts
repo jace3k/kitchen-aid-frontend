@@ -33,4 +33,12 @@ export const pl: ITranslations = {
   languageChanged: 'Język został zmieniony',
   cartsCounter: 'Dostępna ilość koszyków zakupowych. Kliknij aby włączyć koszyki',
   mealsCounter: 'Dostępna ilość posiłków',
+  editIngredient: 'Edytuj składnik',
+  addNewIngredient: 'Dodaj nowy składnik',
+  ingredientNameLabel: 'Nazwa składnika',
+  ingredientDefaultPriceLabel: 'Cena domyślna składnika',
+  actions: 'Więcej',
+  removeConfirmTitle: 'Uwaga! Wybrany element zostanie usunięty na zawsze',
+  ingredient: 'Składnik',
+  loadingData: 'Ładowanie danych, chwilunia',
 }

@@ -1,4 +1,5 @@
-import { retreats, mealRows } from "utils/fakeData"
+import { retreats, mealRows, ingredients } from "utils/fakeData"
+import { IngredientsResponse } from "./ingredients/types"
 import { MealRowResponse, RetreatResponse } from "./retreats/types"
 
 // payload
@@ -55,4 +56,14 @@ export const RetreatsApi = {
       }, 1000)
     })
   }
+}
+
+export const IngredientsApi = {
+  getAll: (): Promise<IngredientsResponse> => {
+    return new Promise<IngredientsResponse>((resolve, reject) => {
+      setTimeout(() => {
+        resolve({ ingredients, status: 'OK' })
+      }, 1000)
+    })
+  },
 }
