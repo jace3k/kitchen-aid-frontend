@@ -15,6 +15,9 @@ import { retreatReducer } from './retreats/reducer'
 import { RetreatsState } from './retreats/types'
 import retreatsSaga from './retreats/saga'
 
+import { ingredientReducer } from './ingredients/reducer'
+import { IngredientsState } from './ingredients/types'
+import ingredientsSaga from './ingredients/saga'
 
 ////////////////////////////////////////////////
 // When adding new store object, add it to application state and saga below.
@@ -23,12 +26,14 @@ export interface ApplicationState {
   simple: SimpleState,
   user: UserState,
   retreats: RetreatsState,
+  ingredients: IngredientsState,
 }
 
 const rootReducer = combineReducers<ApplicationState>({
   simple: simpleReducer,
   user: userReducer,
   retreats: retreatReducer,
+  ingredients: ingredientReducer,
 })
 
 function* rootSaga() {
@@ -36,6 +41,7 @@ function* rootSaga() {
     simpleSaga(),
     userSaga(),
     retreatsSaga(),
+    ingredientsSaga(),
   ])
 }
 

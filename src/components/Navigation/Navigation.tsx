@@ -9,7 +9,6 @@ import { TranslationTokensType } from 'utils/translations'
 import Sidebar from './Sidebar'
 import DarkModeSwitcher from 'components/DarkModeSwitcher/DarkModeSwitcher'
 import SettingsMenuButton from 'components/SettingsMenu/SettingsMenuButton'
-import LanguageChooser from 'components/LanguageChooser/LanguageChooser'
 
 type ITabNavigationUrls = {
   url: string,
@@ -18,7 +17,7 @@ type ITabNavigationUrls = {
 
 export const TabNavigationUrls: ITabNavigationUrls[] = [
   { url: routes.Retreats, token: "retreats" },
-  { url: routes.Meals, token: 'meals' },
+  // { url: routes.Meals, token: 'meals' },
   { url: routes.Ingredients, token: 'ingredients' },
 ]
 

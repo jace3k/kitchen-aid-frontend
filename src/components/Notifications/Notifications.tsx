@@ -23,6 +23,7 @@ const Notifications = () => {
   useEffect(() => {
     if (userErrorState) {
       // TODO: Handle network error & check userErrorState content
+      console.log('[Nofitications] userErrorState', userErrorState)
       setCurrentMessage('invalidUsernameOrPass')
       setNotificationOpened(true)
       setSeverity('error')

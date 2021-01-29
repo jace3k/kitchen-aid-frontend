@@ -6,7 +6,7 @@ export default {
     return jwtDecode<User>(token)
   },
   checkExpirationTime: (decodedToken: User) => {
-    if (decodedToken.exp < Date.now())
+    if (decodedToken.exp < Date.now() / 1000)
       throw Error('Token expired')
   }
 }
