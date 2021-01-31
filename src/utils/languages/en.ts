@@ -41,4 +41,7 @@ export const en: ITranslations = {
   removeConfirmTitle: 'Warning! Item will be deleted permamently',
   ingredient: 'Ingredient',
   loadingData: 'Loading data, please wait',
+  dishes: 'Dishes',
+  dish: 'Dish',
+  dishName: 'Dish name',
 }

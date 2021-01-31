@@ -39,4 +39,7 @@ export interface ITranslations {
   removeConfirmTitle: string,
   ingredient: string,
   loadingData: string,
+  dishes: string,
+  dish: string,
+  dishName: string,
 }

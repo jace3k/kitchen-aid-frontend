@@ -7,6 +7,7 @@ import IngredientEditDialog from './IngredientEditDialog'
 import DialogRemove from './DialogRemove'
 import Token from 'components/Token'
 import AddIcon from '@material-ui/icons/Add'
+import InformationPanel from './InformationPanel'
 
 const Ingredients = () => {
   const retreatClasses = useRetreatStyles()
@@ -31,12 +32,15 @@ const Ingredients = () => {
   const handleCloseConfirmDialogRemove = () => setRemoveDialogOpen(false)
 
   return (
-    <Container style={{ minWidth: 300 }}>
-      
+    <Container className={retreatClasses.detailContainer}>
       <IngredientsTable
+        className={retreatClasses.detailMealsList}  
         handleEditDialogOpen={handleIngredientDialogEditOpen}
         handleOpenConfirmDialogRemove={handleOpenConfirmDialogRemove}
         dialogIngredient={dialogIngredient}
+      />
+      <InformationPanel
+        className={retreatClasses.detailInformationPanel}
       />
       <IngredientEditDialog
         open={editDialogOpen}

@@ -18,6 +18,7 @@ import { ThemeProvider, createMuiTheme, CssBaseline } from '@material-ui/core'
 import { getPalette } from 'utils/palette'
 import storage from 'utils/storage'
 import { changeLanguage, tryLogin, toggleDarkMode } from 'store/user/actions'
+import Dishes from './Dishes/Dishes'
 
 const App: React.FC = () => {
   const dispatch = useDispatch()
@@ -50,6 +51,7 @@ const App: React.FC = () => {
           <Route exact path="/retreats" component={Retreats} />
           <Route exact path="/retreats/:id" component={RetreatDetail} />
           <Route exact path="/ingredients" component={Ingredients} />
+          <Route exact path="/dishes" component={Dishes} />
           <Route exact path="/meals" component={About} />
           <Route path="/" component={NotFound} />
         </Switch>

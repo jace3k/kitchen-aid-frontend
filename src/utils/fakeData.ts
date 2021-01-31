@@ -1,4 +1,5 @@
-import { Ingredient, IngredientRow } from "store/ingredients/types";
+import { IngredientRow } from "store/dishes/types";
+import { Ingredient } from "store/ingredients/types";
 import { MealRow, Retreat } from "store/retreats/types";
 
 export const retreats: Retreat[] = [
@@ -60,8 +61,6 @@ export const ingredientRows: IngredientRow[] = [
 
   { id: 5, ingredient: ingredients[3], dishId: 2, customName: '', margin: 5, part: 0.20, price: 40.00 },
   { id: 6, ingredient: ingredients[5], dishId: 2, customName: '', margin: 2, part: 0.40, price: 80.00 },
-  { id: 7, ingredient: ingredients[7], dishId: 2, customName: '', margin: 1, part: 0.10, price: 20.00 },
-  { id: 8, ingredient: ingredients[6], dishId: 2, customName: '', margin: 7, part: 0.30, price: 60.00 },
+  { id: 7, ingredient: ingredients[4], dishId: 2, customName: '', margin: 1, part: 0.10, price: 20.00 },
+  { id: 8, ingredient: ingredients[6], dishId: 3, customName: '', margin: 7, part: 0.30, price: 60.00 },
 ]
-
-

@@ -41,4 +41,7 @@ export const pl: ITranslations = {
   removeConfirmTitle: 'Uwaga! Wybrany element zostanie usunięty na zawsze',
   ingredient: 'Składnik',
   loadingData: 'Ładowanie danych, chwilunia',
+  dishes: 'Dania',
+  dish: 'Danie',
+  dishName: 'Nazwa dania',
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react'
-import { CircularProgress, IconButton, Paper, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
+import { Card, CircularProgress, IconButton, Paper, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
 import { CellProps, Column, useTable } from 'react-table'
 import { useSelector, useDispatch } from 'react-redux'
 import { ApplicationState } from 'store'
@@ -10,26 +10,16 @@ import { Table } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import RemoveIcon from '@material-ui/icons/Delete'
 import Token from 'components/Token'
+import DataGrid from 'components/DataGrid/DataGrid'
 
 interface IngredientsTableProps {
   handleEditDialogOpen: (ingredient: Ingredient | null) => void
   handleOpenConfirmDialogRemove: (ingredient: Ingredient) => void
   dialogIngredient: Ingredient | null,
+  className?: string,
 }
 
-const LoadingDataRow = () => {
-
-  return (
-    <TableRow>
-      <TableCell colSpan={3} align="center" style={{ marginTop: 50 }}>
-        <h2><Token value="loadingData" /></h2>
-        <CircularProgress />
-      </TableCell>
-    </TableRow>
-  )
-}
-
-const IngredientsTable = ({ handleEditDialogOpen, handleOpenConfirmDialogRemove, dialogIngredient }: IngredientsTableProps) => {
+const IngredientsTable = ({ handleEditDialogOpen, handleOpenConfirmDialogRemove, dialogIngredient, className }: IngredientsTableProps) => {
   const dispatch = useDispatch()
   const fetchIngredients = () => dispatch(fetchAllIngredientsRequest())
   const { ingredients, loading } = useSelector((state: ApplicationState) => state.ingredients)
@@ -69,69 +59,17 @@ const IngredientsTable = ({ handleEditDialogOpen, handleOpenConfirmDialogRemove,
     }
   ], [dialogIngredient])
 
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({ columns, data: ingredients })
-
   useEffect(() => {
     fetchIngredients()
   }, [])
 
   return (
-    <TableContainer component={Paper} variant="elevation" square>
-      <Table {...getTableProps()} size='small'>
-        <TableHead>
-          {
-            headerGroups.map(headerGroup => (
-              <TableRow {...headerGroup.getHeaderGroupProps()}>
-                {
-                  headerGroup.headers.map(column => (
-                    <TableCell {...column.getHeaderProps()}
-                      align={column.id === '3' ? 'right' : 'left'}
-                    >
-                      {column.render('Header')}
-                    </TableCell>
-                  ))
-                }
-              </TableRow>
-            ))
-          }
-        </TableHead>
-        <TableBody {...getTableBodyProps()}>
-          {loading && <LoadingDataRow />}
-          {
-            rows.map(row => {
-
-              prepareRow(row)
-
-              return (
-                <TableRow {...row.getRowProps()}>
-                  {
-                    row.cells.map(cell => {
-
-                      return (
-                        <TableCell
-                          width={100}
-                          {...cell.getCellProps()}
-                          align={cell.column.id === '3' ? 'right' : 'left'}
-                        >
-                          {cell.render('Cell')}
-                        </TableCell>
-                      )
-                    })
-                  }
-                </TableRow>
-              )
-            })
-          }
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <DataGrid
+      columns={columns}
+      data={ingredients}
+      loading={loading}
+      className={className}
+    />
   )
 }
 

@@ -4,6 +4,7 @@ import RetreatIcon from '@material-ui/icons/Assignment'
 import IngredientIcon from '@material-ui/icons/Grain'
 import LanguageIcon from '@material-ui/icons/Language'
 import MealsIcon from '@material-ui/icons/Fastfood'
+import DishIcon from '@material-ui/icons/LocalPizza'
 import { TabNavigationUrls } from './Navigation'
 import Token from 'components/Token'
 import * as routes from 'utils/routes'
@@ -23,6 +24,8 @@ const renderIcon = (url: string) => {
       return <MealsIcon />
     case routes.Ingredients:
       return <IngredientIcon />
+    case routes.Dishes:
+      return <DishIcon />
   }
 }
 

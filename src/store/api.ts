@@ -1,4 +1,5 @@
-import { retreats, mealRows, ingredients } from "utils/fakeData"
+import { retreats, mealRows, ingredients, dishes, ingredientRows } from "utils/fakeData"
+import { DishesResponse, IngredientRowsResponse } from "./dishes/types"
 import { IngredientsResponse } from "./ingredients/types"
 import { MealRowResponse, RetreatResponse } from "./retreats/types"
 
@@ -66,4 +67,21 @@ export const IngredientsApi = {
       }, 1000)
     })
   },
+}
+
+export const DishesApi = {
+  getAll: (): Promise<DishesResponse> => {
+    return new Promise<DishesResponse>((resolve, reject) => {
+      setTimeout(() => {
+        resolve({ dishes, status: 'OK' })
+      }, 1000)
+    })
+  },
+  getIngredientsForDish: (dishId: number): Promise<IngredientRowsResponse> => {
+    return new Promise<IngredientRowsResponse>((res, rej) => {
+      setTimeout(() => {
+        res({ ingredientRows: ingredientRows.filter(x => x.dishId === dishId), status: 'OK' })
+      }, 1000)
+    })
+  }
 }

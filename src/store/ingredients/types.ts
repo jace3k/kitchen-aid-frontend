@@ -6,24 +6,6 @@ export interface Ingredient {
   defaultPrice: number,
 }
 
-// wrapper on ingredient for a certain Dish.
-export interface IngredientRow {
-  id: number,
-  ingredient: Ingredient,
-  dishId: number,
-
-  customName: string,
-  price: number,
-  margin: number,
-  part: number,
-}
-
-export interface IngredientRowResponse {
-  mealRows: IngredientRow[],
-  ingredient: Ingredient,
-  status: string,
-}
-
 export interface IngredientsResponse {
   ingredients: Ingredient[],
   status: string | number,
