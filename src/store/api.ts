@@ -1,23 +1,23 @@
 import { retreats, mealRows, ingredients } from "utils/fakeData"
 import { IngredientsResponse } from "./ingredients/types"
 import { MealRowResponse, RetreatResponse } from "./retreats/types"
+import { SimpleResponse } from "./simple/types"
 
 // payload
 // {
 //   "role": "worker",
 //   "username": "johndoe",
 //   "displayName": "John Doe",
-//   "exp": 1612224000, (Tue Feb 02 2021 01:00:00 GMT+0100)
+//   "exp": 1612224000, (Fri Oct 11 2052 03:46:40 GMT+0200)
 // }
 // secret: 123456
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoid29ya2VyIiwidXNlcm5hbWUiOiJqb2huRG9lIiwiZGlzcGxheU5hbWUiOiJKb2huIERvZSIsImV4cCI6MTYxMjIyNDAwMH0._eSK0XopCxPDBQstLW9AdGa7VyWJujQlGz1ZsiQODSE"
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoid29ya2VyIiwidXNlcm5hbWUiOiJqb2huRG9lIiwiZGlzcGxheU5hbWUiOiJKb2huIERvZSIsImV4cCI6MjYxMjIyNDAwMH0.oHggPJ0eLPH_PC8dHExkxcOPBIp0n9V1f6kl0_QcMQI"
 
 export const SimpleApi = {
-  get: () => {
-    const task = (resolve: (value?: unknown) => void) => {
+  get: (): Promise<SimpleResponse> => {
+    return new Promise<SimpleResponse>((resolve) => {
       setTimeout(() => resolve({ simpleValue: 9 }), 2000)
-    }
-    return new Promise(task)
+    })
   }
 }
 

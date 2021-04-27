@@ -1,11 +1,11 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { SimpleApi } from 'store/api'
 import { simpleValuefetchFailed, simpleValuefetchSuccess } from './actions'
-import { SimpleActionTypes } from './types'
+import { SimpleActionTypes, SimpleResponse } from './types'
 
 function* fetchSimpleValue() {
   try {
-    const response = yield call(SimpleApi.get)
+    const response: SimpleResponse = yield call(SimpleApi.get)
     const responseValue = response.simpleValue
 
     yield put(simpleValuefetchSuccess(responseValue))

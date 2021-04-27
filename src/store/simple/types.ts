@@ -4,6 +4,10 @@ export interface Simple {
   simpleValue: number,
 }
 
+export interface SimpleResponse {
+  simpleValue: number,
+}
+
 export enum SimpleActionTypes {
   FETCH_REQUEST = '@@simple/FETCH_REQUEST',
   FETCH_SUCCESS = '@@simple/FETCH_SUCCESS',
