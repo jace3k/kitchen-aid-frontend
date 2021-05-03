@@ -44,7 +44,6 @@ const App: React.FC = () => {
       <Router>
         <Route path="/" component={Navigation} />
         <Route path="/" component={Loader} />
-        {/* <Redirect exact from="/" to="/retreats" /> */}
         <Switch>
           <Route exact path="/" component={Retreats} />
           <Route exact path="/retreats" component={Retreats} />
@@ -62,7 +61,7 @@ const App: React.FC = () => {
         <Switch>
           <Route exact path="/" component={Login} />
           {/* <Route exact path="/admin" component={Admin} /> */}
-          {/* <Redirect from="*" to="/" /> */}
+          <Route path="/" component={NotFound} />
         </Switch>
       </Router>
     )

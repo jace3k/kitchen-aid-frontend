@@ -41,4 +41,5 @@ export const pl: ITranslations = {
   removeConfirmTitle: 'Uwaga! Wybrany element zostanie usunięty na zawsze',
   ingredient: 'Składnik',
   loadingData: 'Ładowanie danych, chwilunia',
+  addIngredientError: 'Nie można dodać składnika',
 }

@@ -1,16 +1,21 @@
+import { AxiosInterceptorManager, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { UserApi } from 'store/api'
 import storage from 'utils/storage'
-import token from 'utils/token'
+import jwt from 'utils/token'
 import { loginFailed, loginSuccess } from './actions'
 import { UserActionTypes, LoginRequestType, ChangeLanguageType, ToggleDarkModeType, LoginResponseSuccess } from './types'
 
 function* loginRequest({ username, password }: LoginRequestType) {
   try {
-    const response: LoginResponseSuccess = yield call(UserApi.login, username, password)
-    const decodedToken = token.decode(response.token)
-    token.checkExpirationTime(decodedToken)
-    storage.saveToken(response.token)
+    const response: AxiosResponse = yield call(UserApi.login, username, password)
+    console.log('login response', response)
+    const token = response.data.access
+    const decodedToken = jwt.decode(token)
+    console.log('decodedToken', decodedToken)
+    jwt.checkExpirationTime(decodedToken)
+    storage.saveToken(token)
+    
 
     yield put(loginSuccess(decodedToken))
   }
@@ -25,8 +30,8 @@ function* loginLocal() {
 
   if (fromStorage) {
     try {
-      const decodedToken = token.decode(fromStorage)
-      token.checkExpirationTime(decodedToken)
+      const decodedToken = jwt.decode(fromStorage)
+      jwt.checkExpirationTime(decodedToken)
 
       yield put(loginSuccess(decodedToken))
     }

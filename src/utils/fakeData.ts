@@ -1,4 +1,3 @@
-import { Ingredient, IngredientRow } from "store/ingredients/types";
 import { MealRow, Retreat } from "store/retreats/types";
 
 export const retreats: Retreat[] = [
@@ -27,15 +26,15 @@ export const mealRows: MealRow[] = [
 ///////
 
 
-export const ingredients: Ingredient[] = [
-  { id: 1, name: 'Mąka', defaultPrice: 4.49 },
-  { id: 2, name: 'Sól', defaultPrice: 1.00 },
-  { id: 3, name: 'Keczup', defaultPrice: 9.60 },
-  { id: 4, name: 'Musztarda', defaultPrice: 5.55 },
-  { id: 5, name: 'Kapusta', defaultPrice: 1.99 },
-  { id: 6, name: 'Woda', defaultPrice: 1.20 },
-  { id: 7, name: 'Kiełbasa', defaultPrice: 2.20 },
-]
+// export const ingredients: Ingredient[] = [
+//   { id: 1, name: 'Mąka', defaultPrice: 4.49 },
+//   { id: 2, name: 'Sól', defaultPrice: 1.00 },
+//   { id: 3, name: 'Keczup', defaultPrice: 9.60 },
+//   { id: 4, name: 'Musztarda', defaultPrice: 5.55 },
+//   { id: 5, name: 'Kapusta', defaultPrice: 1.99 },
+//   { id: 6, name: 'Woda', defaultPrice: 1.20 },
+//   { id: 7, name: 'Kiełbasa', defaultPrice: 2.20 },
+// ]
 
 interface Dish {
   id: number,
@@ -52,16 +51,16 @@ export const dishes: Dish[] = [
 ]
 
 
-export const ingredientRows: IngredientRow[] = [
-  { id: 1, ingredient: ingredients[1], dishId: 1, customName: '', margin: 4, part: 0.20, price: 40.00 },
-  { id: 2, ingredient: ingredients[2], dishId: 1, customName: '', margin: 1, part: 0.40, price: 80.00 },
-  { id: 3, ingredient: ingredients[3], dishId: 1, customName: '', margin: 11, part: 0.10, price: 20.00 },
-  { id: 4, ingredient: ingredients[4], dishId: 1, customName: '', margin: 5, part: 0.30, price: 60.00 },
+// export const ingredientRows: IngredientRow[] = [
+//   { id: 1, ingredient: ingredients[1], dishId: 1, customName: '', margin: 4, part: 0.20, price: 40.00 },
+//   { id: 2, ingredient: ingredients[2], dishId: 1, customName: '', margin: 1, part: 0.40, price: 80.00 },
+//   { id: 3, ingredient: ingredients[3], dishId: 1, customName: '', margin: 11, part: 0.10, price: 20.00 },
+//   { id: 4, ingredient: ingredients[4], dishId: 1, customName: '', margin: 5, part: 0.30, price: 60.00 },
 
-  { id: 5, ingredient: ingredients[3], dishId: 2, customName: '', margin: 5, part: 0.20, price: 40.00 },
-  { id: 6, ingredient: ingredients[5], dishId: 2, customName: '', margin: 2, part: 0.40, price: 80.00 },
-  { id: 7, ingredient: ingredients[7], dishId: 2, customName: '', margin: 1, part: 0.10, price: 20.00 },
-  { id: 8, ingredient: ingredients[6], dishId: 2, customName: '', margin: 7, part: 0.30, price: 60.00 },
-]
+//   { id: 5, ingredient: ingredients[3], dishId: 2, customName: '', margin: 5, part: 0.20, price: 40.00 },
+//   { id: 6, ingredient: ingredients[5], dishId: 2, customName: '', margin: 2, part: 0.40, price: 80.00 },
+//   { id: 7, ingredient: ingredients[7], dishId: 2, customName: '', margin: 1, part: 0.10, price: 20.00 },
+//   { id: 8, ingredient: ingredients[6], dishId: 2, customName: '', margin: 7, part: 0.30, price: 60.00 },
+// ]
 
 

@@ -16,7 +16,7 @@ const Notifications = () => {
 
   const userErrorState = useSelector((state: ApplicationState) => state.user.error)
   const userAuthorizedState = useSelector((state: ApplicationState) => state.user.authorized)
-  // const userLanguageState = useSelector((state: ApplicationState) => state.user.language)
+  const ingredientErrorState = useSelector((state: ApplicationState) => state.ingredients.error)
 
   const handleCloseNotification = () => setNotificationOpened(false)
 
@@ -25,10 +25,16 @@ const Notifications = () => {
       // TODO: Handle network error & check userErrorState content
       console.log('[Nofitications] userErrorState', userErrorState)
       setCurrentMessage('invalidUsernameOrPass')
-      setNotificationOpened(true)
       setSeverity('error')
+      setNotificationOpened(true)
     }
-  }, [userErrorState])
+    if (ingredientErrorState === 'addIngredientError') {
+      console.log('[Notifications] ingredientErrorState', ingredientErrorState)
+      setCurrentMessage('addIngredientError')
+      setSeverity('error')
+      setNotificationOpened(true)
+    }
+  }, [userErrorState, ingredientErrorState])
 
   useEffect(() => {
     if (userAuthorizedState) {
@@ -37,17 +43,6 @@ const Notifications = () => {
       setSeverity('success')
     }
   }, [userAuthorizedState])
-
-  // useEffect(() => {
-  //   if (isInitial) {
-  //     setIsInitial(false)
-  //     return
-  //   }
-    
-  //   setCurrentMessage('languageChanged')
-  //   setNotificationOpened(true)
-  //   setSeverity('success')
-  // }, [userLanguageState])
 
   return (
     <Snackbar

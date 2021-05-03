@@ -42,12 +42,7 @@ const IngredientsTable = ({ handleEditDialogOpen, handleOpenConfirmDialogRemove,
     },
     {
       id: '2',
-      Header: <Token value="ingredientDefaultPriceLabel" />,
-      accessor: 'defaultPrice',
-    },
-    {
-      id: '3',
-      Header: 'Więcej',
+      Header: <Token value="more" />,
       Cell: ({ row }: CellProps<Ingredient>) => {
         return (
           <div style={{ minWidth: 60 }}>
@@ -92,7 +87,7 @@ const IngredientsTable = ({ handleEditDialogOpen, handleOpenConfirmDialogRemove,
                 {
                   headerGroup.headers.map(column => (
                     <TableCell {...column.getHeaderProps()}
-                      align={column.id === '3' ? 'right' : 'left'}
+                      align={column.id === '2' ? 'right' : 'left'}
                     >
                       {column.render('Header')}
                     </TableCell>
@@ -103,10 +98,7 @@ const IngredientsTable = ({ handleEditDialogOpen, handleOpenConfirmDialogRemove,
           }
         </TableHead>
         <TableBody {...getTableBodyProps()}>
-          {loading && <LoadingDataRow />}
-          {
-            rows.map(row => {
-
+          {loading ? <LoadingDataRow /> : rows.map(row => {
               prepareRow(row)
 
               return (
@@ -118,7 +110,7 @@ const IngredientsTable = ({ handleEditDialogOpen, handleOpenConfirmDialogRemove,
                         <TableCell
                           width={100}
                           {...cell.getCellProps()}
-                          align={cell.column.id === '3' ? 'right' : 'left'}
+                          align={cell.column.id === '2' ? 'right' : 'left'}
                         >
                           {cell.render('Cell')}
                         </TableCell>

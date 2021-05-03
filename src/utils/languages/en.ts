@@ -41,4 +41,5 @@ export const en: ITranslations = {
   removeConfirmTitle: 'Warning! Item will be deleted permamently',
   ingredient: 'Ingredient',
   loadingData: 'Loading data, please wait',
+  addIngredientError: 'Cannot add an ingredient',
 }

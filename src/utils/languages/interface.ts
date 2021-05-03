@@ -39,4 +39,5 @@ export interface ITranslations {
   removeConfirmTitle: string,
   ingredient: string,
   loadingData: string,
+  addIngredientError: string,
 }

@@ -1,17 +1,9 @@
-import { retreats, mealRows, ingredients } from "utils/fakeData"
-import { IngredientsResponse } from "./ingredients/types"
+import { retreats, mealRows } from "utils/fakeData"
+import { Ingredient } from "./ingredients/types"
 import { MealRowResponse, RetreatResponse } from "./retreats/types"
 import { SimpleResponse } from "./simple/types"
-
-// payload
-// {
-//   "role": "worker",
-//   "username": "johndoe",
-//   "displayName": "John Doe",
-//   "exp": 1612224000, (Fri Oct 11 2052 03:46:40 GMT+0200)
-// }
-// secret: 123456
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoid29ya2VyIiwidXNlcm5hbWUiOiJqb2huRG9lIiwiZGlzcGxheU5hbWUiOiJKb2huIERvZSIsImV4cCI6MjYxMjIyNDAwMH0.oHggPJ0eLPH_PC8dHExkxcOPBIp0n9V1f6kl0_QcMQI"
+import axios from './axios'
+import { changeLanguage } from "./user/actions"
 
 export const SimpleApi = {
   get: (): Promise<SimpleResponse> => {
@@ -23,17 +15,7 @@ export const SimpleApi = {
 
 export const UserApi = {
   login: (username: string, password: string) => {
-    const task = (resolve: (value?: unknown) => void, reject: (value?: unknown) => void) => {
-      setTimeout(() => {
-        if (username === 'johndoe' && password === 'Doejohnestpass8!') {
-          resolve({ status: 200, token })
-        }
-        else {
-          reject({ status: 401, message: 'Incorrect username or password' })
-        }
-      }, 1000)
-    }
-    return new Promise(task)
+    return axios.post('api/token/', { username, password })
   }
 }
 
@@ -59,11 +41,16 @@ export const RetreatsApi = {
 }
 
 export const IngredientsApi = {
-  getAll: (): Promise<IngredientsResponse> => {
-    return new Promise<IngredientsResponse>((resolve, reject) => {
-      setTimeout(() => {
-        resolve({ ingredients, status: 'OK' })
-      }, 1000)
-    })
+  getAll: (): Promise<Ingredient[]> => {
+    return axios.get('ingredients')
   },
+  createIngredient: (name: string): Promise<Ingredient> => {
+    return axios.post('ingredients/', { name })
+  },
+  deleteIngredient: (id: number) => {
+    return axios.delete(`ingredients/${id}`)
+  },
+  updateIngredient: (id: number, name: string) => {
+    return axios.put(`ingredients/${id}/`, { name })
+  }
 }

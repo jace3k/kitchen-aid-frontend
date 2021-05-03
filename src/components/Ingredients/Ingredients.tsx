@@ -32,7 +32,6 @@ const Ingredients = () => {
 
   return (
     <Container style={{ minWidth: 300 }}>
-      
       <IngredientsTable
         handleEditDialogOpen={handleIngredientDialogEditOpen}
         handleOpenConfirmDialogRemove={handleOpenConfirmDialogRemove}

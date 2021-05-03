@@ -2,6 +2,8 @@ import React from 'react'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core'
 import Token from 'components/Token'
 import { Ingredient } from 'store/ingredients/types'
+import { useDispatch } from 'react-redux'
+import { deleteIngredientRequest } from 'store/ingredients/actions'
 
 interface DialogRemoveProps {
   open: boolean,
@@ -10,6 +12,14 @@ interface DialogRemoveProps {
 }
 
 const DialogRemove = ({ open, onClose, ingredient }: DialogRemoveProps) => {
+  const dispatch = useDispatch()
+
+  const handleRemove = () => {
+    if (ingredient)
+      dispatch(deleteIngredientRequest(ingredient.id))
+
+    onClose()
+  }
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -21,7 +31,7 @@ const DialogRemove = ({ open, onClose, ingredient }: DialogRemoveProps) => {
         <Button onClick={onClose} color="secondary">
           <Token value="cancel" />
         </Button>
-        <Button onClick={onClose} color="primary">
+        <Button onClick={handleRemove} color="primary">
           <Token value="delete" />
         </Button>
       </DialogActions>
