@@ -4,6 +4,7 @@ import { MealRowResponse, RetreatResponse } from "./retreats/types"
 import { SimpleResponse } from "./simple/types"
 import axios from './axios'
 import { changeLanguage } from "./user/actions"
+import { Dish } from "./dishes/types"
 
 export const SimpleApi = {
   get: (): Promise<SimpleResponse> => {
@@ -52,5 +53,20 @@ export const IngredientsApi = {
   },
   updateIngredient: (id: number, name: string) => {
     return axios.put(`ingredients/${id}/`, { name })
+  }
+}
+
+export const DishesApi = {
+  getAll: () => {
+    return axios.get('dishes')
+  },
+  createDish: (name: string, size: number) => {
+    return axios.post('dishes/', { name, size })
+  },
+  deleteDish: (id: number) => {
+    return axios.delete(`dishes/${id}`)
+  },
+  updateDish: (id: number, name: string, size: number) => {
+    return axios.put(`dishes/${id}/`, { name, size })
   }
 }

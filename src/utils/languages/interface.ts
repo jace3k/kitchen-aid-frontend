@@ -40,4 +40,7 @@ export interface ITranslations {
   ingredient: string,
   loadingData: string,
   addIngredientError: string,
+  dishes: string,
+  name: string,
+  size: string,
 }

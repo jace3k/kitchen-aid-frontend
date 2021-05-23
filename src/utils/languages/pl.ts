@@ -42,4 +42,7 @@ export const pl: ITranslations = {
   ingredient: 'Składnik',
   loadingData: 'Ładowanie danych, chwilunia',
   addIngredientError: 'Nie można dodać składnika',
+  dishes: 'Dania',
+  name: 'Nazwa',
+  size: 'Ilość',
 }

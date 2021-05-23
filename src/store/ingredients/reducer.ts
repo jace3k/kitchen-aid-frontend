@@ -1,5 +1,4 @@
 import { Reducer } from 'redux'
-import { Ingredients } from 'utils/routes'
 import { IngredientsState, IngredientActionTypes, IngredientStateActionTypes } from './types'
 
 const initialState: IngredientsState = {
@@ -69,31 +68,31 @@ const reducer: Reducer<IngredientsState, IngredientStateActionTypes> = (state = 
         loading: false,
         error: action.error,
       }
-      case IngredientActionTypes.UPDATE_INGREDIENT_REQUEST:
-        return {
-          ...state,
-          loading: true,
-          error: null,
-        }
-      case IngredientActionTypes.UPDATE_INGREDIENT_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          error: null,
-          // TODO: extract this logic somewhere
-          ingredients: state.ingredients.map(ingredient => {
-            if (ingredient.id === action.id)
-              ingredient.name = action.name
+    case IngredientActionTypes.UPDATE_INGREDIENT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      }
+    case IngredientActionTypes.UPDATE_INGREDIENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        // TODO: extract this logic somewhere
+        ingredients: state.ingredients.map(ingredient => {
+          if (ingredient.id === action.id)
+            ingredient.name = action.name
 
-            return ingredient
-          }),
-        }
-      case IngredientActionTypes.UPDATE_INGREDIENT_ERROR:
-        return {
-          ...state,
-          loading: false,
-          error: action.error,
-        }
+          return ingredient
+        }),
+      }
+    case IngredientActionTypes.UPDATE_INGREDIENT_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      }
     default:
       return state
   }
