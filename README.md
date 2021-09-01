@@ -28,8 +28,14 @@ ___
 * ~navigation - menu - logout option / darkmode switcher / language chooser~
 * ~login/logout with local storage~
 * ~ingredients - list/edit/remove/new~
-* ingredients - pagination/filtering/sorting
+* ~ingredients - pagination/filtering/sorting~
 * logout redirect to /
+* warning when ingredient in a dish is used during removal
+* settings - add default items per page (pagination)
+* fix some translations
+* error handling
+* logging
+* later: Meals
 
 ####### Future
 * Blocking delete ingredients when are used in some dish
