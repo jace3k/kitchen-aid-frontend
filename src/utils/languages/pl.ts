@@ -45,4 +45,10 @@ export const pl: ITranslations = {
   dishes: 'Dania',
   name: 'Nazwa',
   size: 'Ilość',
+  rowsPerPage: 'Na stronie',
+  addNewDish: 'Dodaj nową potrawę',
+  dishNameLabel: 'Nazwa potrawy',
+  dishSizeLabel: 'Ilość potraw',
+  margin: 'Margines',
+  part: 'Część',
 }

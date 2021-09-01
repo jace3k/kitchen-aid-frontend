@@ -32,6 +32,7 @@ const Ingredients = () => {
 
   return (
     <Container style={{ minWidth: 300 }}>
+      <h1><Token value="ingredients" /></h1>
       <IngredientsTable
         handleEditDialogOpen={handleIngredientDialogEditOpen}
         handleOpenConfirmDialogRemove={handleOpenConfirmDialogRemove}

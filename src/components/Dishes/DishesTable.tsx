@@ -1,26 +1,37 @@
 import Token from 'components/Token'
-import React, { useEffect, useMemo } from 'react'
-import { CellProps, Column, Row } from 'react-table'
+import React, { useEffect, useMemo, useState } from 'react'
+import { CellProps, Column, Row, usePagination, useTable } from 'react-table'
 import { useSelector, useDispatch } from 'react-redux'
 import { ApplicationState } from 'store'
-import { Dish } from 'store/dishes/types'
 import MyTable from '../Table/MyTable'
 import { fetchAllDishesRequest } from 'store/dishes/actions'
-import { IconButton } from '@material-ui/core'
+import { IconButton, Table } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import RemoveIcon from '@material-ui/icons/Delete'
+import { Dish } from 'utils/interfaces/dish.interface'
+import { CircularProgress, Paper, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField } from '@material-ui/core'
 
 interface DishesTableProps {
-	
+	onRowClick: (row: Row<Dish>) => void
 }
 
-const DishesTable = () => {
-	const { dishes, loading } = useSelector((state: ApplicationState) => state.dishes)
-	const dispatch = useDispatch()
+const LoadingDataRow = () => {
 
-	const onRowClick = (row: Row<Dish>) => {
-		alert(`row ${row.original.name} clicked`)
-	}
+	return (
+		<TableRow>
+			<TableCell colSpan={3} align="center" style={{ marginTop: 50 }}>
+				<h2><Token value="loadingData" /></h2>
+				<CircularProgress />
+			</TableCell>
+		</TableRow>
+	)
+}
+
+const DishesTable = ({ onRowClick }: DishesTableProps) => {
+	const dispatch = useDispatch()
+	const { dishes, loading } = useSelector((state: ApplicationState) => state.dishes)
+	const [rowsPerPage, setRowsPerPage] = useState(5);
+	const [currentPage, setCurrentPage] = useState(0);
 
 	useEffect(() => {
 		dispatch(fetchAllDishesRequest())
@@ -38,8 +49,81 @@ const DishesTable = () => {
 			accessor: 'size',
 		},
 	], [])
+
+	const {
+		getTableProps,
+		getTableBodyProps,
+		headerGroups,
+		rows,
+		prepareRow,
+	} = useTable({ columns, data: dishes }, usePagination)
+
 	return (
-		<MyTable columns={columns} data={dishes} loading={loading} onRowClick={onRowClick} />
+		<TableContainer component={Paper} variant="elevation" square>
+			<Table {...getTableProps()} size='small'>
+				<TableHead>
+					{
+						headerGroups.map(headerGroup => (
+							<TableRow {...headerGroup.getHeaderGroupProps()}>
+								{
+									headerGroup.headers.map(column => (
+										<TableCell {...column.getHeaderProps()}
+											align={column.id === '99' ? 'right' : 'left'}
+										>
+											{column.render('Header')}
+										</TableCell>
+									))
+								}
+							</TableRow>
+						))
+					}
+				</TableHead>
+				<TableBody {...getTableBodyProps()}>
+					{loading ? <LoadingDataRow /> : rows.slice(currentPage * rowsPerPage, currentPage * rowsPerPage + rowsPerPage).map(row => {
+						prepareRow(row)
+
+						return (
+							<TableRow hover onClick={() => { onRowClick(row) }} {...row.getRowProps()} style={{ cursor: 'pointer' }}>
+								{
+									row.cells.map(cell => {
+
+										return (
+											<TableCell
+												width={100}
+												{...cell.getCellProps()}
+												align={cell.column.id === '99' ? 'right' : 'left'}
+											>
+												{cell.render('Cell')}
+											</TableCell>
+										)
+									})
+								}
+							</TableRow>
+						)
+					})
+					}
+				</TableBody>
+				<TableFooter>
+					<TableRow>
+						<TablePagination
+							labelRowsPerPage={<Token value="rowsPerPage" />}
+							rowsPerPageOptions={[5, 10, 25]}
+							colSpan={3}
+							count={rows.length}
+							rowsPerPage={rowsPerPage}
+							page={currentPage}
+							onChangePage={(e, newPage) => {
+								setCurrentPage(newPage)
+							}}
+							onChangeRowsPerPage={(e) => {
+								setRowsPerPage(parseInt(e.target.value, 10))
+								setCurrentPage(0)
+							}}
+						/>
+					</TableRow>
+				</TableFooter>
+			</Table>
+		</TableContainer>
 	)
 }
 

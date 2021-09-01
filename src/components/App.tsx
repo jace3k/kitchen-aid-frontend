@@ -19,6 +19,7 @@ import { getPalette } from 'utils/palette'
 import storage from 'utils/storage'
 import { changeLanguage, tryLogin, toggleDarkMode } from 'store/user/actions'
 import Dishes from './Dishes/Dishes'
+import DishesDetail from './Dishes/DishesDetail'
 
 const App: React.FC = () => {
   const dispatch = useDispatch()
@@ -50,6 +51,7 @@ const App: React.FC = () => {
           <Route exact path="/retreats" component={Retreats} />
           <Route exact path="/retreats/:id" component={RetreatDetail} />
           <Route exact path="/dishes" component={Dishes} />
+          <Route exact path="/dishes/:id" component={DishesDetail} />
           <Route exact path="/ingredients" component={Ingredients} />
           <Route path="/" component={NotFound} />
         </Switch>
