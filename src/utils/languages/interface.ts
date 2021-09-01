@@ -43,4 +43,10 @@ export interface ITranslations {
   dishes: string,
   name: string,
   size: string,
+  rowsPerPage: string,
+  addNewDish: string,
+  dishNameLabel: string,
+  dishSizeLabel: string,
+  margin: string,
+  part: string,
 }

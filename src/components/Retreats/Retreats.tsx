@@ -29,6 +29,7 @@ const Retreats: React.FC<RouteComponentProps> = ({ history }) => {
 
   return (
     <Container style={{ minWidth: 300 }}>
+      <h1><Token value="retreats" /></h1>
       <List>
         {allRetreats.map((retreat, index) =>
           <RetreatListItem

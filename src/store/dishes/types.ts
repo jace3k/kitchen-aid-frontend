@@ -1,8 +1,5 @@
-export interface Dish {
-	id: number,
-	name: string,
-	size: number,
-}
+import { Dish, DishDetail } from "utils/interfaces/dish.interface"
+import { IngredientInADish, IngredientInaDishDto } from "utils/interfaces/ingredient-ina-dish.interface"
 
 // export interface DishRow
 
@@ -22,6 +19,22 @@ export enum DishActionTypes {
   UPDATE_DISH_REQUEST = '@@dishes/UPDATE_DISH_REQUEST',
   UPDATE_DISH_SUCCESS = '@@dishes/UPDATE_DISH_SUCCESS',
   UPDATE_DISH_ERROR = '@@dishes/UPDATE_DISH_ERROR',
+
+  FETCH_DISH_DETAIL_REQUEST = '@@dishes/FETCH_DISH_DETAIL_REQUEST',
+  FETCH_DISH_DETAIL_SUCCESS = '@@dishes/FETCH_DISH_DETAIL_SUCCESS',
+  FETCH_DISH_DETAIL_ERROR = '@@dishes/FETCH_DISH_DETAIL_ERROR',
+
+  UPDATE_INGREDIENT_REQUEST = '@@dishes/UPDATE_INGREDIENT_REQUEST',
+  UPDATE_INGREDIENT_SUCCESS = '@@dishes/UPDATE_INGREDIENT_SUCCESS',
+  UPDATE_INGREDIENT_ERROR = '@@dishes/UPDATE_INGREDIENT_ERROR',
+
+  CREATE_INGREDIENT_REQUEST = '@@dishes/CREATE_INGREDIENT_REQUEST',
+  CREATE_INGREDIENT_SUCCESS = '@@dishes/CREATE_INGREDIENT_SUCCESS',
+  CREATE_INGREDIENT_ERROR = '@@dishes/CREATE_INGREDIENT_ERROR',
+
+  DELETE_INGREDIENT_REQUEST = '@@dishes/DELETE_INGREDIENT_REQUEST',
+  DELETE_INGREDIENT_SUCCESS = '@@dishes/DELETE_INGREDIENT_SUCCESS',
+  DELETE_INGREDIENT_ERROR = '@@dishes/DELETE_INGREDIENT_ERROR',
 }
 
 // LIST
@@ -94,15 +107,88 @@ interface UpdateDishFailedType {
   error: string,
 }
 
+
+// FETCH ALL INGREDIENTS
+export interface FetchDishDetailRequestType {
+  type: typeof DishActionTypes.FETCH_DISH_DETAIL_REQUEST,
+  dishId: number,
+}
+
+interface FetchDishDetailSuccessType {
+  type: typeof DishActionTypes.FETCH_DISH_DETAIL_SUCCESS,
+  dishDetail: DishDetail,
+}
+
+interface FetchDishDetailFailedType {
+  type: typeof DishActionTypes.FETCH_DISH_DETAIL_ERROR,
+  error: string,
+}
+
+
+// UPDATE INGREDIENT
+export interface UpdateIngredientRequestType {
+  type: typeof DishActionTypes.UPDATE_INGREDIENT_REQUEST,
+  ingredient: IngredientInaDishDto,
+}
+
+interface UpdateIngredientSuccessType {
+  type: typeof DishActionTypes.UPDATE_INGREDIENT_SUCCESS,
+  ingredient: IngredientInaDishDto,
+}
+
+interface UpdateIngredientFailedType {
+  type: typeof DishActionTypes.UPDATE_INGREDIENT_ERROR,
+  error: string,
+}
+
+// CREATE INGREDIENT
+export interface CreateIngredientRequestType {
+  type: typeof DishActionTypes.CREATE_INGREDIENT_REQUEST,
+  ingredient: IngredientInaDishDto,
+}
+
+interface CreateIngredientSuccessType {
+  type: typeof DishActionTypes.CREATE_INGREDIENT_SUCCESS,
+  ingredient: IngredientInaDishDto,
+}
+
+interface CreateIngredientFailedType {
+  type: typeof DishActionTypes.CREATE_INGREDIENT_ERROR,
+  error: string,
+}
+
+// CREATE INGREDIENT
+export interface DeleteIngredientRequestType {
+  type: typeof DishActionTypes.DELETE_INGREDIENT_REQUEST,
+  id: number,
+}
+
+interface DeleteIngredientSuccessType {
+  type: typeof DishActionTypes.DELETE_INGREDIENT_SUCCESS,
+  id: number,
+}
+
+interface DeleteIngredientFailedType {
+  type: typeof DishActionTypes.DELETE_INGREDIENT_ERROR,
+  error: string,
+}
+
 export type FetchAllDishesType = FetchAllDishesRequestType | FetchAllDishesSuccessType | FetchAllDishesErrorType
 export type CreateDishType = CreateDishRequestType | CreateDishSuccessType | CreateDishFailedType
 export type DeleteDishType = DeleteDishRequestType | DeleteDishSuccessType | DeleteDishFailedType
 export type UpdateDishType = UpdateDishRequestType | UpdateDishSuccessType | UpdateDishFailedType
+export type FetchDishDetailType = FetchDishDetailRequestType | FetchDishDetailSuccessType | FetchDishDetailFailedType
+export type UpdateIngredientType = UpdateIngredientRequestType | UpdateIngredientSuccessType | UpdateIngredientFailedType
+export type CreateIngredientType = CreateIngredientRequestType | CreateIngredientSuccessType | CreateIngredientFailedType
+export type DeleteIngredientType = DeleteIngredientRequestType | DeleteIngredientSuccessType | DeleteIngredientFailedType
 
-export type DishStateActionTypes = FetchAllDishesType | CreateDishType | DeleteDishType | UpdateDishType
+export type DishStateActionTypes = FetchAllDishesType | CreateDishType | DeleteDishType | UpdateDishType | FetchDishDetailType | UpdateIngredientType | CreateIngredientType | DeleteIngredientType
 
 export interface DishesState {
   readonly loading: boolean,
   readonly error: string | null,
   readonly dishes: Dish[],
+  readonly dishDetail: DishDetail | null,
+  readonly ingredients: IngredientInADish[],
+  readonly removed: boolean,
 }

@@ -3,8 +3,7 @@ import { Ingredient } from "./ingredients/types"
 import { MealRowResponse, RetreatResponse } from "./retreats/types"
 import { SimpleResponse } from "./simple/types"
 import axios from './axios'
-import { changeLanguage } from "./user/actions"
-import { Dish } from "./dishes/types"
+import { IngredientInADish, IngredientInaDishDto } from "utils/interfaces/ingredient-ina-dish.interface"
 
 export const SimpleApi = {
   get: (): Promise<SimpleResponse> => {
@@ -43,30 +42,42 @@ export const RetreatsApi = {
 
 export const IngredientsApi = {
   getAll: (): Promise<Ingredient[]> => {
-    return axios.get('ingredients')
+    return axios.get('ingredient')
   },
   createIngredient: (name: string): Promise<Ingredient> => {
-    return axios.post('ingredients/', { name })
+    return axios.post('ingredient/', { name })
   },
   deleteIngredient: (id: number) => {
-    return axios.delete(`ingredients/${id}`)
+    return axios.delete(`ingredient/${id}`)
   },
   updateIngredient: (id: number, name: string) => {
-    return axios.put(`ingredients/${id}/`, { name })
+    return axios.put(`ingredient/${id}/`, { name })
   }
 }
 
 export const DishesApi = {
   getAll: () => {
-    return axios.get('dishes')
+    return axios.get('dish')
   },
   createDish: (name: string, size: number) => {
-    return axios.post('dishes/', { name, size })
+    return axios.post('dish/', { name, size })
   },
   deleteDish: (id: number) => {
-    return axios.delete(`dishes/${id}`)
+    return axios.delete(`dish/${id}/`)
   },
   updateDish: (id: number, name: string, size: number) => {
-    return axios.put(`dishes/${id}/`, { name, size })
+    return axios.put(`dish/${id}/`, { name, size })
+  },
+  getDishDetail: (dishId: number) => {
+    return axios.get(`dish/${dishId}/`)
+  },
+  addIngredient: (ingredientInaDish: IngredientInaDishDto) => {
+    return axios.post(`ingredient_ina_dish/`, ingredientInaDish)
+  },
+  updateIngredient: (ingredientInaDish: IngredientInaDishDto) => {
+    return axios.put(`ingredient_ina_dish/${ingredientInaDish.id}/`, ingredientInaDish)
+  },
+  removeIngredient: (ingredientInaDishId: number) => {
+    return axios.delete(`ingredient_ina_dish/${ingredientInaDishId}/`)
   }
 }
