@@ -4,7 +4,7 @@ import { UserApi } from 'store/api'
 import storage from 'utils/storage'
 import jwt from 'utils/token'
 import { loginFailed, loginSuccess } from './actions'
-import { UserActionTypes, LoginRequestType, ChangeLanguageType, ToggleDarkModeType, LoginResponseSuccess } from './types'
+import { UserActionTypes, LoginRequestType, ChangeLanguageType, ToggleDarkModeType, LoginResponseSuccess, SetItemsPerPageType } from './types'
 
 function* loginRequest({ username, password }: LoginRequestType) {
   try {
@@ -19,7 +19,7 @@ function* loginRequest({ username, password }: LoginRequestType) {
 
     yield put(loginSuccess(decodedToken))
   }
-  catch (err) {
+  catch (err: any) {
     // TODO: check if the error comes from the token or network
     yield put(loginFailed(err))
   }
@@ -54,10 +54,15 @@ function toggleDarkMode({ isDarkMode }: ToggleDarkModeType) {
     storage.removeDarkMode()
 }
 
+function setDefaultItemsPerPage({ itemsPerPage }: SetItemsPerPageType) {
+  storage.setDefaultItemsPerPage(itemsPerPage)
+}
+
 export default function* watch() {
   yield takeLatest(UserActionTypes.LOGIN_REQUEST, loginRequest)
   yield takeLatest(UserActionTypes.LOGIN_LOCAL, loginLocal)
   yield takeLatest(UserActionTypes.LOGOUT, logout)
   yield takeLatest(UserActionTypes.CHANGE_LANGUAGE, changeLanguage)
   yield takeLatest(UserActionTypes.TOGGLE_DARK_MODE, toggleDarkMode)
+  yield takeLatest(UserActionTypes.SET_ITEMS_PER_PAGE, setDefaultItemsPerPage)
 }

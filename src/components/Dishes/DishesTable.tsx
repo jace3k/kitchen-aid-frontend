@@ -10,6 +10,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import RemoveIcon from '@material-ui/icons/Delete'
 import { Dish } from 'utils/interfaces/dish.interface'
 import { CircularProgress, Paper, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField } from '@material-ui/core'
+import { ROWS_PER_PAGE_OPTIONS } from 'utils/constants'
 
 interface DishesTableProps {
 	onRowClick: (row: Row<Dish>) => void
@@ -30,7 +31,8 @@ const LoadingDataRow = () => {
 const DishesTable = ({ onRowClick }: DishesTableProps) => {
 	const dispatch = useDispatch()
 	const { dishes, loading } = useSelector((state: ApplicationState) => state.dishes)
-	const [rowsPerPage, setRowsPerPage] = useState(5);
+	const itemsPerPageFromSettings = useSelector((state: ApplicationState) => state.user.itemsPerPage)
+	const [rowsPerPage, setRowsPerPage] = useState(itemsPerPageFromSettings);
 	const [currentPage, setCurrentPage] = useState(0);
 
 	useEffect(() => {
@@ -107,15 +109,15 @@ const DishesTable = ({ onRowClick }: DishesTableProps) => {
 					<TableRow>
 						<TablePagination
 							labelRowsPerPage={<Token value="rowsPerPage" />}
-							rowsPerPageOptions={[5, 10, 25]}
+							rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
 							colSpan={3}
 							count={rows.length}
 							rowsPerPage={rowsPerPage}
 							page={currentPage}
-							onChangePage={(e, newPage) => {
+							onPageChange={(e, newPage) => {
 								setCurrentPage(newPage)
 							}}
-							onChangeRowsPerPage={(e) => {
+							onRowsPerPageChange={(e) => {
 								setRowsPerPage(parseInt(e.target.value, 10))
 								setCurrentPage(0)
 							}}

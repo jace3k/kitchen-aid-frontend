@@ -9,7 +9,7 @@ function* fetchAllIngredients() {
     const response: AxiosResponse = yield call(IngredientsApi.getAll)
     yield put(fetchAllIngredientsSuccess(response.data))
   }
-  catch (err) {
+  catch (err: any) {
     yield put(fetchAllIngredientsFailed(err))
   }
 }
@@ -19,7 +19,7 @@ function* createIngredient({ name }: CreateIngredientRequestType) {
     const response: AxiosResponse = yield call(IngredientsApi.createIngredient, name)
     yield put(createIngredientSuccess(response.data))
   }
-  catch (err) {
+  catch (err: any) {
     yield put(createIngredientFailed('addIngredientError'))
   }
 }
@@ -30,7 +30,7 @@ function* deleteIngredient({ id }: DeleteIngredientRequestType) {
     // check if response 204 No Content then return id of removed ingredient
     yield put(deleteIngredientSuccess(id))
   }
-  catch (err) {
+  catch (err: any) {
     yield put(deleteIngredientFailed(err))
   }
 }
@@ -40,7 +40,7 @@ function* updateIngredient({ id, name }: UpdateIngredientRequestType) {
     const response: AxiosResponse = yield call(IngredientsApi.updateIngredient, id, name)
     yield put(updateIngredientSuccess(id, name))
   }
-  catch (err) {
+  catch (err: any) {
     yield put(updateIngredientFailed(err))
   }
 }

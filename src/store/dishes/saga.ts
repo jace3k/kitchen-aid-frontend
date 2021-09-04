@@ -9,7 +9,7 @@ function* fetchAllDishes() {
 		const response: AxiosResponse = yield call(DishesApi.getAll)
 		yield put(fetchAllDishesSuccess(response.data))
 	}
-	catch (err) {
+	catch (err: any) {
 		yield put(fetchAllDishesFailed(err))
 	}
 }
@@ -19,7 +19,7 @@ function* createDish({ name, size }: CreateDishRequestType) {
 		const response: AxiosResponse = yield call(DishesApi.createDish, name, size)
 		yield put(createDishSuccess(response.data))
 	}
-	catch (err) {
+	catch (err: any) {
 		console.log('createDish error', err.response)
 		yield put(createDishFailed(err))
 	}
@@ -30,7 +30,7 @@ function* deleteDish({ id }: DeleteDishRequestType) {
 		const response: AxiosResponse = yield call(DishesApi.deleteDish, id)
 		yield put(deleteDishSuccess(id))
 	}
-	catch (err) {
+	catch (err: any) {
 		yield put(deleteDishFailed(err))
 	}
 }
@@ -40,7 +40,7 @@ function* updateDish({ id, name, size }: UpdateDishRequestType) {
 		const response: AxiosResponse = yield call(DishesApi.updateDish, id, name, size)
 		yield put(updateDishSuccess(response.data))
 	}
-	catch (err) {
+	catch (err: any) {
 		yield put(updateDishFailed(err))
 	}
 }
@@ -51,9 +51,10 @@ function* fetchDishDetail({ dishId }: FetchDishDetailRequestType) {
 		console.log('[fetchDishDetail][success]', dishId)
 		yield put(fetchDishDetailSuccess(response.data))
 	}
-	catch (err) {
-		console.log('fetchDishDetail error', err.response)
-		yield put(fetchDishDetailFailed(err.response.statusText))
+	catch (err: any) {
+		console.log('fetchDishDetail error', err.message)
+		// err.response, err.response.statusText, network error
+		yield put(fetchDishDetailFailed(err))
 	}
 }
 
@@ -64,7 +65,7 @@ function* updateIngredient({ ingredient }: UpdateIngredientRequestType) {
 		yield put(updateIngredientInADishSuccess(response.data))
 		yield put(fetchDishDetailRequest(ingredient.dish))
 	}
-	catch (err) {
+	catch (err: any) {
 		yield put(updateIngredientInADishFailed(err))
 	}
 }
@@ -76,7 +77,7 @@ function* createIngredient({ ingredient }: CreateIngredientRequestType) {
 		yield put(createIngredientInADishSuccess(response.data))
 		yield put(fetchDishDetailRequest(ingredient.dish))
 	}
-	catch (err) {
+	catch (err: any) {
 		yield put(createIngredientInADishFailed(err))
 	}
 }
@@ -87,7 +88,7 @@ function* deleteIngredient({ id }: DeleteIngredientRequestType) {
 		console.log('[deleteIngredient][success]', id)
 		yield put(deleteIngredientInADishSuccess(id))
 	}
-	catch (err) {
+	catch (err: any) {
 		yield put(deleteIngredientInADishFailed(err))
 	}
 }

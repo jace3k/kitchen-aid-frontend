@@ -25,7 +25,7 @@ const LanguageChooser = () => {
   }
 
   return (
-    <FormControl size="small" variant='outlined'>
+    <FormControl size="small" variant='outlined' fullWidth>
       <InputLabel id="lang-selector">
         <Token value='language' />
       </InputLabel>

@@ -62,8 +62,7 @@ module.exports = {
   devServer: {
     compress: true,
     port: 8080,
-    historyApiFallback: true,
-    publicPath: '/',
+    historyApiFallback: { index: "/", disableDotRule: true },
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],

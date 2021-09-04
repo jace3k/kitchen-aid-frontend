@@ -8,6 +8,8 @@ const initialState: UserState = {
   user: null,
   darkMode: true,
   language: "pl",
+  itemsPerPage: 10,
+  redirect: null,
 }
 
 const reducer: Reducer<UserState, UserStateActionTypes> = (state = initialState, action) => {
@@ -16,6 +18,7 @@ const reducer: Reducer<UserState, UserStateActionTypes> = (state = initialState,
       return {
         ...state,
         loading: true,
+        redirect: null,
         error: null,
       }
     case UserActionTypes.LOGIN_SUCCESS:
@@ -39,6 +42,7 @@ const reducer: Reducer<UserState, UserStateActionTypes> = (state = initialState,
         ...state,
         user: null,
         authorized: false,
+        redirect: '/',
         error: null,
       }
     case UserActionTypes.TOGGLE_DARK_MODE:
@@ -50,6 +54,11 @@ const reducer: Reducer<UserState, UserStateActionTypes> = (state = initialState,
       return {
         ...state,
         language: action.language,
+      }
+    case UserActionTypes.SET_ITEMS_PER_PAGE:
+      return {
+        ...state,
+        itemsPerPage: action.itemsPerPage,
       }
     default:
       return state

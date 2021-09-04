@@ -4,6 +4,7 @@ enum StorageKeys {
   language = '@@KITCHEN_AID/language',
   darkMode = '@@KITCHEN_AID/darkMode',
   token = '@@KITCHEN_AID/authToken',
+  itemsPerPage = '@@KITCHEN_AID/itemsPerPage',
 }
 
 const storage = {
@@ -52,7 +53,14 @@ const storage = {
 
     localStorage.removeItem(StorageKeys.token)
     console.log('[Local storage] Auth token removed')
-  }
+  },
+  getDefaultItemsPerPage: () => {
+    return localStorage.getItem(StorageKeys.itemsPerPage)
+  },
+  setDefaultItemsPerPage: (itemsPerPage: number) => {
+    localStorage.setItem(StorageKeys.itemsPerPage, itemsPerPage + '')
+  },
+  
 }
 
 export default storage

@@ -113,7 +113,7 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
           )
         }}
         generateItemsList={() => {
-          return <DishDetailIngredientsList handleOpenConfirmDialogRemove={() => { }} />
+          return <DishDetailIngredientsList />
         }}
       />
       {dishDetail &&
@@ -122,7 +122,6 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
           <DialogRemove open={dialogRemoveOpen} handleRemove={handleRemoveDish} onClose={onCloseRemoveDishDialog} elementName={dishDetail.name} />
         </>
       }
-
     </div>
   )
 }

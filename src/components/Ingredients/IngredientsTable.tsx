@@ -12,6 +12,7 @@ import RemoveIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import Token from 'components/Token'
 import { useState } from 'react'
+import { ROWS_PER_PAGE_OPTIONS } from 'utils/constants'
 
 interface IngredientsTableProps {
   handleEditDialogOpen: (ingredient: Ingredient | null) => void
@@ -35,9 +36,10 @@ const IngredientsTable = ({ handleOpenConfirmDialogRemove }: IngredientsTablePro
   const dispatch = useDispatch()
   const fetchIngredients = () => dispatch(fetchAllIngredientsRequest())
   const { ingredients, loading } = useSelector((state: ApplicationState) => state.ingredients);
+  const itemsPerPageFromSettings = useSelector((state: ApplicationState) => state.user.itemsPerPage)
   const [currentEdit, setCurrentEdit] = useState<null | Ingredient>(null)
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(itemsPerPageFromSettings)
+  const [currentPage, setCurrentPage] = useState(0)
 
   useEffect(() => {
     fetchIngredients()
@@ -168,15 +170,15 @@ const IngredientsTable = ({ handleOpenConfirmDialogRemove }: IngredientsTablePro
           <TableRow>
             <TablePagination
               labelRowsPerPage={<Token value="rowsPerPage" />}
-              rowsPerPageOptions={[5, 10, 25]}
+              rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
               colSpan={3}
               count={rows.length}
               rowsPerPage={rowsPerPage}
               page={currentPage}
-              onChangePage={(e, newPage) => {
+              onPageChange={(e, newPage) => {
                 setCurrentPage(newPage)
               }}
-              onChangeRowsPerPage={(e) => {
+              onRowsPerPageChange={(e) => {
                 setRowsPerPage(parseInt(e.target.value, 10))
                 setCurrentPage(0)
               }}

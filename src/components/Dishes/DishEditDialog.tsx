@@ -30,7 +30,6 @@ const DishEditDialog = ({ open, dish, onClose }: DishEditDialogProps) => {
             value={name}
             onChange={e => setName(e.target.value)}
             fullWidth
-            type="numeric"
           />
           <TextField
             margin="dense"
@@ -38,6 +37,7 @@ const DishEditDialog = ({ open, dish, onClose }: DishEditDialogProps) => {
             value={size}
             onChange={e => setSize(e.target.value)}
             fullWidth
+            type="number"
           />
         </DialogContent>
         <DialogActions>

@@ -48,7 +48,11 @@ export const pl: ITranslations = {
   rowsPerPage: 'Na stronie',
   addNewDish: 'Dodaj nową potrawę',
   dishNameLabel: 'Nazwa potrawy',
-  dishSizeLabel: 'Ilość potraw',
+  dishSizeLabel: 'Rozmiar potrawy',
   margin: 'Margines',
   part: 'Część',
+  defaultRowsPerPageLabel: 'Domyślna liczba elementów na stronie',
+  total: 'z',
+  notFound: '404 - Nie znaleziono strony!',
+  backToHome: 'Strona główna'
 }

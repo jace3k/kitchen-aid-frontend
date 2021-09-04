@@ -27,6 +27,7 @@ export enum UserActionTypes {
 
   TOGGLE_DARK_MODE = '@@user/TOGGLE_DARK_MODE',
   CHANGE_LANGUAGE = '@@user/CHANGE_LANGUAGE',
+  SET_ITEMS_PER_PAGE = '@@user/SET_ITEMS_PER_PAGE',
 }
 
 export interface LoginRequestType {
@@ -65,11 +66,17 @@ export type ChangeLanguageType = {
   language: LanguageType,
 }
 
+export type SetItemsPerPageType = {
+  type: typeof UserActionTypes.SET_ITEMS_PER_PAGE,
+  itemsPerPage: number,
+}
+
 
 export type UserStateActionTypes =
   LoginType
   | ToggleDarkModeType
   | ChangeLanguageType
+  | SetItemsPerPageType
 
 export interface UserState {
   readonly loading: boolean,
@@ -78,4 +85,6 @@ export interface UserState {
   readonly user: User | null,
   readonly darkMode: boolean,
   readonly language: LanguageType,
+  readonly itemsPerPage: number,
+  readonly redirect: string | null,
 }

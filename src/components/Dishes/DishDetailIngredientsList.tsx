@@ -1,6 +1,6 @@
 import { CircularProgress, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField } from '@material-ui/core'
 import Token from 'components/Token'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CellProps, Column, useTable } from 'react-table'
@@ -12,6 +12,7 @@ import CloseIcon from '@material-ui/icons/Check'
 import RemoveIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
+import { ROWS_PER_PAGE_OPTIONS } from 'utils/constants'
 
 interface DishDetailIngredientsListProps {
   handleOpenConfirmDialogRemove: (ingredient: IngredientInADish) => void
@@ -29,11 +30,12 @@ const LoadingDataRow = () => {
   )
 }
 
-const DishDetailIngredientsList = ({ handleOpenConfirmDialogRemove }: DishDetailIngredientsListProps) => {
+const DishDetailIngredientsList = () => {
   const dispatch = useDispatch()
   const { ingredients, dishDetail, loading } = useSelector((state: ApplicationState) => state.dishes)
+  const itemsPerPageFromSettings = useSelector((state: ApplicationState) => state.user.itemsPerPage)
   const [currentEdit, setCurrentEdit] = useState<null | IngredientInADish>(null)
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(itemsPerPageFromSettings);
   const [currentPage, setCurrentPage] = useState(0);
   const [ingredientRemoveDialogOpen, setIngredientRemoveDialogOpen] = useState(false)
 
@@ -60,14 +62,14 @@ const DishDetailIngredientsList = ({ handleOpenConfirmDialogRemove }: DishDetail
   const columns: Column<IngredientInADish>[] = useMemo(() => [
     {
       id: '1',
-      Header: 'Ingredient name',
+      Header: <Token value="ingredientNameLabel" />,
       Cell: ({ row }: CellProps<IngredientInADish>) => {
         return row.original.ingredient.name
       }
     },
     {
       id: '2',
-      Header: 'Margin',
+      Header: <Token value="margin" />,
       Cell: ({ row }: CellProps<IngredientInADish>) => {
         const [currentEditMargin, setCurrentEditMargin] = useState<number>(row.original.margin)
         if (currentEdit?.id === row.original.id) {
@@ -95,7 +97,7 @@ const DishDetailIngredientsList = ({ handleOpenConfirmDialogRemove }: DishDetail
     },
     {
       id: '3',
-      Header: 'Part',
+      Header: <Token value="part" />,
       Cell: ({ row }: CellProps<IngredientInADish>) => {
         const [currentEditPart, setCurrentEditPart] = useState<number>(row.original.part)
         if (currentEdit?.id === row.original.id) {
@@ -123,7 +125,7 @@ const DishDetailIngredientsList = ({ handleOpenConfirmDialogRemove }: DishDetail
     },
     {
       id: '99',
-      Header: 'More',
+      Header: <Token value="more" />,
       Cell: ({ row }: CellProps<IngredientInADish>) => {
         return (
           <div style={{ minWidth: 60 }}>
@@ -220,18 +222,19 @@ const DishDetailIngredientsList = ({ handleOpenConfirmDialogRemove }: DishDetail
             <TableRow>
               <TablePagination
                 labelRowsPerPage={<Token value="rowsPerPage" />}
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
                 colSpan={4}
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={currentPage}
-                onChangePage={(e, newPage) => {
+                onPageChange={(e, newPage) => {
                   setCurrentPage(newPage)
                 }}
-                onChangeRowsPerPage={(e) => {
+                onRowsPerPageChange={(e) => {
                   setRowsPerPage(parseInt(e.target.value, 10))
                   setCurrentPage(0)
                 }}
+                labelDisplayedRows={info => <>{`${info.from}-${info.to}`} <Token value="total" /> {info.count}</>}
               />
             </TableRow>
           </TableFooter>

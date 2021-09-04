@@ -7,7 +7,7 @@ import MealsIcon from '@material-ui/icons/Fastfood'
 import { TabNavigationUrls } from './Navigation'
 import Token from 'components/Token'
 import * as routes from 'utils/routes'
-import LanguageChooser from 'components/LanguageChooser/LanguageChooser'
+import LanguageChooser from 'components/SettingsMenu/LanguageChooser/LanguageChooser'
 
 interface SidebarProps {
   open: boolean,

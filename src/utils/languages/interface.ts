@@ -49,4 +49,8 @@ export interface ITranslations {
   dishSizeLabel: string,
   margin: string,
   part: string,
+  defaultRowsPerPageLabel: string,
+  total: string,
+  notFound: string,
+  backToHome: string,
 }

@@ -1,9 +1,13 @@
+import { Button } from '@material-ui/core'
 import React from 'react'
+import Token from './Token'
 
 const NotFound: React.FC = () => {
+
   return (
-    <div>
-      <h4>404 Not Found!</h4>
+    <div style={{ textAlign: 'center' }}>
+      <h2><Token value="notFound" /></h2>
+      <Button variant="contained" color="primary" onClick={() => window.location.pathname = '/'}><Token value="backToHome" /></Button>
     </div>
   )
 }

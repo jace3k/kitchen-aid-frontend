@@ -10,7 +10,7 @@ function* fetchAllRetreats() {
 
     yield put(fetchAllRetreatsSuccess(allRetreats))
   }
-  catch (err) {
+  catch (err: any) {
     yield put(fetchAllRetreatsFailed(err))
   }
 }
@@ -20,7 +20,7 @@ function* fetchMealsForRetreat({ retreatId }: FetchAllMealsForRetreatRequestType
     const response: MealRowResponse = yield call(RetreatsApi.getMeals, retreatId)
     yield put(fetchMealsForRetreatSuccess(response.mealRows, response.retreat))
   }
-  catch (err) {
+  catch (err: any) {
     yield put(fetchMealsForRetreatFailed(err))
   }
 }

@@ -51,4 +51,8 @@ export const en: ITranslations = {
   dishSizeLabel: 'Dish size',
   margin: 'Margin',
   part: 'Part',
+  defaultRowsPerPageLabel: 'Default rows per page in every table',
+  total: 'of',
+  notFound: '404 Not Found!',
+  backToHome: 'Home',
 }

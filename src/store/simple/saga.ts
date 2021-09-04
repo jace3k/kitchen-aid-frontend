@@ -10,7 +10,7 @@ function* fetchSimpleValue() {
 
     yield put(simpleValuefetchSuccess(responseValue))
   }
-  catch (err) {
+  catch (err: any) {
     yield put(simpleValuefetchFailed(err))
   }
 }

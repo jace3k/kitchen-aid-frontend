@@ -14,18 +14,19 @@ import Loader from './Loader/Loader'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { ApplicationState } from 'store'
-import { ThemeProvider, createMuiTheme, CssBaseline } from '@material-ui/core'
+import { ThemeProvider, createTheme, CssBaseline } from '@material-ui/core'
 import { getPalette } from 'utils/palette'
 import storage from 'utils/storage'
-import { changeLanguage, tryLogin, toggleDarkMode } from 'store/user/actions'
+import { changeLanguage, tryLogin, toggleDarkMode, setDefaultItemsPerPage } from 'store/user/actions'
 import Dishes from './Dishes/Dishes'
 import DishesDetail from './Dishes/DishesDetail'
 
 const App: React.FC = () => {
   const dispatch = useDispatch()
   const authorized = useSelector((state: ApplicationState) => state.user.authorized)
+  const redirect = useSelector((state: ApplicationState) => state.user.redirect)
   const isDarkMode = useSelector((state: ApplicationState) => state.user.darkMode)
-  const theme = createMuiTheme({
+  const theme = createTheme({
     palette: getPalette(isDarkMode),
   })
 
@@ -36,8 +37,20 @@ const App: React.FC = () => {
     const darkMode = storage.isDarkMode()
     dispatch(toggleDarkMode(darkMode))
 
+    const itemsPerPage = storage.getDefaultItemsPerPage()
+    if (itemsPerPage) {
+      dispatch(setDefaultItemsPerPage(parseInt(itemsPerPage)))
+    }
+
     dispatch(tryLogin())
   }, [])
+
+  useEffect(() => {
+    if (redirect) {
+      console.log('Logged out. Redirection to Home')
+      window.location.pathname = redirect
+    }
+  }, [redirect])
 
   let RouterComponent: () => any
 

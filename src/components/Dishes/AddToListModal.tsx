@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, MenuItem, OutlinedInput, Select, TextField } from '@material-ui/core'
 import Token from 'components/Token'
 import { useDispatch, useSelector } from 'react-redux'
@@ -43,7 +43,7 @@ const AddToListModal = ({ open, onClose, onCreateIngredient, dishId }: AddToList
         <FormControl fullWidth disabled={ingredientsLoading}>
           <InputLabel><Token value="ingredient" /></InputLabel>
           <Select
-            value={selectedIngredient}
+            value={ingredientsLoading ? '' : selectedIngredient}
             onChange={handleIngredientChange}
           >
             {ingredientList.map(ing => (
