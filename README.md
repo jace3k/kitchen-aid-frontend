@@ -29,15 +29,14 @@ ___
 * ~login/logout with local storage~
 * ~ingredients - list/edit/remove/new~
 * ~ingredients - pagination/filtering/sorting~
-* logout redirect to /
-* warning when ingredient in a dish is used during removal
-* settings - add default items per page (pagination)
-* fix some translations
-* error handling
-* logging
-* later: Meals
+* ~logout redirect to /~
+* warning when ingredient in a dish is used during removal (need endpoint)
+* ~settings - add default items per page (pagination)~
+* ~fix some translations~
+* error handling (detail 404, network errors)
+* Meals
 
 ####### Future
-* Blocking delete ingredients when are used in some dish
-* retreats detail - sorting & filtering meals
-* add admin page
+* Tables - sorting & filtering
+* Admin page
+* Log events
