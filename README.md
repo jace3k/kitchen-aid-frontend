@@ -41,6 +41,7 @@ ___
 * Beautify dialogs, lists (add colors etc)
 * info 'no data' on tables when empty
 * separate loading detail ingredient from list
+* notification when something is updated/removed/added
 
 
 ####### Future
