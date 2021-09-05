@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { IconButton, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Tooltip } from '@material-ui/core'
 import RetreatIcon from '@material-ui/icons/Assignment'
 import MoreIcon from '@material-ui/icons/MoreVert'
-import { Retreat } from 'store/retreats/types'
 import Token from 'components/Token'
 import RetreatDialogEdit from './RetreatDialogEdit'
 import * as routes from 'utils/routes'
+import { Retreat } from 'utils/interfaces/retreat.interface'
 
 type RetreatListItemProps = {
   retreat: Retreat,
@@ -39,9 +39,9 @@ const RetreatListItem: React.FC<RetreatListItemProps> = ({ retreat, disabled, hi
 
   const secondaryTitle = (
     <>
-      <Token value="meals" />: {retreat.mealsCount},
+      <Token value="meals" /> : 1
       {' '}
-      <Token value="carts" />: {retreat.carts}
+      <Token value="carts" /> : 2
     </>
   )
 

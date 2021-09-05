@@ -14,6 +14,8 @@ import AddToListModal from './AddToListModal'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import { fetchAllIngredientsRequest } from 'store/ingredients/actions'
 import { IngredientInaDishDto } from 'utils/interfaces/ingredient-ina-dish.interface'
+import { Meal } from 'utils/interfaces/meal.interface'
+import { MEAL_TYPES_NAMES } from 'utils/constants'
 
 const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
   const dispatch = useDispatch()
@@ -47,6 +49,24 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
       dispatch(deleteDishRequest(dishDetail.id))
 
     onCloseRemoveDishDialog()
+  }
+
+  const mealName = (meal: Meal) => {
+      return <>
+        <Token value={MEAL_TYPES_NAMES[meal.type]} /> {`#${meal.id}`}
+      </>
+  }
+
+  const dialogRemoveDescription = () => {
+    const usedInMeals = dishDetail?.dish_ina_meal.map(dish => mealName(dish.meal))
+
+    if (usedInMeals?.length)
+      return <div>
+        <Token value="warningDishUsed" />
+        {Array.from(new Set(usedInMeals)).map(meal => <p key={`key-${meal}`}>{meal}</p>)}
+      </div>
+
+    return <Token value="dishNotUsed" />
   }
 
   const onCloseAddToListModal = () => {
@@ -115,7 +135,13 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
       {dishDetail &&
         <>
           <AddToListModal open={addToListModalOpen} dishId={dishDetail.id} onClose={onCloseAddToListModal} onCreateIngredient={onCreateIngredient} />
-          <DialogRemove open={dialogRemoveOpen} handleRemove={handleRemoveDish} onClose={onCloseRemoveDishDialog} elementName={dishDetail.name} />
+          <DialogRemove 
+            open={dialogRemoveOpen} 
+            handleRemove={handleRemoveDish} 
+            onClose={onCloseRemoveDishDialog} 
+            elementName={dishDetail.name} 
+            description={dialogRemoveDescription()}
+            />
         </>
       }
     </div>

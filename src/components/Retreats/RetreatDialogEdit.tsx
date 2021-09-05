@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core'
 import Token from 'components/Token'
-import { Retreat } from 'store/retreats/types'
+import { Retreat } from 'utils/interfaces/retreat.interface'
 
 interface RetreatDialogEdit {
   open: boolean,

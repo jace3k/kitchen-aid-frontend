@@ -1,11 +1,10 @@
-import { retreats, mealRows } from "utils/fakeData"
 import { Ingredient } from "./ingredients/types"
-import { MealRowResponse, RetreatResponse } from "./retreats/types"
 import { SimpleResponse } from "./simple/types"
 import axios from './axios'
-import { IngredientInADish, IngredientInaDishDto } from "utils/interfaces/ingredient-ina-dish.interface"
+import { IngredientInaDishDto } from "utils/interfaces/ingredient-ina-dish.interface"
 import { MealDto } from "utils/interfaces/meal.interface"
 import { DishInaMealDto } from "utils/interfaces/dish-ina-meal.interface"
+import { Retreat } from "utils/interfaces/retreat.interface"
 
 export const SimpleApi = {
   get: (): Promise<SimpleResponse> => {
@@ -22,23 +21,8 @@ export const UserApi = {
 }
 
 export const RetreatsApi = {
-  getAll: (): Promise<RetreatResponse> => {
-    return new Promise<RetreatResponse>((resolve, reject) => {
-      setTimeout(() => {
-        resolve({ retreats, status: 'OK' })
-      }, 1000)
-    })
-  },
-  getMeals: (retreatId: number): Promise<MealRowResponse> => {
-    return new Promise<MealRowResponse>((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          mealRows: mealRows.filter(x => x.retreatId === retreatId),
-          retreat: retreats.find(x => x.id === retreatId) || null,
-          status: 'OK'
-        })
-      }, 1000)
-    })
+  getAll: (): Promise<Retreat[]> => {
+    return axios.get(`retreat`)
   }
 }
 

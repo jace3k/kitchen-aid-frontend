@@ -43,13 +43,13 @@ const Ingredients = () => {
     handleCloseConfirmDialogRemove()
   }
 
-  const dialogDescription = () => {
+  const dialogRemoveDescription = () => {
     const usedInDishes = ingredientDetail?.ingredient_ina_dish.map(ing => ing.dish.name)
 
     if (usedInDishes?.length)
       return <div>
         <Token value="warningIngredientUsed" />
-        {usedInDishes?.map(dish => <p key={`key-${dish}`}>{dish}</p>)}
+        {Array.from(new Set(usedInDishes)).map(dish => <p key={`key-${dish}`}>{dish}</p>)}
       </div>
 
     return <Token value="ingredientNotUsed" />
@@ -73,7 +73,7 @@ const Ingredients = () => {
         handleRemove={handleRemoveIngredient}
         onClose={handleCloseConfirmDialogRemove}
         elementName={dialogIngredient ? dialogIngredient.name : ''}
-        description={dialogDescription()}
+        description={dialogRemoveDescription()}
       />
       <Tooltip title={<Token value="addNewIngredient" />} placement='left'>
         <Fab color="primary" className={retreatClasses.fab} onClick={() => handleIngredientDialogEditOpen(null)}>

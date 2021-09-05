@@ -90,7 +90,8 @@ const reducer: Reducer<DishesState, DishStateActionTypes> = (state = initialStat
 					id: state.dishDetail?.id || 0,
 					name: action.dish.name,
 					size: action.dish.size,
-					ingredient_ina_dish: state.dishDetail?.ingredient_ina_dish || []
+					ingredient_ina_dish: state.dishDetail?.ingredient_ina_dish || [],
+					dish_ina_meal: state.dishDetail?.dish_ina_meal || [],
 				}
 			}
 		case DishActionTypes.UPDATE_DISH_ERROR:

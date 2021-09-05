@@ -1,31 +1,21 @@
+import { AxiosResponse } from 'axios'
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { RetreatsApi } from 'store/api'
-import { fetchAllRetreatsFailed, fetchAllRetreatsSuccess, fetchMealsForRetreatFailed, fetchMealsForRetreatSuccess } from './actions'
-import { FetchAllMealsForRetreatRequestType, MealRowResponse, RetreatActionTypes, RetreatResponse } from './types'
+import { fetchAllRetreatsFailed, fetchAllRetreatsSuccess } from './actions'
+import { RetreatActionTypes } from './types'
 
 function* fetchAllRetreats() {
   try {
-    const response: RetreatResponse = yield call(RetreatsApi.getAll)
-    const allRetreats = response.retreats
+    const response: AxiosResponse = yield call(RetreatsApi.getAll)
 
-    yield put(fetchAllRetreatsSuccess(allRetreats))
+    yield put(fetchAllRetreatsSuccess(response.data))
   }
   catch (err: any) {
     yield put(fetchAllRetreatsFailed(err))
   }
 }
 
-function* fetchMealsForRetreat({ retreatId }: FetchAllMealsForRetreatRequestType) {
-  try {
-    const response: MealRowResponse = yield call(RetreatsApi.getMeals, retreatId)
-    yield put(fetchMealsForRetreatSuccess(response.mealRows, response.retreat))
-  }
-  catch (err: any) {
-    yield put(fetchMealsForRetreatFailed(err))
-  }
-}
 
 export default function* watch() {
   yield takeLatest(RetreatActionTypes.FETCH_ALL_REQUEST, fetchAllRetreats)
-  yield takeLatest(RetreatActionTypes.FETCH_MEALS_FOR_RETREAT_REQUEST, fetchMealsForRetreat)
 }

@@ -66,4 +66,8 @@ export interface ITranslations {
   removeDish: string,
   warningIngredientUsed: string,
   ingredientNotUsed: string,
+  warningDishUsed: string,
+  dishNotUsed: string,
+  warningMealUsed: string,
+  mealNotUsed: string,
 }

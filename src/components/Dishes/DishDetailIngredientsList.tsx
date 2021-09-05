@@ -1,22 +1,17 @@
 import { CircularProgress, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField } from '@material-ui/core'
 import Token from 'components/Token'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CellProps, Column, useTable } from 'react-table'
 import { ApplicationState } from 'store'
 import { deleteIngredientInADishRequest, updateIngredientInADishRequest } from 'store/dishes/actions'
-import { Dish } from 'utils/interfaces/dish.interface'
 import { IngredientInADish, IngredientInaDishDto } from 'utils/interfaces/ingredient-ina-dish.interface'
 import CloseIcon from '@material-ui/icons/Check'
 import RemoveIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import { ROWS_PER_PAGE_OPTIONS } from 'utils/constants'
-
-interface DishDetailIngredientsListProps {
-  handleOpenConfirmDialogRemove: (ingredient: IngredientInADish) => void
-}
 
 const LoadingDataRow = () => {
 

@@ -3,8 +3,8 @@ import { RetreatsState, RetreatActionTypes, RetreatStateActionTypes } from './ty
 
 const initialState: RetreatsState = {
   loading: false,
-  allRetreats: [],
-  allMealsForRetreat: [],
+  retreats: [],
+  meals: [],
   currentRetreat: null,
   error: null,
 }
@@ -23,37 +23,14 @@ const reducer: Reducer<RetreatsState, RetreatStateActionTypes> = (state = initia
         ...state,
         loading: false,
         error: null,
-        allRetreats: action.allRetreats,
+        retreats: action.retreats,
       }
     case RetreatActionTypes.FETCH_ALL_ERROR:
       return {
         ...state,
         loading: false,
         error: action.error,
-        allRetreats: [],
-      }
-    case RetreatActionTypes.FETCH_MEALS_FOR_RETREAT_REQUEST:
-      return {
-        ...state,
-        loading: true,
-        error: null,
-        allMealsForRetreat: [],
-        currentRetreat: null,
-      }
-    case RetreatActionTypes.FETCH_MEALS_FOR_RETREAT_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        error: null,
-        allMealsForRetreat: action.allMealsForRetreat,
-        currentRetreat: action.currentRetreat,
-      }
-    case RetreatActionTypes.FETCH_MEALS_FOR_RETREAT_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
-        allMealsForRetreat: [],
+        retreats: [],
       }
     default:
       return state

@@ -68,4 +68,8 @@ export const en: ITranslations = {
   removeDish: 'Remove dish',
   warningIngredientUsed: 'Watch out! Ingredient is used in dishes:',
   ingredientNotUsed: 'Ingredient is not used anywhere',
+  warningDishUsed: 'Watch out! Dish is used in meals:',
+  dishNotUsed: 'Dish is not used anywhere',
+  warningMealUsed: 'Watch out! Meal is used in retreats:',
+  mealNotUsed: 'Meal is not used anywhere',
 }

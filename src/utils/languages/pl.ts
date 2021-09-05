@@ -67,5 +67,9 @@ export const pl: ITranslations = {
   removeMeal: 'Usuń posiłek',
   removeDish: 'Usuń danie',
   warningIngredientUsed: 'Uwaga! Składnik jest używany w daniach:',
-  ingredientNotUsed: 'Składnik nie jest nigdzie używany'
+  ingredientNotUsed: 'Składnik nie jest nigdzie używany',
+  warningDishUsed: 'Uwaga! Danie jest używane w posiłkach:',
+  dishNotUsed: 'Danie nie jest nigdzie używane',
+  warningMealUsed: 'Uwaga! Posiłek jest używany w wydarzeniach:',
+  mealNotUsed: 'Posiłek nie jest nigdzie używany',
 }

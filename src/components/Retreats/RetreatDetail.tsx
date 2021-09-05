@@ -5,7 +5,6 @@ import { RouteComponentProps } from 'react-router-dom'
 import CartIcon from '@material-ui/icons/AddShoppingCart'
 import MealsIcon from '@material-ui/icons/Fastfood'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchMealsForRetreatRequest } from 'store/retreats/actions'
 import { ApplicationState } from 'store'
 import Token from 'components/Token'
 
@@ -13,12 +12,7 @@ import Token from 'components/Token'
 const RetreatDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
   const classes = useStyles()
   const dispatch = useDispatch()
-  const { allMealsForRetreat, currentRetreat, loading } = useSelector((state: ApplicationState) => state.retreats)
-
-  useEffect(() => {
-    const { id } = props.match.params
-    dispatch(fetchMealsForRetreatRequest(parseInt(id)))
-  }, [])
+  const { meals, retreats, currentRetreat, loading } = useSelector((state: ApplicationState) => state.retreats)
 
   return (
     <Container className={classes.detailContainer}>
@@ -28,13 +22,13 @@ const RetreatDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
           <Divider style={{ marginBottom: 10 }} />
           <Tooltip title={<Token value="cartsCounter" />}>
             <IconButton>
-              <Badge badgeContent={currentRetreat?.carts} color="primary" className={classes.badge}>
+              <Badge badgeContent={1} color="primary" className={classes.badge}>
                 <CartIcon />
               </Badge>
             </IconButton>
           </Tooltip>
           <Tooltip title={<Token value="mealsCounter" />}>
-            <Badge badgeContent={currentRetreat?.mealsCount} color="secondary" className={classes.badge}>
+            <Badge badgeContent={2} color="secondary" className={classes.badge}>
               <MealsIcon />
             </Badge>
           </Tooltip>
@@ -45,7 +39,7 @@ const RetreatDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
           <h2><Token value="meals" /></h2>
           <Divider />
           <List>
-            {allMealsForRetreat.map(meal => (
+            {meals.map(meal => (
               <ListItem button key={meal.id}>
                 <ListItemText>
                   {meal.name} <Chip color="secondary" size="small" icon={<MealsIcon />} label="Breakfast" />

@@ -14,11 +14,10 @@ const Retreats: React.FC<RouteComponentProps> = ({ history }) => {
   const classes = useStyles()
   const [newRetreatOpen, setNewRetreatOpen] = useState(false)
 
-  const { allRetreats, loading } = useSelector((state: ApplicationState) => state.retreats)
+  const { retreats, loading } = useSelector((state: ApplicationState) => state.retreats)
 
   const dispatch = useDispatch()
   const fetchAllRetreats = () => dispatch(fetchAllRetreatsRequest())
-  const id = (index: number) => `retreat-list-item-${index}`
 
   const handleAddNewRetreatOpen = () => setNewRetreatOpen(true)
   const handleAddNewRetreatClose = () => setNewRetreatOpen(false)
@@ -31,11 +30,11 @@ const Retreats: React.FC<RouteComponentProps> = ({ history }) => {
     <Container style={{ minWidth: 300 }}>
       <h1><Token value="retreats" /></h1>
       <List>
-        {allRetreats.map((retreat, index) =>
+        {retreats.map(retreat =>
           <RetreatListItem
             retreat={retreat}
             disabled={loading}
-            key={id(index)}
+            key={`ret-list-item-${retreat.id}`}
             history={history}
           />)}
       </List>
