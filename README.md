@@ -30,11 +30,18 @@ ___
 * ~ingredients - list/edit/remove/new~
 * ~ingredients - pagination/filtering/sorting~
 * ~logout redirect to /~
-* warning when ingredient in a dish is used during removal (need endpoint)
+* ~warning when ingredient in a dish is used during removal (need endpoint)~
+* warning when dish is removed (see ingredient)
+* warning when meal is removed (see ingredient)
 * ~settings - add default items per page (pagination)~
 * ~fix some translations~
 * error handling (detail 404, network errors)
-* Meals
+* ~Meals~
+* Retreats
+* Beautify dialogs, lists (add colors etc)
+* info 'no data' on tables when empty
+* separate loading detail ingredient from list
+
 
 ####### Future
 * Tables - sorting & filtering

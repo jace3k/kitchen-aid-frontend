@@ -17,8 +17,9 @@ interface DetaiWithListViewProps {
   generateItemsList: () => JSX.Element
   listTitle: TranslationTokensType
   loading: boolean
-  onCloseEditMode: (itemName: string) => void
+  onCloseEditMode?: (itemName: string) => void
   onAddToListClick?: () => void
+  disableEditMode?: boolean
 }
 
 const DetailWithListView = ({
@@ -28,7 +29,8 @@ const DetailWithListView = ({
   listTitle,
   loading,
   onCloseEditMode,
-  onAddToListClick
+  onAddToListClick,
+  disableEditMode
 }: DetaiWithListViewProps) => {
   const classes = useStyles()
   const [editMode, setEditMode] = useState(false)
@@ -50,13 +52,14 @@ const DetailWithListView = ({
                 <TableBody>
                   <TableRow>
                     <TableCell>
-                      {editMode ? <TextField value={itemName} onChange={(e) => setItemName(e.target.value)} /> : <h3>{itemName}</h3>}
+                      {!disableEditMode && editMode ? <TextField value={itemName} onChange={(e) => setItemName(e.target.value)} /> : <h3>{itemName}</h3>}
                     </TableCell>
                     <TableCell>
                       {editMode ? (
                         <span onClick={() => {
                           setEditMode(false)
-                          onCloseEditMode(itemName)
+                          if (onCloseEditMode)
+                            onCloseEditMode(itemName)
                         }}>
                           <IconButton size="small" style={{ float: 'right' }} >
                             <CloseIcon />
@@ -102,7 +105,7 @@ const DetailWithListView = ({
           {generateItemsList()}
         </CardContent>
       </Card>
-    </Container>
+    </Container >
   )
 }
 

@@ -4,6 +4,8 @@ import { MealRowResponse, RetreatResponse } from "./retreats/types"
 import { SimpleResponse } from "./simple/types"
 import axios from './axios'
 import { IngredientInADish, IngredientInaDishDto } from "utils/interfaces/ingredient-ina-dish.interface"
+import { MealDto } from "utils/interfaces/meal.interface"
+import { DishInaMealDto } from "utils/interfaces/dish-ina-meal.interface"
 
 export const SimpleApi = {
   get: (): Promise<SimpleResponse> => {
@@ -52,6 +54,9 @@ export const IngredientsApi = {
   },
   updateIngredient: (id: number, name: string) => {
     return axios.put(`ingredient/${id}/`, { name })
+  },
+  get: (id: number) => {
+    return axios.get(`ingredient/${id}/`)
   }
 }
 
@@ -79,5 +84,29 @@ export const DishesApi = {
   },
   removeIngredient: (ingredientInaDishId: number) => {
     return axios.delete(`ingredient_ina_dish/${ingredientInaDishId}/`)
+  }
+}
+
+export const MealsApi = {
+  getAll: () => {
+    return axios.get('meal')
+  },
+  createMeal: (meal: MealDto) => {
+    return axios.post('meal/', meal)
+  },
+  deleteMeal: (id: number) => {
+    return axios.delete(`meal/${id}/`)
+  },
+  getMealDetail: (id: number) => {
+    return axios.get(`meal/${id}/`)
+  },
+  addDish: (dishInaMeal: DishInaMealDto) => {
+    return axios.post(`dish_ina_meal/`, dishInaMeal)
+  },
+  updateDish: (dishInaMeal: DishInaMealDto) => {
+    return axios.put(`dish_ina_meal/${dishInaMeal.id}/`, dishInaMeal)
+  },
+  removeDish: (dishInaMealId: number) => {
+    return axios.delete(`dish_ina_meal/${dishInaMealId}/`)
   }
 }

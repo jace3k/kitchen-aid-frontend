@@ -7,16 +7,18 @@ interface DialogRemoveProps {
   open: boolean
   onClose: () => void
   handleRemove: () => void
-  elementName: string
+  elementName: string | JSX.Element
+  description?: string | JSX.Element
 }
 
-const DialogRemove = ({ open, onClose, handleRemove, elementName }: DialogRemoveProps) => {
+const DialogRemove = ({ open, onClose, handleRemove, elementName, description }: DialogRemoveProps) => {
 
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle><Token value="removeConfirmTitle" /> </DialogTitle>
       <DialogContent>
         <h3>{elementName}</h3>
+        {description}
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="secondary">

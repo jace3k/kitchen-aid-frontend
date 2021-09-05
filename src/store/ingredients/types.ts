@@ -1,3 +1,4 @@
+import { IngredientDetal } from "utils/interfaces/ingredient.interface"
 
 // type fetched from api
 export interface Ingredient {
@@ -45,6 +46,10 @@ export enum IngredientActionTypes {
   UPDATE_INGREDIENT_REQUEST = '@@ingredients/UPDATE_INGREDIENT_REQUEST',
   UPDATE_INGREDIENT_SUCCESS = '@@ingredients/UPDATE_INGREDIENT_SUCCESS',
   UPDATE_INGREDIENT_ERROR = '@@ingredients/UPDATE_INGREDIENT_ERROR',
+
+  FETCH_INGREDIENT_DETAIL_REQUEST = '@@ingredients/FETCH_INGREDIENT_DETAIL_REQUEST',
+  FETCH_INGREDIENT_DETAIL_SUCCESS = '@@ingredients/FETCH_INGREDIENT_DETAIL_SUCCESS',
+  FETCH_INGREDIENT_DETAIL_ERROR = '@@ingredients/FETCH_INGREDIENT_DETAIL_ERROR',
 }
 
 // LIST
@@ -115,16 +120,34 @@ interface UpdateIngredientFailedType {
   error: string,
 }
 
+// DETAIL
+export interface FetchIngredientDetailRequestType {
+  type: typeof IngredientActionTypes.FETCH_INGREDIENT_DETAIL_REQUEST,
+  id: number,
+}
+
+interface FetchIngredientDetailSuccessType {
+  type: typeof IngredientActionTypes.FETCH_INGREDIENT_DETAIL_SUCCESS,
+  ingredientDetail: IngredientDetal,
+}
+
+interface FetchIngredientDetailFailedType {
+  type: typeof IngredientActionTypes.FETCH_INGREDIENT_DETAIL_ERROR,
+  error: string,
+}
+
 
 export type FetchAllIngredientsType = FetchAllIngredientsRequestType | FetchAllIngredientsSuccessType | FetchAllIngredientsErrorType
 export type CreateIngredientType = CreateIngredientRequestType | CreateIngredientSuccessType | CreateIngredientFailedType
 export type DeleteIngredientType = DeleteIngredientRequestType | DeleteIngredientSuccessType | DeleteIngredientFailedType
 export type UpdateIngredientType = UpdateIngredientRequestType | UpdateIngredientSuccessType | UpdateIngredientFailedType
+export type FetchIngredientDetailType = FetchIngredientDetailRequestType | FetchIngredientDetailSuccessType | FetchIngredientDetailFailedType
 
-export type IngredientStateActionTypes = FetchAllIngredientsType | CreateIngredientType | DeleteIngredientType | UpdateIngredientType
+export type IngredientStateActionTypes = FetchAllIngredientsType | CreateIngredientType | DeleteIngredientType | UpdateIngredientType | FetchIngredientDetailType
 
 export interface IngredientsState {
   readonly loading: boolean,
   readonly error: string | null,
   readonly ingredients: Ingredient[],
+  readonly ingredientDetail: IngredientDetal | null,
 }

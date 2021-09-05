@@ -1,18 +1,14 @@
-import { Badge, Button, Card, Container, IconButton, ListItem, ListItemText, Table, TableBody, TableCell, TableFooter, TableRow, TextField, Tooltip } from '@material-ui/core'
+import { Button, Table, TableBody, TableCell, TableFooter, TableRow, TextField } from '@material-ui/core'
 import DetailWithListView from 'components/genericComponents/DetailWithListView/DetailWithListView'
 import Loader from 'components/Loader/Loader'
 import Token from 'components/Token'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
-import SizeIcon from '@material-ui/icons/DynamicFeed'
 import { ApplicationState } from 'store'
 import { createIngredientInADishRequest, deleteDishRequest, fetchDishDetailRequest, updateDishRequest } from 'store/dishes/actions'
 import * as routes from 'utils/routes'
 import { useStyles } from 'components/genericComponents/styles'
-import EditIcon from '@material-ui/icons/Edit'
-import CloseIcon from '@material-ui/icons/Check'
-import RemoveIcon from '@material-ui/icons/Delete'
 import DishDetailIngredientsList from './DishDetailIngredientsList'
 import AddToListModal from './AddToListModal'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
@@ -103,7 +99,7 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
                   {editMode && (
                     <TableRow>
                       <TableCell colSpan={2} align="right" onClick={() => setDialogRemoveOpen(true)}>
-                        <Button color="secondary" size="small">Remove dish</Button>
+                        <Button color="secondary" size="small"><Token value="removeDish" /></Button>
                       </TableCell>
                     </TableRow>
                   )}

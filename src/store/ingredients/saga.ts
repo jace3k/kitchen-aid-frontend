@@ -1,8 +1,8 @@
 import { AxiosResponse } from 'axios'
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { IngredientsApi } from 'store/api'
-import { createIngredientFailed, createIngredientSuccess, deleteIngredientFailed, deleteIngredientSuccess, fetchAllIngredientsFailed, fetchAllIngredientsSuccess, updateIngredientFailed, updateIngredientSuccess } from './actions'
-import { CreateIngredientRequestType, DeleteIngredientRequestType, Ingredient, IngredientActionTypes, UpdateIngredientRequestType } from './types'
+import { createIngredientFailed, createIngredientSuccess, deleteIngredientFailed, deleteIngredientSuccess, fetchAllIngredientsFailed, fetchAllIngredientsSuccess, fetchIngredientDetailFailed, fetchIngredientDetailSuccess, updateIngredientFailed, updateIngredientSuccess } from './actions'
+import { CreateIngredientRequestType, DeleteIngredientRequestType, FetchIngredientDetailRequestType, Ingredient, IngredientActionTypes, UpdateIngredientRequestType } from './types'
 
 function* fetchAllIngredients() {
   try {
@@ -45,9 +45,20 @@ function* updateIngredient({ id, name }: UpdateIngredientRequestType) {
   }
 }
 
+function* fetchIngredientDetail({ id }: FetchIngredientDetailRequestType) {
+  try {
+    const response: AxiosResponse = yield call(IngredientsApi.get, id)
+    yield put(fetchIngredientDetailSuccess(response.data))
+  }
+  catch (err: any) {
+    yield put(fetchIngredientDetailFailed(err))
+  }
+}
+
 export default function* watch() {
   yield takeLatest(IngredientActionTypes.FETCH_ALL_REQUEST, fetchAllIngredients)
   yield takeLatest(IngredientActionTypes.CREATE_INGREDIENT_REQUEST, createIngredient)
   yield takeLatest(IngredientActionTypes.DELETE_INGREDIENT_REQUEST, deleteIngredient)
   yield takeLatest(IngredientActionTypes.UPDATE_INGREDIENT_REQUEST, updateIngredient)
+  yield takeLatest(IngredientActionTypes.FETCH_INGREDIENT_DETAIL_REQUEST, fetchIngredientDetail)
 }

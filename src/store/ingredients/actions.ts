@@ -1,4 +1,5 @@
-import { CreateIngredientType, DeleteIngredientType, FetchAllIngredientsType, Ingredient, IngredientActionTypes, UpdateIngredientType } from "./types"
+import { IngredientDetal } from "utils/interfaces/ingredient.interface"
+import { CreateIngredientType, DeleteIngredientType, FetchAllIngredientsType, FetchIngredientDetailType, Ingredient, IngredientActionTypes, UpdateIngredientType } from "./types"
 
 export const fetchAllIngredientsRequest = (): FetchAllIngredientsType => ({ type: IngredientActionTypes.FETCH_ALL_REQUEST })
 export const fetchAllIngredientsSuccess = (ingredients: Ingredient[]): FetchAllIngredientsType => ({ type: IngredientActionTypes.FETCH_ALL_SUCCESS, ingredients })
@@ -16,3 +17,6 @@ export const updateIngredientRequest = (id: number, name: string): UpdateIngredi
 export const updateIngredientSuccess = (id: number, name: string): UpdateIngredientType => ({ type: IngredientActionTypes.UPDATE_INGREDIENT_SUCCESS, id, name })
 export const updateIngredientFailed = (error: string): UpdateIngredientType => ({ type: IngredientActionTypes.UPDATE_INGREDIENT_ERROR, error })
 
+export const fetchIngredientDetailRequest = (id: number): FetchIngredientDetailType => ({ type: IngredientActionTypes.FETCH_INGREDIENT_DETAIL_REQUEST, id })
+export const fetchIngredientDetailSuccess = (ingredientDetail: IngredientDetal): FetchIngredientDetailType => ({ type: IngredientActionTypes.FETCH_INGREDIENT_DETAIL_SUCCESS, ingredientDetail })
+export const fetchIngredientDetailFailed = (error: string): FetchIngredientDetailType => ({ type: IngredientActionTypes.FETCH_INGREDIENT_DETAIL_ERROR, error })

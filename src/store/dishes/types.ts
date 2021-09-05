@@ -108,7 +108,7 @@ interface UpdateDishFailedType {
 }
 
 
-// FETCH ALL INGREDIENTS
+// DISH DETAIL
 export interface FetchDishDetailRequestType {
   type: typeof DishActionTypes.FETCH_DISH_DETAIL_REQUEST,
   dishId: number,
@@ -157,7 +157,7 @@ interface CreateIngredientFailedType {
   error: string,
 }
 
-// CREATE INGREDIENT
+// DELETE INGREDIENT
 export interface DeleteIngredientRequestType {
   type: typeof DishActionTypes.DELETE_INGREDIENT_REQUEST,
   id: number,

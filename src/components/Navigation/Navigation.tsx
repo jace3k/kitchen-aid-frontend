@@ -17,6 +17,7 @@ type ITabNavigationUrls = {
 
 export const TabNavigationUrls: ITabNavigationUrls[] = [
   { url: routes.Retreats, token: "retreats" },
+  { url: routes.Meals, token: 'meals' },
   { url: routes.Dishes, token: 'dishes' },
   { url: routes.Ingredients, token: 'ingredients' },
 ]

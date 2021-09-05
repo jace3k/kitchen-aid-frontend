@@ -44,7 +44,7 @@ export const pl: ITranslations = {
   addIngredientError: 'Nie można dodać składnika',
   dishes: 'Dania',
   name: 'Nazwa',
-  size: 'Ilość',
+  size: 'Rozmiar',
   rowsPerPage: 'Na stronie',
   addNewDish: 'Dodaj nową potrawę',
   dishNameLabel: 'Nazwa potrawy',
@@ -54,5 +54,18 @@ export const pl: ITranslations = {
   defaultRowsPerPageLabel: 'Domyślna liczba elementów na stronie',
   total: 'z',
   notFound: '404 - Nie znaleziono strony!',
-  backToHome: 'Strona główna'
+  backToHome: 'Strona główna',
+  addNewMeal: 'Dodaj nową potrawę',
+  createBreakfast: 'Utwórz śniadanie',
+  createLunch: 'Utwórz lunch',
+  createFeast: 'Utwórz ucztę',
+  mealLabel: 'Nazwa posiłku',
+  breakfast: 'Śniadanie',
+  lunch: 'Lunch',
+  feast: 'Uczta',
+  dish: 'Danie',
+  removeMeal: 'Usuń posiłek',
+  removeDish: 'Usuń danie',
+  warningIngredientUsed: 'Uwaga! Składnik jest używany w daniach:',
+  ingredientNotUsed: 'Składnik nie jest nigdzie używany'
 }

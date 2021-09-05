@@ -4,7 +4,7 @@ import { CellProps, Column, useTable, usePagination } from 'react-table'
 import { useSelector, useDispatch } from 'react-redux'
 import { ApplicationState } from 'store'
 import { useStyles } from './styles'
-import { fetchAllIngredientsRequest, updateIngredientRequest } from 'store/ingredients/actions'
+import { fetchAllIngredientsRequest, fetchIngredientDetailRequest, updateIngredientRequest } from 'store/ingredients/actions'
 import { Ingredient } from 'store/ingredients/types'
 import { Table } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Check'
@@ -103,7 +103,11 @@ const IngredientsTable = ({ handleOpenConfirmDialogRemove }: IngredientsTablePro
             }
             <IconButton
               size="small"
-              onClick={() => handleOpenConfirmDialogRemove(row.original)}
+              onClick={() => {
+                dispatch(fetchIngredientDetailRequest(row.original.id))
+                handleOpenConfirmDialogRemove(row.original)
+
+              }}
             >
               <RemoveIcon />
             </IconButton>

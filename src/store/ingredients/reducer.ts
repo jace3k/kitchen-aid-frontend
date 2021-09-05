@@ -5,6 +5,7 @@ const initialState: IngredientsState = {
   loading: false,
   ingredients: [],
   error: null,
+  ingredientDetail: null,
 }
 
 const reducer: Reducer<IngredientsState, IngredientStateActionTypes> = (state = initialState, action) => {
@@ -88,6 +89,25 @@ const reducer: Reducer<IngredientsState, IngredientStateActionTypes> = (state = 
         }),
       }
     case IngredientActionTypes.UPDATE_INGREDIENT_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      }
+    case IngredientActionTypes.FETCH_INGREDIENT_DETAIL_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      }
+    case IngredientActionTypes.FETCH_INGREDIENT_DETAIL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        ingredientDetail: action.ingredientDetail,
+      }
+    case IngredientActionTypes.FETCH_INGREDIENT_DETAIL_ERROR:
       return {
         ...state,
         loading: false,

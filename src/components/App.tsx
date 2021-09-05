@@ -20,6 +20,8 @@ import storage from 'utils/storage'
 import { changeLanguage, tryLogin, toggleDarkMode, setDefaultItemsPerPage } from 'store/user/actions'
 import Dishes from './Dishes/Dishes'
 import DishesDetail from './Dishes/DishesDetail'
+import Meals from './Meals/Meals'
+import MealDetail from './Meals/MealDetail'
 
 const App: React.FC = () => {
   const dispatch = useDispatch()
@@ -63,6 +65,8 @@ const App: React.FC = () => {
           <Route exact path="/" component={Retreats} />
           <Route exact path="/retreats" component={Retreats} />
           <Route exact path="/retreats/:id" component={RetreatDetail} />
+          <Route exact path="/meals" component={Meals} />
+          <Route exact path="/meals/:id" component={MealDetail} />
           <Route exact path="/dishes" component={Dishes} />
           <Route exact path="/dishes/:id" component={DishesDetail} />
           <Route exact path="/ingredients" component={Ingredients} />
