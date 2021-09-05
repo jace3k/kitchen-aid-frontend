@@ -47,3 +47,4 @@ ___
 * Tables - sorting & filtering
 * Admin page
 * Log events
+* Code optimization
