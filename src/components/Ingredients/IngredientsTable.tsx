@@ -186,6 +186,7 @@ const IngredientsTable = ({ handleOpenConfirmDialogRemove }: IngredientsTablePro
                 setRowsPerPage(parseInt(e.target.value, 10))
                 setCurrentPage(0)
               }}
+              labelDisplayedRows={info => <>{`${info.from}-${info.to}`} <Token value="total" /> {info.count}</>}
             />
           </TableRow>
         </TableFooter>

@@ -70,4 +70,8 @@ export interface ITranslations {
   dishNotUsed: string,
   warningMealUsed: string,
   mealNotUsed: string,
+  meal: string,
+  date: string,
+  servings: string,
+  removeRetreat: string,
 }

@@ -8,11 +8,11 @@ import { RouteComponentProps } from 'react-router-dom'
 import { ApplicationState } from 'store'
 import { fetchAllDishesRequest } from 'store/dishes/actions'
 import { createDishInAMealRequest, deleteMealRequest, fetchMealDetailRequest } from 'store/meals/actions'
-import { MEAL_TYPES_NAMES } from 'utils/constants'
 import { DishInaMealDto } from 'utils/interfaces/dish-ina-meal.interface'
 import * as routes from 'utils/routes'
 import AddToListModal from './AddToListModal'
 import MealDetailDishList from './MealDetailDishList'
+import MealName from './MealName'
 
 const MealDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
   const dispatch = useDispatch()
@@ -44,7 +44,7 @@ const MealDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
 
   const dialogRemoveDescription = () => {
     const usedInRetreats = mealDetail?.meal_ina_retreat.map(meal => meal.retreat.name)
-    
+
     if (usedInRetreats?.length)
       return <div>
         <Token value="warningMealUsed" />
@@ -63,21 +63,12 @@ const MealDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
     setAddToListModalOpen(false)
   }
 
-  const mealName = () => {
-    if (mealDetail)
-      return <>
-        <Token value={MEAL_TYPES_NAMES[mealDetail.type]} /> {`#${mealDetail.id}`}
-      </>
-
-    return ''
-  }
-
   return (
     <div>
       <DetailWithListView
         loading={loading}
         disableEditMode
-        name={mealName()}
+        name={<MealName id={mealDetail?.id} type={mealDetail?.type} />}
         listTitle="dishes"
 
         onAddToListClick={() => {
@@ -110,7 +101,7 @@ const MealDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
             open={dialogRemoveOpen}
             handleRemove={handleRemoveMeal}
             onClose={onCloseRemoveMealDialog}
-            elementName={mealName()}
+            elementName={<MealName id={mealDetail?.id} type={mealDetail?.type} />}
             description={dialogRemoveDescription()}
           />
         </>

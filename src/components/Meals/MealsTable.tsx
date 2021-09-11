@@ -1,15 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Token from 'components/Token'
-import { CellProps, Column, Row, usePagination, useTable } from 'react-table'
+import { CellProps, Column, Row, useTable } from 'react-table'
 import { useSelector, useDispatch } from 'react-redux'
 import { ApplicationState } from 'store'
-import { IconButton, Table } from '@material-ui/core'
-import EditIcon from '@material-ui/icons/Edit'
-import RemoveIcon from '@material-ui/icons/Delete'
-import { CircularProgress, Paper, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField } from '@material-ui/core'
-import { MEAL_TYPES_NAMES, ROWS_PER_PAGE_OPTIONS } from 'utils/constants'
+import { Table } from '@material-ui/core'
+import { CircularProgress, Paper, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from '@material-ui/core'
+import { ROWS_PER_PAGE_OPTIONS } from 'utils/constants'
 import { Meal } from 'utils/interfaces/meal.interface'
 import { fetchAllMealsRequest } from 'store/meals/actions'
+import MealName from './MealName'
 
 interface MealsTableProps {
   onRowClick: (row: Row<Meal>) => void
@@ -44,11 +43,7 @@ const MealsTable = ({ onRowClick }: MealsTableProps) => {
       id: '1',
       Header: <Token value="mealLabel" />,
       Cell: ({ row }: CellProps<Meal>) => {
-        return (
-          <>
-            <Token value={MEAL_TYPES_NAMES[row.original.type]} /> {`#${row.original.id}`}
-          </>
-        )
+        return <MealName id={row.original.id} type={row.original.type} />
       }
     }
   ], [meals])

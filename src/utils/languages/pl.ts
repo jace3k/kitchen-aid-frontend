@@ -55,7 +55,7 @@ export const pl: ITranslations = {
   total: 'z',
   notFound: '404 - Nie znaleziono strony!',
   backToHome: 'Strona główna',
-  addNewMeal: 'Dodaj nową potrawę',
+  addNewMeal: 'Dodaj nowy posiłek',
   createBreakfast: 'Utwórz śniadanie',
   createLunch: 'Utwórz lunch',
   createFeast: 'Utwórz ucztę',
@@ -72,4 +72,8 @@ export const pl: ITranslations = {
   dishNotUsed: 'Danie nie jest nigdzie używane',
   warningMealUsed: 'Uwaga! Posiłek jest używany w wydarzeniach:',
   mealNotUsed: 'Posiłek nie jest nigdzie używany',
+  meal: 'Posiłek',
+  date: 'Data',
+  servings: 'Porcje',
+  removeRetreat: 'Usuń wydarzenie',
 }

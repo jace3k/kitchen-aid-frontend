@@ -36,7 +36,7 @@ ___
 * ~settings - add default items per page (pagination)~
 * ~fix some translations~
 * ~Meals~
-* Retreats
+* ~Retreats~
 * error handling (detail 404, network errors)
 * Beautify dialogs, lists (add colors etc)
 * info 'no data' on tables when empty
@@ -48,4 +48,4 @@ ___
 * Tables - sorting & filtering
 * Admin page
 * Log events
-* Code optimization
+* Code optimization (store refactor (only one error handler), code duplication)

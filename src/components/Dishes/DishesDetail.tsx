@@ -16,6 +16,7 @@ import { fetchAllIngredientsRequest } from 'store/ingredients/actions'
 import { IngredientInaDishDto } from 'utils/interfaces/ingredient-ina-dish.interface'
 import { Meal } from 'utils/interfaces/meal.interface'
 import { MEAL_TYPES_NAMES } from 'utils/constants'
+import MealName from 'components/Meals/MealName'
 
 const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
   const dispatch = useDispatch()
@@ -51,14 +52,8 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
     onCloseRemoveDishDialog()
   }
 
-  const mealName = (meal: Meal) => {
-      return <>
-        <Token value={MEAL_TYPES_NAMES[meal.type]} /> {`#${meal.id}`}
-      </>
-  }
-
   const dialogRemoveDescription = () => {
-    const usedInMeals = dishDetail?.dish_ina_meal.map(dish => mealName(dish.meal))
+    const usedInMeals = dishDetail?.dish_ina_meal.map(dish => <MealName id={dish.meal.id} type={dish.meal.type} />)
 
     if (usedInMeals?.length)
       return <div>
@@ -135,13 +130,13 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
       {dishDetail &&
         <>
           <AddToListModal open={addToListModalOpen} dishId={dishDetail.id} onClose={onCloseAddToListModal} onCreateIngredient={onCreateIngredient} />
-          <DialogRemove 
-            open={dialogRemoveOpen} 
-            handleRemove={handleRemoveDish} 
-            onClose={onCloseRemoveDishDialog} 
-            elementName={dishDetail.name} 
+          <DialogRemove
+            open={dialogRemoveOpen}
+            handleRemove={handleRemoveDish}
+            onClose={onCloseRemoveDishDialog}
+            elementName={dishDetail.name}
             description={dialogRemoveDescription()}
-            />
+          />
         </>
       }
     </div>

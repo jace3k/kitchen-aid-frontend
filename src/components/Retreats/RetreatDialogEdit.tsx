@@ -1,39 +1,34 @@
 import React, { useState } from 'react'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core'
 import Token from 'components/Token'
-import { Retreat } from 'utils/interfaces/retreat.interface'
+import { useDispatch } from 'react-redux'
+import { createRetreatRequest } from 'store/retreats/actions'
 
 interface RetreatDialogEdit {
   open: boolean,
   onClose: () => void,
-  retreat?: Retreat,
 }
 
-const RetreatDialogEdit: React.FC<RetreatDialogEdit> = ({ open, onClose, retreat }) => {
-  const [retreatName, setRetreatName] = useState(retreat ? retreat.name : '')
+const RetreatDialogEdit: React.FC<RetreatDialogEdit> = ({ open, onClose }) => {
+  const dispatch = useDispatch()
+  const [name, setName] = useState('')
 
-  const BtnUpdate = () => (
-    <Button onClick={onClose} color="primary">
-      <Token value="update" />
-    </Button>
-  )
-
-  const BtnCreate = () => (
-    <Button onClick={onClose} color="primary">
-      <Token value="create" />
-    </Button>
-  )
+  const handleCreateRetreat = () => {
+    dispatch(createRetreatRequest({ name }))
+    setName('')
+    onClose()
+  }
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth>
-      <DialogTitle><Token value={retreat ? "editName" : "addNewRetreat"} /></DialogTitle>
+      <DialogTitle><Token value={"addNewRetreat"} /></DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
           margin="dense"
           label={<Token value="retreatName" />}
-          value={retreatName}
-          onChange={e => setRetreatName(e.target.value)}
+          value={name}
+          onChange={e => setName(e.target.value)}
           fullWidth
         />
       </DialogContent>
@@ -41,7 +36,9 @@ const RetreatDialogEdit: React.FC<RetreatDialogEdit> = ({ open, onClose, retreat
         <Button onClick={onClose} color="secondary">
           <Token value="cancel" />
         </Button>
-        {retreat ? <BtnUpdate /> : <BtnCreate />}
+        <Button onClick={handleCreateRetreat} color="primary">
+          <Token value="create" />
+        </Button>
       </DialogActions>
     </Dialog>
   )

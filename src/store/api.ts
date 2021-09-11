@@ -4,7 +4,8 @@ import axios from './axios'
 import { IngredientInaDishDto } from "utils/interfaces/ingredient-ina-dish.interface"
 import { MealDto } from "utils/interfaces/meal.interface"
 import { DishInaMealDto } from "utils/interfaces/dish-ina-meal.interface"
-import { Retreat } from "utils/interfaces/retreat.interface"
+import { Retreat, RetreatDetail, RetreatDto } from "utils/interfaces/retreat.interface"
+import { MealInaRetreatDto } from "utils/interfaces/meal-ina-retreat.interface"
 
 export const SimpleApi = {
   get: (): Promise<SimpleResponse> => {
@@ -17,12 +18,6 @@ export const SimpleApi = {
 export const UserApi = {
   login: (username: string, password: string) => {
     return axios.post('api/token/', { username, password })
-  }
-}
-
-export const RetreatsApi = {
-  getAll: (): Promise<Retreat[]> => {
-    return axios.get(`retreat`)
   }
 }
 
@@ -92,5 +87,32 @@ export const MealsApi = {
   },
   removeDish: (dishInaMealId: number) => {
     return axios.delete(`dish_ina_meal/${dishInaMealId}/`)
+  }
+}
+
+export const RetreatsApi = {
+  getAll: (): Promise<Retreat[]> => {
+    return axios.get(`retreat/`)
+  },
+  getDetail: (id: number): Promise<RetreatDetail> => {
+    return axios.get(`retreat/${id}/`)
+  },
+  createRetreat: (retreat: RetreatDto) => {
+    return axios.post(`retreat/`, retreat)
+  },
+  deleteRetreat: (id: number) => {
+    return axios.delete(`retreat/${id}/`)
+  },
+  updateRetreat: (retreat: RetreatDto) => {
+    return axios.put(`retreat/${retreat.id}/`, retreat)
+  },
+  addMeal: (mealInaRetreat: MealInaRetreatDto) => {
+    return axios.post(`meal_ina_retreat/`, mealInaRetreat)
+  },
+  updateMeal: (mealInaRetreat: MealInaRetreatDto) => {
+    return axios.put(`meal_ina_retreat/${mealInaRetreat.id}/`, mealInaRetreat)
+  },
+  removeMeal: (mealInaRetreatId: number) => {
+    return axios.delete(`meal_ina_retreat/${mealInaRetreatId}/`)
   }
 }

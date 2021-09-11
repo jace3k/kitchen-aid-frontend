@@ -87,7 +87,7 @@ const reducer: Reducer<DishesState, DishStateActionTypes> = (state = initialStat
 				error: null,
 				dishes: state.dishes.map(dish => dish.id === action.dish.id ? action.dish : dish),
 				dishDetail: {
-					id: state.dishDetail?.id || 0,
+					id: state.dishDetail?.id || action.dish.id,
 					name: action.dish.name,
 					size: action.dish.size,
 					ingredient_ina_dish: state.dishDetail?.ingredient_ina_dish || [],

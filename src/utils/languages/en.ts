@@ -72,4 +72,8 @@ export const en: ITranslations = {
   dishNotUsed: 'Dish is not used anywhere',
   warningMealUsed: 'Watch out! Meal is used in retreats:',
   mealNotUsed: 'Meal is not used anywhere',
+  meal: 'Meal',
+  date: 'Date',
+  servings: 'Servings',
+  removeRetreat: 'Remove reterat',
 }
