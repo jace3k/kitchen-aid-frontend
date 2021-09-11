@@ -37,11 +37,11 @@ ___
 * ~fix some translations~
 * ~Meals~
 * ~Retreats~
-* Datepicker on Retreats detail meals list
+* ~Datepicker on Retreats detail meals list~
 * error handling (detail 404, network errors)
-* Beautify dialogs, lists (add colors etc)
-* info 'no data' on tables when empty
-* separate loading detail ingredient from list
+* ~Beautify dialogs, lists (add colors etc)~
+* ~info 'no data' on tables when empty~
+* ~separate loading detail ingredient from list~
 * notification when something is updated/removed/added
 * icons on lists!
 
@@ -50,4 +50,4 @@ ___
 * Tables - sorting & filtering
 * Admin page
 * Log events
-* Code optimization (store refactor (only one error handler), code duplication)
+* Code optimization (store refactor (only one error handler), ~code duplication~)

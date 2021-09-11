@@ -102,6 +102,7 @@ const RetreatDetailMealList = () => {
         if (currentEdit?.id === row.original.id) {
           return (
             <TextField
+              type="date"
               value={currentEditDate}
               onChange={(e) => setCurrentEditDate(e.target.value)}
               onBlur={() => {
@@ -118,7 +119,8 @@ const RetreatDetailMealList = () => {
           )
         }
         else {
-          return row.original.date
+          const date = new Date(row.original.date).toLocaleDateString('pl-PL')
+          return date
         }
       }
     },

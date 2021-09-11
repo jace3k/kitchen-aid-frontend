@@ -13,12 +13,20 @@ interface AddToListModalProps {
   onCreateMeal: (meal: MealInaRetreatDto) => void
 }
 
+const getCurrentDate = () => {
+  const date = new Date().toLocaleDateString('pl-PL')
+  const [d, m, y] = date.split('.')
+
+  return [y, m, d].join('-')
+}
+
 const AddToListModal = ({ open, onClose, onCreateMeal, retreatId }: AddToListModalProps) => {
   const mealsList = useSelector((state: ApplicationState) => state.meals.meals)
   const mealsLoading = useSelector((state: ApplicationState) => state.meals.loading)
 
   const [selectedMeal, setSelectedMeal] = useState('')
-  const [selectedDate, setSelectedDate] = useState('')
+
+  const [selectedDate, setSelectedDate] = useState(getCurrentDate())
   const [selectedServings, setSelectedServings] = useState('')
 
   const handleMealChange = (e: any) => {
@@ -52,8 +60,8 @@ const AddToListModal = ({ open, onClose, onCreateMeal, retreatId }: AddToListMod
         </FormControl>
         <div style={{ margin: 10 }} />
         <FormControl fullWidth>
-          <InputLabel><Token value="date" /></InputLabel>
-          <Input value={selectedDate} onChange={handleDateChange} />
+        <InputLabel><Token value="date" /></InputLabel>
+          <Input value={selectedDate} onChange={handleDateChange} type="date" />
         </FormControl>
         <div style={{ margin: 10 }} />
         <FormControl fullWidth>
