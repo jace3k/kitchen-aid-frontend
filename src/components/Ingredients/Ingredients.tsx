@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Container, Fab, Tooltip } from '@material-ui/core'
-import { useStyles as useRetreatStyles } from 'components/Retreats/styles'
 import { Ingredient } from 'store/ingredients/types'
 import IngredientsTable from './IngredientsTable'
 import IngredientEditDialog from './IngredientEditDialog'
@@ -10,15 +9,17 @@ import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteIngredientRequest } from 'store/ingredients/actions'
 import { ApplicationState } from 'store'
+import DialogRemoveDescription from 'components/genericComponents/DialogRemove/DialogRemoveDescription'
+import { useStyles } from 'components/genericComponents/styles'
 
 const Ingredients = () => {
-  const retreatClasses = useRetreatStyles()
+  const classes = useStyles()
   const dispatch = useDispatch()
 
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const [removeDialogOpen, setRemoveDialogOpen] = useState(false)
   const [dialogIngredient, setDialogIngredient] = useState<Ingredient | null>(null)
-  const ingredientDetail = useSelector((state: ApplicationState) => state.ingredients.ingredientDetail)
+  const { ingredientDetail, loadingDetail } = useSelector((state: ApplicationState) => state.ingredients)
 
   const handleIngredientDialogEditOpen = (ingredient: Ingredient | null) => {
     setDialogIngredient(ingredient)
@@ -45,23 +46,19 @@ const Ingredients = () => {
 
   const dialogRemoveDescription = () => {
     const usedInDishes = ingredientDetail?.ingredient_ina_dish.map(ing => ing.dish.name)
-
-    if (usedInDishes?.length)
-      return <div>
-        <Token value="warningIngredientUsed" />
-        {Array.from(new Set(usedInDishes)).map(dish => <p key={`key-${dish}`}>{dish}</p>)}
-      </div>
-
-    return <Token value="ingredientNotUsed" />
+    return <DialogRemoveDescription
+      usedInElements={usedInDishes}
+      loading={loadingDetail}
+      headerUsed="warningIngredientUsed"
+      headerUnused="ingredientNotUsed"
+    />
   }
 
   return (
     <Container style={{ minWidth: 300 }}>
       <h1><Token value="ingredients" /></h1>
       <IngredientsTable
-        handleEditDialogOpen={handleIngredientDialogEditOpen}
         handleOpenConfirmDialogRemove={handleOpenConfirmDialogRemove}
-        dialogIngredient={dialogIngredient}
       />
       <IngredientEditDialog
         open={editDialogOpen}
@@ -76,7 +73,7 @@ const Ingredients = () => {
         description={dialogRemoveDescription()}
       />
       <Tooltip title={<Token value="addNewIngredient" />} placement='left'>
-        <Fab color="primary" className={retreatClasses.fab} onClick={() => handleIngredientDialogEditOpen(null)}>
+        <Fab color="primary" className={classes.fab} onClick={() => handleIngredientDialogEditOpen(null)}>
           <AddIcon />
         </Fab>
       </Tooltip>

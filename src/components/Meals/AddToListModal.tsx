@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
 import Token from 'components/Token'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { ApplicationState } from 'store'
 import { DishInaMealDto } from 'utils/interfaces/dish-ina-meal.interface'

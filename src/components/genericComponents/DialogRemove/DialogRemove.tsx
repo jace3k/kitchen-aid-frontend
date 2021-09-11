@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider } from '@material-ui/core'
 import Token from 'components/Token'
 
 
@@ -17,7 +17,8 @@ const DialogRemove = ({ open, onClose, handleRemove, elementName, description }:
     <Dialog open={open} onClose={onClose}>
       <DialogTitle><Token value="removeConfirmTitle" /> </DialogTitle>
       <DialogContent>
-        <h3>{elementName}</h3>
+        <h2 style={{ textAlign: 'center' }}>{elementName}</h2>
+        <div style={{ margin: 20 }} />
         {description}
       </DialogContent>
       <DialogActions>

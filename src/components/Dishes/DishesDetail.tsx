@@ -1,6 +1,5 @@
 import { Button, Table, TableBody, TableCell, TableFooter, TableRow, TextField } from '@material-ui/core'
 import DetailWithListView from 'components/genericComponents/DetailWithListView/DetailWithListView'
-import Loader from 'components/Loader/Loader'
 import Token from 'components/Token'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,21 +7,17 @@ import { RouteComponentProps } from 'react-router-dom'
 import { ApplicationState } from 'store'
 import { createIngredientInADishRequest, deleteDishRequest, fetchDishDetailRequest, updateDishRequest } from 'store/dishes/actions'
 import * as routes from 'utils/routes'
-import { useStyles } from 'components/genericComponents/styles'
 import DishDetailIngredientsList from './DishDetailIngredientsList'
 import AddToListModal from './AddToListModal'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import { fetchAllIngredientsRequest } from 'store/ingredients/actions'
 import { IngredientInaDishDto } from 'utils/interfaces/ingredient-ina-dish.interface'
-import { Meal } from 'utils/interfaces/meal.interface'
-import { MEAL_TYPES_NAMES } from 'utils/constants'
 import MealName from 'components/Meals/MealName'
+import DialogRemoveDescription from 'components/genericComponents/DialogRemove/DialogRemoveDescription'
 
 const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
   const dispatch = useDispatch()
-  const classes = useStyles()
-  const { history } = props
-  const { dishDetail, loading, error, removed } = useSelector((state: ApplicationState) => state.dishes)
+  const { dishDetail, loading, removed } = useSelector((state: ApplicationState) => state.dishes)
   const [dishSize, setDishSize] = useState(0)
   const [addToListModalOpen, setAddToListModalOpen] = useState(false)
   const [dialogRemoveOpen, setDialogRemoveOpen] = useState(false)
@@ -54,14 +49,12 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
 
   const dialogRemoveDescription = () => {
     const usedInMeals = dishDetail?.dish_ina_meal.map(dish => <MealName id={dish.meal.id} type={dish.meal.type} />)
-
-    if (usedInMeals?.length)
-      return <div>
-        <Token value="warningDishUsed" />
-        {Array.from(new Set(usedInMeals)).map(meal => <p key={`key-${meal}`}>{meal}</p>)}
-      </div>
-
-    return <Token value="dishNotUsed" />
+    return <DialogRemoveDescription
+      usedInElementsJsx={usedInMeals}
+      loading={false}
+      headerUsed="warningDishUsed"
+      headerUnused="dishNotUsed"
+    />
   }
 
   const onCloseAddToListModal = () => {
@@ -75,7 +68,6 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
 
   return (
     <div>
-      <Loader />
       <DetailWithListView
         loading={loading}
         name={dishDetail?.name}

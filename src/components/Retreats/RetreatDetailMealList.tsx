@@ -14,26 +14,27 @@ import { ROWS_PER_PAGE_OPTIONS } from 'utils/constants'
 import { MealInaRetreat, MealInaRetreatDto } from 'utils/interfaces/meal-ina-retreat.interface'
 import { removeMealRequest, updateMealRequest } from 'store/retreats/actions'
 import MealName from 'components/Meals/MealName'
+import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
 
-const LoadingDataRow = () => {
+// const LoadingDataRow = () => {
 
-  return (
-    <TableRow>
-      <TableCell colSpan={3} align="center" style={{ marginTop: 50 }}>
-        <h2><Token value="loadingData" /></h2>
-        <CircularProgress />
-      </TableCell>
-    </TableRow>
-  )
-}
+//   return (
+//     <TableRow>
+//       <TableCell colSpan={3} align="center" style={{ marginTop: 50 }}>
+//         <h2><Token value="loadingData" /></h2>
+//         <CircularProgress />
+//       </TableCell>
+//     </TableRow>
+//   )
+// }
 
 const RetreatDetailMealList = () => {
   const dispatch = useDispatch()
-  const { meals, retreatDetail, loading } = useSelector((state: ApplicationState) => state.retreats)
-  const itemsPerPageFromSettings = useSelector((state: ApplicationState) => state.user.itemsPerPage)
+  const { meals, loading } = useSelector((state: ApplicationState) => state.retreats)
+  // const itemsPerPageFromSettings = useSelector((state: ApplicationState) => state.user.itemsPerPage)
   const [currentEdit, setCurrentEdit] = useState<null | MealInaRetreat>(null)
-  const [rowsPerPage, setRowsPerPage] = useState(itemsPerPageFromSettings);
-  const [currentPage, setCurrentPage] = useState(0);
+  // const [rowsPerPage, setRowsPerPage] = useState(itemsPerPageFromSettings);
+  // const [currentPage, setCurrentPage] = useState(0);
   const [mealRemoveDialogOpen, setMealRemoveDialogOpen] = useState(false)
 
   const handleMealRemove = () => {
@@ -169,21 +170,22 @@ const RetreatDetailMealList = () => {
         )
       }
     }
-  ], [currentEdit, currentPage, meals])
-  
+  ], [currentEdit])
 
-  
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({ columns, data: meals })
+
+
+  // const {
+  //   getTableProps,
+  //   getTableBodyProps,
+  //   headerGroups,
+  //   rows,
+  //   prepareRow,
+  // } = useTable({ columns, data: meals })
 
   return (
     <>
-      <TableContainer component={Paper} variant="elevation" square>
+      <GenericTable columns={columns} data={meals} loading={loading} />
+      {/* <TableContainer component={Paper} variant="elevation" square>
         <Table {...getTableProps()} size='small' >
           <TableHead>
             {
@@ -248,8 +250,13 @@ const RetreatDetailMealList = () => {
             </TableRow>
           </TableFooter>
         </Table>
-      </TableContainer>
-      {currentEdit && <DialogRemove open={mealRemoveDialogOpen} handleRemove={handleMealRemove} onClose={onCloseMealRemove} elementName={currentEdit.meal.type} />}
+      </TableContainer> */}
+      {currentEdit && <DialogRemove
+        open={mealRemoveDialogOpen}
+        handleRemove={handleMealRemove}
+        onClose={onCloseMealRemove}
+        elementName={<MealName id={currentEdit.meal.id} type={currentEdit.meal.type} />}
+      />}
     </>
   )
 }

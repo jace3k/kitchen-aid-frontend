@@ -1,24 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Container from '@material-ui/core/Container'
 import Token from 'components/Token'
 import { RouteComponentProps } from 'react-router-dom'
 import * as routes from 'utils/routes'
-import { Button, ButtonGroup, Fab, Tooltip } from '@material-ui/core'
-import AddIcon from '@material-ui/icons/Add'
-import { useStyles } from 'components/genericComponents/styles'
+import { Button, ButtonGroup } from '@material-ui/core'
 import { Row } from 'react-table'
 import { Meal, MealType } from 'utils/interfaces/meal.interface'
-import { MEAL_TYPES, MEAL_TYPES_COLORS } from 'utils/constants'
+import { MEAL_TYPES_COLORS } from 'utils/constants'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import MealsTable from './MealsTable'
 import { useDispatch, useSelector } from 'react-redux'
 import { createMealRequest } from 'store/meals/actions'
 import { ApplicationState } from 'store'
-
-
-// #c8e6c9 (green) - breakfast
-// #b2ebf2 (blue) - lunch
-// #ef9a9a (red) - feast
 
 
 const Meals: React.FC<RouteComponentProps> = ({ history }) => {

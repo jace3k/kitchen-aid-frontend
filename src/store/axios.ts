@@ -1,8 +1,9 @@
 import axios, { AxiosRequestConfig } from 'axios'
+import { BASE_URL } from 'utils/constants'
 import storage from 'utils/storage'
 
 const instance = axios.create({
-    baseURL: 'https://kitchenaid.pythonanywhere.com/cookbook/',
+    baseURL: BASE_URL,
 })
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {

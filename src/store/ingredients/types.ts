@@ -150,4 +150,5 @@ export interface IngredientsState {
   readonly error: string | null,
   readonly ingredients: Ingredient[],
   readonly ingredientDetail: IngredientDetal | null,
+  readonly loadingDetail: boolean,
 }

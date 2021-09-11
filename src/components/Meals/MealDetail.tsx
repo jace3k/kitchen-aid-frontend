@@ -1,6 +1,7 @@
 import { Button, Table, TableBody, TableCell, TableRow } from '@material-ui/core'
 import DetailWithListView from 'components/genericComponents/DetailWithListView/DetailWithListView'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
+import DialogRemoveDescription from 'components/genericComponents/DialogRemove/DialogRemoveDescription'
 import Token from 'components/Token'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -44,14 +45,14 @@ const MealDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
 
   const dialogRemoveDescription = () => {
     const usedInRetreats = mealDetail?.meal_ina_retreat.map(meal => meal.retreat.name)
-
-    if (usedInRetreats?.length)
-      return <div>
-        <Token value="warningMealUsed" />
-        {Array.from(new Set(usedInRetreats)).map(retreat => <p key={`key-${retreat}`}>{retreat}</p>)}
-      </div>
-
-    return <Token value="mealNotUsed" />
+    return (
+      <DialogRemoveDescription
+        usedInElements={usedInRetreats}
+        loading={loading}
+        headerUsed="warningMealUsed"
+        headerUnused="mealNotUsed"
+      />
+    )
   }
 
   const onCloseAddToListModal = () => {

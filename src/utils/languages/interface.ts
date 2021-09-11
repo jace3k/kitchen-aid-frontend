@@ -74,4 +74,6 @@ export interface ITranslations {
   date: string,
   servings: string,
   removeRetreat: string,
+  checkingRelations: string,
+  emptyData: string,
 }

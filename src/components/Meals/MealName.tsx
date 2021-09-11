@@ -1,7 +1,7 @@
 import Token from 'components/Token'
 import React from 'react'
 import { MEAL_TYPES_NAMES } from 'utils/constants'
-import { Meal, MealType } from 'utils/interfaces/meal.interface'
+import { MealType } from 'utils/interfaces/meal.interface'
 
 interface MealNameProps {
   id?: number,

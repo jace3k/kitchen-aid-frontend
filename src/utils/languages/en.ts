@@ -76,4 +76,6 @@ export const en: ITranslations = {
   date: 'Date',
   servings: 'Servings',
   removeRetreat: 'Remove reterat',
+  checkingRelations: 'Checking relations',
+  emptyData: 'Nothing here yet',
 }

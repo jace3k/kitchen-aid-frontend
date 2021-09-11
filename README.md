@@ -37,11 +37,13 @@ ___
 * ~fix some translations~
 * ~Meals~
 * ~Retreats~
+* Datepicker on Retreats detail meals list
 * error handling (detail 404, network errors)
 * Beautify dialogs, lists (add colors etc)
 * info 'no data' on tables when empty
 * separate loading detail ingredient from list
 * notification when something is updated/removed/added
+* icons on lists!
 
 
 ####### Future
