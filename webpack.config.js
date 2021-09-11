@@ -73,6 +73,10 @@ module.exports = {
     }
   },
   optimization: {
-    emitOnErrors: false
-  }
+    emitOnErrors: false,
+  },
+  performance: {
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+  },
 };

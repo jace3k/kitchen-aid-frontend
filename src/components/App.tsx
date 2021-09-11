@@ -8,6 +8,10 @@ import Login from './Login/Login'
 import Retreats from './Retreats/Retreats'
 import RetreatDetail from './Retreats/RetreatDetail'
 import Ingredients from './Ingredients/Ingredients'
+import Dishes from './Dishes/Dishes'
+import DishesDetail from './Dishes/DishesDetail'
+import Meals from './Meals/Meals'
+import MealDetail from './Meals/MealDetail'
 import Notifications from './Notifications/Notifications'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,10 +20,7 @@ import { ThemeProvider, createTheme, CssBaseline } from '@material-ui/core'
 import { getPalette } from 'utils/palette'
 import storage from 'utils/storage'
 import { changeLanguage, tryLogin, toggleDarkMode, setDefaultItemsPerPage } from 'store/user/actions'
-import Dishes from './Dishes/Dishes'
-import DishesDetail from './Dishes/DishesDetail'
-import Meals from './Meals/Meals'
-import MealDetail from './Meals/MealDetail'
+
 
 const App: React.FC = () => {
   const dispatch = useDispatch()
