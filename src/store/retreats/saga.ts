@@ -2,22 +2,14 @@ import { AxiosResponse } from 'axios'
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { RetreatsApi } from 'store/api'
 import {
-  // addMealFailed,
   addMealSuccess,
-  // createRetreatFailed,
   createRetreatSuccess,
-  // deleteRetreatFailed,
   deleteRetreatSuccess,
-  // fetchAllRetreatsFailed,
   fetchAllRetreatsSuccess,
   fetchRetreatDetailRequest,
-  // fetchRetreatDetailFailed,
   fetchRetreatDetailSuccess,
   handleError,
-  // removeMealFailed,
   removeMealSuccess,
-  // upadteRetreatFailed,
-  // updateMealFailed,
   updateMealSuccess,
   updateRetreatSuccess
 } from './actions'
@@ -55,7 +47,7 @@ function* getRetreatDetail({ id }: FetchRetreatDetailRequestType) {
 function* createRetreat({ retreatDto }: CreateRetreatRequestType) {
   try {
     const response: AxiosResponse = yield call(RetreatsApi.createRetreat, retreatDto)
-    yield put(createRetreatSuccess(response.data))
+    yield put(createRetreatSuccess(response.data, 'Retreat created successfully!'))
   }
   catch (err: any) {
     yield put(handleError('Failed to create retreat', err))
@@ -65,7 +57,7 @@ function* createRetreat({ retreatDto }: CreateRetreatRequestType) {
 function* deleteRetreat({ id }: DeleteRetreatRequestType) {
   try {
     const response: AxiosResponse = yield call(RetreatsApi.deleteRetreat, id)
-    yield put(deleteRetreatSuccess(response.data))
+    yield put(deleteRetreatSuccess(response.data, 'Retreat deleted successfully!'))
   }
   catch (err: any) {
     yield put(handleError('Failed to delete retreat', err))
@@ -75,7 +67,7 @@ function* deleteRetreat({ id }: DeleteRetreatRequestType) {
 function* updateRetreat({ retreat }: UpdateRetreatRequestType) {
   try {
     const response: AxiosResponse = yield call(RetreatsApi.updateRetreat, retreat)
-    yield put(updateRetreatSuccess(response.data))
+    yield put(updateRetreatSuccess(response.data, 'Retreat updated successfully!'))
   }
   catch (err: any) {
     yield put(handleError('Failed to update retreat', err))
@@ -85,7 +77,7 @@ function* updateRetreat({ retreat }: UpdateRetreatRequestType) {
 function* addMealToRetreat({ meal }: AddMealRequestType) {
   try {
     const response: AxiosResponse = yield call(RetreatsApi.addMeal, meal)
-    yield put(addMealSuccess(response.data))
+    yield put(addMealSuccess(response.data, 'Meal added successfully!'))
     yield put(fetchRetreatDetailRequest(meal.retreat))
 
   }
@@ -98,7 +90,7 @@ function* updateMealInRetreat({ meal }: UpdateMealRequestType) {
   try {
     const response: AxiosResponse = yield call(RetreatsApi.updateMeal, meal)
     console.log('updateMealInRetreat - saga', meal)
-    yield put(updateMealSuccess(response.data))
+    yield put(updateMealSuccess(response.data, 'Meal updated successfully!'))
     yield put(fetchRetreatDetailRequest(meal.retreat))
   }
   catch (err: any) {
@@ -109,7 +101,7 @@ function* updateMealInRetreat({ meal }: UpdateMealRequestType) {
 function* removeMealFromRetreat({ mealInaRetreatId }: RemoveMealRequestType) {
   try {
     const response: AxiosResponse = yield call(RetreatsApi.removeMeal, mealInaRetreatId)
-    yield put(removeMealSuccess(mealInaRetreatId))
+    yield put(removeMealSuccess(mealInaRetreatId, 'Meal removed successfully!'))
   }
   catch (err: any) {
     yield put(handleError('Failed to remove meal from retreat', err))

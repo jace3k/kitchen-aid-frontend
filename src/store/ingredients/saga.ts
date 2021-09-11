@@ -1,8 +1,22 @@
 import { AxiosResponse } from 'axios'
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { IngredientsApi } from 'store/api'
-import { createIngredientFailed, createIngredientSuccess, deleteIngredientFailed, deleteIngredientSuccess, fetchAllIngredientsFailed, fetchAllIngredientsSuccess, fetchIngredientDetailFailed, fetchIngredientDetailSuccess, updateIngredientFailed, updateIngredientSuccess } from './actions'
-import { CreateIngredientRequestType, DeleteIngredientRequestType, FetchIngredientDetailRequestType, Ingredient, IngredientActionTypes, UpdateIngredientRequestType } from './types'
+import {
+  createIngredientSuccess,
+  deleteIngredientSuccess,
+  fetchAllIngredientsSuccess,
+  fetchIngredientDetailSuccess,
+  handleError,
+  updateIngredientSuccess
+} from './actions'
+import {
+  CreateIngredientRequestType,
+  DeleteIngredientRequestType,
+  FetchIngredientDetailRequestType,
+  IngredientActionTypes,
+  UpdateIngredientRequestType
+} from './types'
+
 
 function* fetchAllIngredients() {
   try {
@@ -10,38 +24,37 @@ function* fetchAllIngredients() {
     yield put(fetchAllIngredientsSuccess(response.data))
   }
   catch (err: any) {
-    yield put(fetchAllIngredientsFailed(err))
+    yield put(handleError('Failed to fetch all ingredients', err))
   }
 }
 
 function* createIngredient({ name }: CreateIngredientRequestType) {
   try {
     const response: AxiosResponse = yield call(IngredientsApi.createIngredient, name)
-    yield put(createIngredientSuccess(response.data))
+    yield put(createIngredientSuccess(response.data, 'Ingredient created successfully!'))
   }
   catch (err: any) {
-    yield put(createIngredientFailed('addIngredientError'))
+    yield put(handleError('Failed to create ingredient', err))
   }
 }
 
 function* deleteIngredient({ id }: DeleteIngredientRequestType) {
   try {
     const response: AxiosResponse = yield call(IngredientsApi.deleteIngredient, id)
-    // check if response 204 No Content then return id of removed ingredient
-    yield put(deleteIngredientSuccess(id))
+    yield put(deleteIngredientSuccess(id, 'Ingredient deleted successfully!'))
   }
   catch (err: any) {
-    yield put(deleteIngredientFailed(err))
+    yield put(handleError('Failed to delete ingredient', err))
   }
 }
 
 function* updateIngredient({ id, name }: UpdateIngredientRequestType) {
   try {
     const response: AxiosResponse = yield call(IngredientsApi.updateIngredient, id, name)
-    yield put(updateIngredientSuccess(id, name))
+    yield put(updateIngredientSuccess(id, name, 'Ingredient updated successfully!'))
   }
   catch (err: any) {
-    yield put(updateIngredientFailed(err))
+    yield put(handleError('Failed to update ingredient', err))
   }
 }
 
@@ -51,7 +64,7 @@ function* fetchIngredientDetail({ id }: FetchIngredientDetailRequestType) {
     yield put(fetchIngredientDetailSuccess(response.data))
   }
   catch (err: any) {
-    yield put(fetchIngredientDetailFailed(err))
+    yield put(handleError('Failed to fetch ingredient details', err))
   }
 }
 

@@ -3,14 +3,12 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 
 import Navigation from './Navigation/Navigation'
 
-import About from './About'
 import NotFound from './NotFound'
 import Login from './Login/Login'
 import Retreats from './Retreats/Retreats'
 import RetreatDetail from './Retreats/RetreatDetail'
 import Ingredients from './Ingredients/Ingredients'
 import Notifications from './Notifications/Notifications'
-import Loader from './Loader/Loader'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { ApplicationState } from 'store'
@@ -60,7 +58,6 @@ const App: React.FC = () => {
     RouterComponent = () => (
       <Router>
         <Route path="/" component={Navigation} />
-        <Route path="/" component={Loader} />
         <Switch>
           <Route exact path="/" component={Retreats} />
           <Route exact path="/retreats" component={Retreats} />

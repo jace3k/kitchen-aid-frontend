@@ -7,7 +7,7 @@ const NotFound: React.FC = () => {
   return (
     <div style={{ textAlign: 'center' }}>
       <h2><Token value="notFound" /></h2>
-      <Button variant="contained" color="primary" onClick={() => window.location.pathname = '/'}><Token value="backToHome" /></Button>
+      <Button variant="outlined" color="primary" onClick={() => window.location.pathname = '/'}><Token value="backToHome" /></Button>
     </div>
   )
 }

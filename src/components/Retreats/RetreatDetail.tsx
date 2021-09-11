@@ -67,7 +67,7 @@ const RetreatDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
         loading={loading}
         name={retreatDetail?.name}
         listTitle="meals"
-
+        notFound={!retreatDetail}
         onAddToListClick={() => {
           dispatch(fetchAllMealsRequest())
           setAddToListModalOpen(true)

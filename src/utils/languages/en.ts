@@ -78,4 +78,9 @@ export const en: ITranslations = {
   removeRetreat: 'Remove reterat',
   checkingRelations: 'Checking relations',
   emptyData: 'Nothing here yet',
+  operationSuccess: 'Action performed successfully!',
+  operationFailure: 'Action failed',
+  add: 'Add',
+  elementNotFound: 'Not found!',
+  elementNotFoundDesc: 'The thing you\'re looking for may have already been deleted',
 }

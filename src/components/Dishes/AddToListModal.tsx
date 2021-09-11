@@ -45,6 +45,7 @@ const AddToListModal = ({ open, onClose, onCreateIngredient, dishId }: AddToList
           <Select
             value={ingredientsLoading ? '' : selectedIngredient}
             onChange={handleIngredientChange}
+            disabled={!ingredientList.length}
           >
             {ingredientList.map(ing => (
               <MenuItem value={ing.id} key={ing.id}>{ing.name}</MenuItem>
@@ -76,7 +77,7 @@ const AddToListModal = ({ open, onClose, onCreateIngredient, dishId }: AddToList
           color="primary"
           disabled={selectedMargin === '' || selectedPart === ''}
         >
-          <Token value="create" />
+          <Token value="add" />
         </Button>
       </DialogActions>
     </Dialog>

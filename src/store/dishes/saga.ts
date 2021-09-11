@@ -1,8 +1,19 @@
 import { AxiosResponse } from "axios";
 import { call, put, takeLatest } from "redux-saga/effects";
 import { DishesApi } from "store/api";
-import { createDishFailed, createDishSuccess, createIngredientInADishFailed, createIngredientInADishSuccess, deleteDishFailed, deleteDishSuccess, deleteIngredientInADishFailed, deleteIngredientInADishSuccess, fetchAllDishesFailed, fetchAllDishesSuccess, fetchDishDetailFailed, fetchDishDetailRequest, fetchDishDetailSuccess, updateDishFailed, updateDishSuccess, updateIngredientInADishFailed, updateIngredientInADishRequest, updateIngredientInADishSuccess } from "./actions";
-import { CreateDishRequestType, CreateIngredientRequestType, DeleteDishRequestType, DeleteIngredientRequestType, DishActionTypes, FetchDishDetailRequestType, UpdateDishRequestType, UpdateIngredientRequestType } from "./types";
+import {
+	createDishSuccess,
+	addIngredientInADishSuccess,
+	deleteDishSuccess,
+	deleteIngredientInADishSuccess,
+	fetchAllDishesSuccess,
+	fetchDishDetailRequest,
+	fetchDishDetailSuccess,
+	handleError,
+	updateDishSuccess,
+	updateIngredientInADishSuccess
+} from "./actions";
+import { CreateDishRequestType, AddIngredientRequestType, DeleteDishRequestType, DeleteIngredientRequestType, DishActionTypes, FetchDishDetailRequestType, UpdateDishRequestType, UpdateIngredientRequestType } from "./types";
 
 function* fetchAllDishes() {
 	try {
@@ -10,38 +21,38 @@ function* fetchAllDishes() {
 		yield put(fetchAllDishesSuccess(response.data))
 	}
 	catch (err: any) {
-		yield put(fetchAllDishesFailed(err))
+		yield put(handleError('Fetch all dishes failed', err))
 	}
 }
 
 function* createDish({ name, size }: CreateDishRequestType) {
 	try {
 		const response: AxiosResponse = yield call(DishesApi.createDish, name, size)
-		yield put(createDishSuccess(response.data))
+		yield put(createDishSuccess(response.data, 'Dish created successfully!'))
 	}
 	catch (err: any) {
 		console.log('createDish error', err.response)
-		yield put(createDishFailed(err))
+		yield put(handleError('Failed to create dish', err))
 	}
 }
 
 function* deleteDish({ id }: DeleteDishRequestType) {
 	try {
 		const response: AxiosResponse = yield call(DishesApi.deleteDish, id)
-		yield put(deleteDishSuccess(id))
+		yield put(deleteDishSuccess(id, 'Dish deleted successfully'))
 	}
 	catch (err: any) {
-		yield put(deleteDishFailed(err))
+		yield put(handleError('Failed to delete dish', err))
 	}
 }
 
 function* updateDish({ id, name, size }: UpdateDishRequestType) {
 	try {
 		const response: AxiosResponse = yield call(DishesApi.updateDish, id, name, size)
-		yield put(updateDishSuccess(response.data))
+		yield put(updateDishSuccess(response.data, 'Dish updated successfully'))
 	}
 	catch (err: any) {
-		yield put(updateDishFailed(err))
+		yield put(handleError('Failed to update dish', err))
 	}
 }
 
@@ -54,31 +65,30 @@ function* fetchDishDetail({ dishId }: FetchDishDetailRequestType) {
 	catch (err: any) {
 		console.log('fetchDishDetail error', err.message)
 		// err.response, err.response.statusText, network error
-		yield put(fetchDishDetailFailed(err))
+		yield put(handleError('Failed to fetch dish details', err))
 	}
 }
-
 
 function* updateIngredient({ ingredient }: UpdateIngredientRequestType) {
 	try {
 		const response: AxiosResponse = yield call(DishesApi.updateIngredient, ingredient)
-		yield put(updateIngredientInADishSuccess(response.data))
+		yield put(updateIngredientInADishSuccess(response.data, 'Ingredient updated successfully!'))
 		yield put(fetchDishDetailRequest(ingredient.dish))
 	}
 	catch (err: any) {
-		yield put(updateIngredientInADishFailed(err))
+		yield put(handleError('Failed to update ingredient in a dish', err))
 	}
 }
 
-function* createIngredient({ ingredient }: CreateIngredientRequestType) {
+function* createIngredient({ ingredient }: AddIngredientRequestType) {
 	try {
 		const response: AxiosResponse = yield call(DishesApi.addIngredient, ingredient)
 		console.log('[createIngredient][success]', ingredient)
-		yield put(createIngredientInADishSuccess(response.data))
+		yield put(addIngredientInADishSuccess(response.data, 'Ingredient added successfully!'))
 		yield put(fetchDishDetailRequest(ingredient.dish))
 	}
 	catch (err: any) {
-		yield put(createIngredientInADishFailed(err))
+		yield put(handleError('Failed to add ingredient to a dish', err))
 	}
 }
 
@@ -86,10 +96,10 @@ function* deleteIngredient({ id }: DeleteIngredientRequestType) {
 	try {
 		const response: AxiosResponse = yield call(DishesApi.removeIngredient, id)
 		console.log('[deleteIngredient][success]', id)
-		yield put(deleteIngredientInADishSuccess(id))
+		yield put(deleteIngredientInADishSuccess(id, 'Ingredient deleted successfully!'))
 	}
 	catch (err: any) {
-		yield put(deleteIngredientInADishFailed(err))
+		yield put(handleError('Failed to delete ingredient from a dish', err))
 	}
 }
 

@@ -8,6 +8,7 @@ const initialState: MealsState = {
   mealDetail: null,
   dishes: [],
   removed: false,
+  successMessage: null,
 }
 
 const reducer: Reducer<MealsState, MealStateActionTypes> = (state = initialState, action) => {
@@ -27,17 +28,12 @@ const reducer: Reducer<MealsState, MealStateActionTypes> = (state = initialState
         error: null,
         meals: action.meals,
       }
-    case MealActionTypes.FETCH_ALL_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
-      }
     case MealActionTypes.CREATE_MEAL_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
+        successMessage: null,
       }
     case MealActionTypes.CREATE_MEAL_SUCCESS:
       return {
@@ -45,18 +41,14 @@ const reducer: Reducer<MealsState, MealStateActionTypes> = (state = initialState
         loading: false,
         error: null,
         meals: [action.meal, ...state.meals],
-      }
-    case MealActionTypes.CREATE_MEAL_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
+        successMessage: action.msg,
       }
     case MealActionTypes.DELETE_MEAL_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
+        successMessage: null,
       }
     case MealActionTypes.DELETE_MEAL_SUCCESS:
       return {
@@ -66,12 +58,7 @@ const reducer: Reducer<MealsState, MealStateActionTypes> = (state = initialState
         meals: state.meals.filter(x => x.id !== action.id),
         mealDetail: null,
         removed: true,
-      }
-    case MealActionTypes.DELETE_MEAL_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
+        successMessage: action.msg,
       }
     case MealActionTypes.FETCH_MEAL_DETAIL_REQUEST:
       return {
@@ -87,35 +74,26 @@ const reducer: Reducer<MealsState, MealStateActionTypes> = (state = initialState
         dishes: action.mealDetail.dish_ina_meal,
         mealDetail: action.mealDetail,
       }
-    case MealActionTypes.FETCH_MEAL_DETAIL_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
-      }
     case MealActionTypes.CREATE_DISH_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
+        successMessage: null,
       }
     case MealActionTypes.CREATE_DISH_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
-      }
-    case MealActionTypes.CREATE_DISH_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
+        successMessage: action.msg,
       }
     case MealActionTypes.DELETE_DISH_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
+        successMessage: null,
       }
     case MealActionTypes.DELETE_DISH_SUCCESS:
       return {
@@ -123,12 +101,15 @@ const reducer: Reducer<MealsState, MealStateActionTypes> = (state = initialState
         loading: false,
         error: null,
         dishes: state.dishes.filter(x => x.id !== action.id),
+        successMessage: action.msg,
       }
-    case MealActionTypes.DELETE_DISH_ERROR:
+    case MealActionTypes.HANDLE_ERROR:
       return {
         ...state,
         loading: false,
-        error: action.error,
+        loadingDetail: false,
+        error: { error: action.error, message: action.message },
+        successMessage: null,
       }
     default:
       return state

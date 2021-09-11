@@ -12,29 +12,14 @@ const Notifications = () => {
   const [notificationOpened, setNotificationOpened] = useState(false)
   const [currentMessage, setCurrentMessage] = useState<TranslationTokensType>('empty')
   const [severity, setSeverity] = useState<SeverityProp>('info')
-  const [isInitial, setIsInitial] = useState(true)
 
-  const userErrorState = useSelector((state: ApplicationState) => state.user.error)
   const userAuthorizedState = useSelector((state: ApplicationState) => state.user.authorized)
-  const ingredientErrorState = useSelector((state: ApplicationState) => state.ingredients.error)
+  const { error: ingredientError, successMessage: ingredientSuccess } = useSelector((state: ApplicationState) => state.ingredients)
+  const { error: dishError, successMessage: dishSuccess } = useSelector((state: ApplicationState) => state.dishes)
+  const { error: mealError, successMessage: mealSuccess } = useSelector((state: ApplicationState) => state.meals)
+  const { error: retreatError, successMessage: retreatSuccess } = useSelector((state: ApplicationState) => state.retreats)
 
   const handleCloseNotification = () => setNotificationOpened(false)
-
-  useEffect(() => {
-    if (userErrorState) {
-      // TODO: Handle network error & check userErrorState content
-      console.log('[Nofitications] userErrorState', userErrorState)
-      setCurrentMessage('invalidUsernameOrPass')
-      setSeverity('error')
-      setNotificationOpened(true)
-    }
-    if (ingredientErrorState === 'addIngredientError') {
-      console.log('[Notifications] ingredientErrorState', ingredientErrorState)
-      setCurrentMessage('addIngredientError')
-      setSeverity('error')
-      setNotificationOpened(true)
-    }
-  }, [userErrorState, ingredientErrorState])
 
   useEffect(() => {
     if (userAuthorizedState) {
@@ -43,6 +28,67 @@ const Notifications = () => {
       setSeverity('success')
     }
   }, [userAuthorizedState])
+
+  useEffect(() => {
+    if (ingredientError) {
+      setCurrentMessage('operationFailure')
+      setSeverity('error')
+      setNotificationOpened(true)
+      console.log(ingredientError)
+    }
+
+    if (ingredientSuccess) {
+      setCurrentMessage('operationSuccess')
+      setSeverity('success')
+      setNotificationOpened(true)
+    }
+  }, [ingredientError, ingredientSuccess])
+
+  useEffect(() => {
+    if (dishError) {
+      setCurrentMessage('operationFailure')
+      setSeverity('error')
+      setNotificationOpened(true)
+      console.log(dishError)
+    }
+
+    if (dishSuccess) {
+      setCurrentMessage('operationSuccess')
+      setSeverity('success')
+      setNotificationOpened(true)
+    }
+  }, [dishError, dishSuccess])
+
+  useEffect(() => {
+    if (mealError) {
+      setCurrentMessage('operationFailure')
+      setSeverity('error')
+      setNotificationOpened(true)
+      console.log(mealError)
+    }
+
+    if (mealSuccess) {
+      setCurrentMessage('operationSuccess')
+      setSeverity('success')
+      setNotificationOpened(true)
+    }
+  }, [mealError, mealSuccess])
+
+  useEffect(() => {
+    if (retreatError) {
+      setCurrentMessage('operationFailure')
+      setSeverity('error')
+      setNotificationOpened(true)
+      console.log(retreatError)
+    }
+
+    if (retreatSuccess) {
+      setCurrentMessage('operationSuccess')
+      setSeverity('success')
+      setNotificationOpened(true)
+    }
+  }, [retreatError, retreatSuccess])
+
 
   return (
     <Snackbar

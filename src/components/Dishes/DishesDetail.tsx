@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
 import { ApplicationState } from 'store'
-import { createIngredientInADishRequest, deleteDishRequest, fetchDishDetailRequest, updateDishRequest } from 'store/dishes/actions'
+import { addIngredientInADishRequest, deleteDishRequest, fetchDishDetailRequest, updateDishRequest } from 'store/dishes/actions'
 import * as routes from 'utils/routes'
 import DishDetailIngredientsList from './DishDetailIngredientsList'
 import AddToListModal from './AddToListModal'
@@ -62,7 +62,7 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
   }
 
   const onCreateIngredient = (ingredient: IngredientInaDishDto) => {
-    dispatch(createIngredientInADishRequest(ingredient))
+    dispatch(addIngredientInADishRequest(ingredient))
     setAddToListModalOpen(false)
   }
 
@@ -72,6 +72,7 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
         loading={loading}
         name={dishDetail?.name}
         listTitle="ingredients"
+        notFound={!dishDetail}
         onCloseEditMode={(name) => {
           if (!dishDetail)
             return

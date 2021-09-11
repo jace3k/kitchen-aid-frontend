@@ -76,4 +76,9 @@ export interface ITranslations {
   removeRetreat: string,
   checkingRelations: string,
   emptyData: string,
+  operationSuccess: string,
+  operationFailure: string,
+  add: string,
+  elementNotFound: string,
+  elementNotFoundDesc: string,
 }

@@ -78,4 +78,9 @@ export const pl: ITranslations = {
   removeRetreat: 'Usuń wydarzenie',
   checkingRelations: 'Sprawdzam relacje',
   emptyData: 'Jeszcze nic tutaj nie ma',
+  operationSuccess: 'Operacja się powiodła!',
+  operationFailure: 'Operacja się nie powiodła',
+  add: 'Dodaj',
+  elementNotFound: 'Nie znaleziono!',
+  elementNotFoundDesc: 'Rzecz, której szukasz mogła zostać już usunięta'
 }

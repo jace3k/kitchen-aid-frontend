@@ -2,12 +2,11 @@ import React from 'react'
 import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import RetreatIcon from '@material-ui/icons/Assignment'
 import IngredientIcon from '@material-ui/icons/Grain'
-import LanguageIcon from '@material-ui/icons/Language'
-import MealsIcon from '@material-ui/icons/Fastfood'
+import MealsIcon from '@material-ui/icons/Kitchen'
+import DishesIcon from '@material-ui/icons/Fastfood'
 import { TabNavigationUrls } from './Navigation'
 import Token from 'components/Token'
 import * as routes from 'utils/routes'
-import LanguageChooser from 'components/SettingsMenu/LanguageChooser/LanguageChooser'
 
 interface SidebarProps {
   open: boolean,
@@ -23,6 +22,8 @@ const renderIcon = (url: string) => {
       return <MealsIcon />
     case routes.Ingredients:
       return <IngredientIcon />
+    case routes.Dishes:
+      return <DishesIcon />
   }
 }
 

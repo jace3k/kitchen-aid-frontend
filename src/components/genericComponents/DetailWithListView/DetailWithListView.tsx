@@ -1,4 +1,4 @@
-import { Card, CardContent, Container, Divider, IconButton, List, Table, TableBody, TableCell, TableRow, TextField } from '@material-ui/core'
+import { Backdrop, Button, Card, CardContent, Container, Divider, IconButton, List, Table, TableBody, TableCell, TableRow, TextField } from '@material-ui/core'
 import Token from 'components/Token'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -19,7 +19,8 @@ interface DetaiWithListViewProps {
   loading: boolean
   onCloseEditMode?: (itemName: string) => void
   onAddToListClick?: () => void
-  disableEditMode?: boolean
+  disableEditMode?: boolean,
+  notFound?: boolean,
 }
 
 const DetailWithListView = ({
@@ -30,7 +31,8 @@ const DetailWithListView = ({
   loading,
   onCloseEditMode,
   onAddToListClick,
-  disableEditMode
+  disableEditMode,
+  notFound
 }: DetaiWithListViewProps) => {
   const classes = useStyles()
   const [editMode, setEditMode] = useState(false)
@@ -39,6 +41,18 @@ const DetailWithListView = ({
   useEffect(() => {
     setItemName(name)
   }, [name])
+
+  if (!loading && notFound)
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <h1><Token value="elementNotFound" /></h1>
+        <h3><Token value="elementNotFoundDesc" /></h3>
+        <Button variant="outlined" onClick={() => window.location.pathname = '/'}>
+          <Token value="backToHome" />
+        </Button>
+      </div>
+    )
+
 
   return (
     <Container className={classes.detailContainer}>
@@ -105,7 +119,7 @@ const DetailWithListView = ({
           {generateItemsList()}
         </CardContent>
       </Card>
-    </Container >
+    </Container>
   )
 }
 

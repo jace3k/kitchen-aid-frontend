@@ -7,6 +7,7 @@ const initialState: IngredientsState = {
   error: null,
   ingredientDetail: null,
   loadingDetail: false,
+  successMessage: null,
 }
 
 const reducer: Reducer<IngredientsState, IngredientStateActionTypes> = (state = initialState, action) => {
@@ -25,75 +26,55 @@ const reducer: Reducer<IngredientsState, IngredientStateActionTypes> = (state = 
         error: null,
         ingredients: action.ingredients,
       }
-    case IngredientActionTypes.FETCH_ALL_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
-        ingredients: [],
-      }
     case IngredientActionTypes.CREATE_INGREDIENT_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
+        successMessage: null,
       }
     case IngredientActionTypes.CREATE_INGREDIENT_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
+        successMessage: action.msg,
         ingredients: [action.ingredient, ...state.ingredients],
-      }
-    case IngredientActionTypes.CREATE_INGREDIENT_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
       }
     case IngredientActionTypes.DELETE_INGREDIENT_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
+        successMessage: null,
       }
     case IngredientActionTypes.DELETE_INGREDIENT_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
+        successMessage: action.msg,
         ingredients: state.ingredients.filter(x => x.id !== action.id),
-      }
-    case IngredientActionTypes.DELETE_INGREDIENT_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
       }
     case IngredientActionTypes.UPDATE_INGREDIENT_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
+        successMessage: null,
       }
     case IngredientActionTypes.UPDATE_INGREDIENT_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
-        // TODO: extract this logic somewhere
+        successMessage: action.msg,
         ingredients: state.ingredients.map(ingredient => {
           if (ingredient.id === action.id)
             ingredient.name = action.name
 
           return ingredient
         }),
-      }
-    case IngredientActionTypes.UPDATE_INGREDIENT_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
       }
     case IngredientActionTypes.FETCH_INGREDIENT_DETAIL_REQUEST:
       return {
@@ -108,11 +89,13 @@ const reducer: Reducer<IngredientsState, IngredientStateActionTypes> = (state = 
         error: null,
         ingredientDetail: action.ingredientDetail,
       }
-    case IngredientActionTypes.FETCH_INGREDIENT_DETAIL_ERROR:
+    case IngredientActionTypes.HANDLE_ERROR:
       return {
         ...state,
+        loading: false,
         loadingDetail: false,
-        error: action.error,
+        error: { error: action.error, message: action.message },
+        successMessage: null,
       }
     default:
       return state

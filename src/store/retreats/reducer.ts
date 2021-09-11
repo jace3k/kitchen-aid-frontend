@@ -9,6 +9,7 @@ const initialState: RetreatsState = {
   retreatDetail: null,
   error: null,
   removed: false,
+  successMessage: null,
 }
 
 const reducer: Reducer<RetreatsState, RetreatStateActionTypes> = (state = initialState, action) => {
@@ -49,6 +50,7 @@ const reducer: Reducer<RetreatsState, RetreatStateActionTypes> = (state = initia
         ...state,
         loading: true,
         error: null,
+        successMessage: null,
         retreatDetail: null,
       }
     case RetreatActionTypes.CREATE_RETREAT_SUCCESS:
@@ -57,6 +59,7 @@ const reducer: Reducer<RetreatsState, RetreatStateActionTypes> = (state = initia
         loading: false,
         error: null,
         errorMessage: null,
+        successMessage: action.msg,
         retreats: [action.retreat, ...state.retreats]
       }
     case RetreatActionTypes.DELETE_RETREAT_REQUEST:
@@ -64,6 +67,7 @@ const reducer: Reducer<RetreatsState, RetreatStateActionTypes> = (state = initia
         ...state,
         loading: true,
         error: null,
+        successMessage: null,
       }
     case RetreatActionTypes.DELETE_RETREAT_SUCCESS:
       return {
@@ -73,6 +77,7 @@ const reducer: Reducer<RetreatsState, RetreatStateActionTypes> = (state = initia
         retreats: state.retreats.filter(x => x.id !== action.id),
         retreatDetail: null,
         removed: true,
+        successMessage: action.msg,
       }
     case RetreatActionTypes.UPDATE_RETREAT_REQUEST:
       return {
@@ -80,6 +85,7 @@ const reducer: Reducer<RetreatsState, RetreatStateActionTypes> = (state = initia
         loading: true,
         error: null,
         retreatDetail: null,
+        successMessage: null,
       }
     case RetreatActionTypes.UPDATE_RETREAT_SUCCESS:
       return {
@@ -90,37 +96,43 @@ const reducer: Reducer<RetreatsState, RetreatStateActionTypes> = (state = initia
           id: state.retreatDetail?.id || action.retreat.id,
           name: action.retreat.name,
           meal_ina_retreat: state.retreatDetail?.meal_ina_retreat || [],
-        }
+        },
+        successMessage: action.msg,
       }
     case RetreatActionTypes.ADD_MEAL_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
+        successMessage: null,
       }
     case RetreatActionTypes.ADD_MEAL_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
+        successMessage: action.msg,
       }
     case RetreatActionTypes.UPDATE_MEAL_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
+        successMessage: null,
       }
     case RetreatActionTypes.UPDATE_MEAL_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
+        successMessage: action.msg,
       }
     case RetreatActionTypes.REMOVE_MEAL_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
+        successMessage: null,
       }
     case RetreatActionTypes.REMOVE_MEAL_SUCCESS:
       return {
@@ -128,12 +140,14 @@ const reducer: Reducer<RetreatsState, RetreatStateActionTypes> = (state = initia
         loading: false,
         meals: state.meals.filter(x => x.id !== action.mealInaRetreatId),
         error: null,
+        successMessage: action.msg,
       }
     case RetreatActionTypes.HANDLE_ERROR:
       return {
         ...state,
         loading: false,
-        error: { error: action.error, message: action.message }
+        error: { error: action.error, message: action.message },
+        successMessage: null,
       }
     default:
       return state

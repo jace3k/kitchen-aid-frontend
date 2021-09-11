@@ -1,3 +1,4 @@
+import { AppError, HandleErrorType } from "utils/interfaces/error-handling.interface"
 import { MealInaRetreat, MealInaRetreatDto } from "utils/interfaces/meal-ina-retreat.interface"
 import { Retreat, RetreatDetail, RetreatDto } from "utils/interfaces/retreat.interface"
 
@@ -5,35 +6,27 @@ import { Retreat, RetreatDetail, RetreatDto } from "utils/interfaces/retreat.int
 export enum RetreatActionTypes {
   FETCH_ALL_REQUEST = '@@retreats/FETCH_ALL_REQUEST',
   FETCH_ALL_SUCCESS = '@@retreats/FETCH_ALL_SUCCESS',
-  // FETCH_ALL_ERROR = '@@retreats/FETCH_ALL_ERROR',
 
   FETCH_RETREAT_DETAIL_REQUEST = '@@retreats/FETCH_RETREAT_DETAIL_REQUEST',
   FETCH_RETREAT_DETAIL_SUCCESS = '@@retreats/FETCH_RETREAT_DETAIL_SUCCESS',
-  // FETCH_RETREAT_DETAIL_ERROR = '@@retreats/FETCH_RETREAT_DETAIL_ERROR',
 
   CREATE_RETREAT_REQUEST = '@@retreats/CREATE_RETREAT_REQUEST',
   CREATE_RETREAT_SUCCESS = '@@retreats/CREATE_RETREAT_SUCCESS',
-  // CREATE_RETREAT_ERROR = '@@retreats/FETCH_RETREAT_DETAIL_ERROR',
 
   DELETE_RETREAT_REQUEST = '@@retreats/DELETE_RETREAT_REQUEST',
   DELETE_RETREAT_SUCCESS = '@@retreats/DELETE_RETREAT_SUCCESS',
-  // DELETE_RETREAT_ERROR = '@@retreats/DELETE_RETREAT_ERROR',
 
   UPDATE_RETREAT_REQUEST = '@@retreats/UPDATE_RETREAT_REQUEST',
   UPDATE_RETREAT_SUCCESS = '@@retreats/UPDATE_RETREAT_SUCCESS',
-  // UPDATE_RETREAT_ERROR = '@@retreats/UPDATE_RETREAT_ERROR',
 
   ADD_MEAL_REQUEST = '@@retreats/ADD_MEAL_REQUEST',
   ADD_MEAL_SUCCESS = '@@retreats/ADD_MEAL_SUCCESS',
-  // ADD_MEAL_ERROR = '@@retreats/ADD_MEAL_ERROR',
 
   UPDATE_MEAL_REQUEST = '@@retreats/UPDATE_MEAL_REQUEST',
   UPDATE_MEAL_SUCCESS = '@@retreats/UPDATE_MEAL_SUCCESS',
-  // UPDATE_MEAL_ERROR = '@@retreats/UPDATE_MEAL_ERROR',
 
   REMOVE_MEAL_REQUEST = '@@retreats/REMOVE_MEAL_REQUEST',
   REMOVE_MEAL_SUCCESS = '@@retreats/REMOVE_MEAL_SUCCESS',
-  // REMOVE_MEAL_ERROR = '@@retreats/REMOVE_MEAL_ERROR',
 
   HANDLE_ERROR = '@@retreats/HANDLE_ERROR',
 }
@@ -48,10 +41,6 @@ interface FetchAllRetreatsSuccessType {
   retreats: Retreat[],
 }
 
-// interface FetchAllRetreatsErrorType {
-//   type: typeof RetreatActionTypes.FETCH_ALL_ERROR,
-//   error: string,
-// }
 
 // DETAIL
 export interface FetchRetreatDetailRequestType {
@@ -64,10 +53,6 @@ interface FetchRetreatDetailSuccessType {
   retreatDetail: RetreatDetail,
 }
 
-// interface FetchRetreatDetailErrorType {
-//   type: typeof RetreatActionTypes.FETCH_RETREAT_DETAIL_ERROR,
-//   error: string,
-// }
 
 // CREATE
 export interface CreateRetreatRequestType {
@@ -78,12 +63,9 @@ export interface CreateRetreatRequestType {
 interface CreateRetreatSuccessType {
   type: typeof RetreatActionTypes.CREATE_RETREAT_SUCCESS,
   retreat: Retreat,
+  msg: string,
 }
 
-// interface CreateRetreatErrorType {
-//   type: typeof RetreatActionTypes.CREATE_RETREAT_ERROR,
-//   error: string,
-// }
 
 // DELETE
 export interface DeleteRetreatRequestType {
@@ -94,12 +76,9 @@ export interface DeleteRetreatRequestType {
 interface DeleteRetreatSuccessType {
   type: typeof RetreatActionTypes.DELETE_RETREAT_SUCCESS,
   id: number,
+  msg: string,
 }
 
-// interface DeleteRetreatErrorType {
-//   type: typeof RetreatActionTypes.DELETE_RETREAT_ERROR,
-//   error: string,
-// }
 
 // UPDATE
 export interface UpdateRetreatRequestType {
@@ -110,12 +89,9 @@ export interface UpdateRetreatRequestType {
 interface UpdateRetreatSuccessType {
   type: typeof RetreatActionTypes.UPDATE_RETREAT_SUCCESS,
   retreat: Retreat,
+  msg: string,
 }
 
-// interface UpdateRetreatErrorType {
-//   type: typeof RetreatActionTypes.UPDATE_RETREAT_ERROR,
-//   error: string,
-// }
 
 // ADD MEAL INA RETREAT
 export interface AddMealRequestType {
@@ -126,12 +102,9 @@ export interface AddMealRequestType {
 interface AddMealSuccessType {
   type: typeof RetreatActionTypes.ADD_MEAL_SUCCESS,
   meal: MealInaRetreatDto,
+  msg: string,
 }
 
-// interface AddMealErrorType {
-//   type: typeof RetreatActionTypes.ADD_MEAL_ERROR,
-//   error: string,
-// }
 
 // UPDATE MEAL INA RETREAT
 export interface UpdateMealRequestType {
@@ -142,12 +115,9 @@ export interface UpdateMealRequestType {
 interface UpdateMealSuccessType {
   type: typeof RetreatActionTypes.UPDATE_MEAL_SUCCESS,
   meal: MealInaRetreatDto,
+  msg: string,
 }
 
-// interface UpdateMealErrorType {
-//   type: typeof RetreatActionTypes.UPDATE_MEAL_ERROR,
-//   error: string,
-// }
 
 // REMOVE MEAL INA RETREAT
 export interface RemoveMealRequestType {
@@ -158,28 +128,14 @@ export interface RemoveMealRequestType {
 interface RemoveMealSuccessType {
   type: typeof RetreatActionTypes.REMOVE_MEAL_SUCCESS,
   mealInaRetreatId: number,
+  msg: string,
 }
 
-// interface RemoveMealErrorType {
-//   type: typeof RetreatActionTypes.REMOVE_MEAL_ERROR,
-//   error: string,
-// }
-
-export interface HandleErrorType {
-  type: typeof RetreatActionTypes.HANDLE_ERROR,
-  message: string,
-  error: string,
-}
-
-export interface AppError {
-  error: any,
-  message: string,
-}
 
 export type FetchAllRetreatsType = FetchAllRetreatsRequestType | FetchAllRetreatsSuccessType
 export type FetchRetreatDetailType = FetchRetreatDetailRequestType | FetchRetreatDetailSuccessType
 export type CreateRetreatType = CreateRetreatRequestType | CreateRetreatSuccessType
-export type DeleteRetreatType = DeleteRetreatRequestType | DeleteRetreatSuccessType 
+export type DeleteRetreatType = DeleteRetreatRequestType | DeleteRetreatSuccessType
 export type UpdateRetreatType = UpdateRetreatRequestType | UpdateRetreatSuccessType
 export type AddMealType = AddMealRequestType | AddMealSuccessType
 export type UpdateMealType = UpdateMealRequestType | UpdateMealSuccessType
@@ -203,4 +159,5 @@ export interface RetreatsState {
   readonly retreatDetail: RetreatDetail | null
   readonly meals: MealInaRetreat[],
   readonly removed: boolean,
+  readonly successMessage: string | null,
 }

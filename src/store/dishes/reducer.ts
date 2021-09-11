@@ -9,6 +9,7 @@ const initialState: DishesState = {
 	dishDetail: null,
 	ingredients: [],
 	removed: false,
+	successMessage: null,
 }
 
 const reducer: Reducer<DishesState, DishStateActionTypes> = (state = initialState, action) => {
@@ -28,17 +29,12 @@ const reducer: Reducer<DishesState, DishStateActionTypes> = (state = initialStat
 				error: null,
 				dishes: action.dishes,
 			}
-		case DishActionTypes.FETCH_ALL_ERROR:
-			return {
-				...state,
-				loading: false,
-				error: action.error,
-			}
 		case DishActionTypes.CREATE_DISH_REQUEST:
 			return {
 				...state,
 				loading: true,
 				error: null,
+				successMessage: null,
 			}
 		case DishActionTypes.CREATE_DISH_SUCCESS:
 			return {
@@ -46,18 +42,14 @@ const reducer: Reducer<DishesState, DishStateActionTypes> = (state = initialStat
 				loading: false,
 				error: null,
 				dishes: [action.dish, ...state.dishes],
-			}
-		case DishActionTypes.CREATE_DISH_ERROR:
-			return {
-				...state,
-				loading: false,
-				error: action.error,
+				successMessage: action.msg,
 			}
 		case DishActionTypes.DELETE_DISH_REQUEST:
 			return {
 				...state,
 				loading: true,
 				error: null,
+				successMessage: null,
 			}
 		case DishActionTypes.DELETE_DISH_SUCCESS:
 			return {
@@ -67,18 +59,14 @@ const reducer: Reducer<DishesState, DishStateActionTypes> = (state = initialStat
 				dishes: state.dishes.filter(x => x.id !== action.id),
 				dishDetail: null,
 				removed: true,
-			}
-		case DishActionTypes.DELETE_DISH_ERROR:
-			return {
-				...state,
-				loading: false,
-				error: action.error,
+				successMessage: action.msg,
 			}
 		case DishActionTypes.UPDATE_DISH_REQUEST:
 			return {
 				...state,
 				loading: true,
 				error: null,
+				successMessage: null,
 			}
 		case DishActionTypes.UPDATE_DISH_SUCCESS:
 			return {
@@ -92,13 +80,8 @@ const reducer: Reducer<DishesState, DishStateActionTypes> = (state = initialStat
 					size: action.dish.size,
 					ingredient_ina_dish: state.dishDetail?.ingredient_ina_dish || [],
 					dish_ina_meal: state.dishDetail?.dish_ina_meal || [],
-				}
-			}
-		case DishActionTypes.UPDATE_DISH_ERROR:
-			return {
-				...state,
-				loading: false,
-				error: action.error,
+				},
+				successMessage: action.msg,
 			}
 		case DishActionTypes.FETCH_DISH_DETAIL_REQUEST:
 			return {
@@ -114,53 +97,40 @@ const reducer: Reducer<DishesState, DishStateActionTypes> = (state = initialStat
 				ingredients: action.dishDetail.ingredient_ina_dish,
 				dishDetail: action.dishDetail,
 			}
-		case DishActionTypes.FETCH_DISH_DETAIL_ERROR:
-			return {
-				...state,
-				loading: false,
-				error: action.error,
-			}
 		case DishActionTypes.UPDATE_INGREDIENT_REQUEST:
 			return {
 				...state,
 				loading: true,
 				error: null,
+				successMessage: null,
 			}
 		case DishActionTypes.UPDATE_INGREDIENT_SUCCESS:
 			return {
 				...state,
 				loading: false,
 				error: null,
-			}
-		case DishActionTypes.UPDATE_INGREDIENT_ERROR:
-			return {
-				...state,
-				loading: false,
-				error: action.error,
+				successMessage: action.msg,
 			}
 		case DishActionTypes.CREATE_INGREDIENT_REQUEST:
 			return {
 				...state,
 				loading: true,
 				error: null,
+				successMessage: null,
 			}
 		case DishActionTypes.CREATE_INGREDIENT_SUCCESS:
 			return {
 				...state,
 				loading: false,
 				error: null,
-			}
-		case DishActionTypes.CREATE_INGREDIENT_ERROR:
-			return {
-				...state,
-				loading: false,
-				error: action.error,
+				successMessage: action.msg,
 			}
 		case DishActionTypes.DELETE_INGREDIENT_REQUEST:
 			return {
 				...state,
 				loading: true,
 				error: null,
+				successMessage: null,
 			}
 		case DishActionTypes.DELETE_INGREDIENT_SUCCESS:
 			return {
@@ -168,12 +138,15 @@ const reducer: Reducer<DishesState, DishStateActionTypes> = (state = initialStat
 				loading: false,
 				error: null,
 				ingredients: state.ingredients.filter(ing => ing.id !== action.id),
+				successMessage: action.msg,
 			}
-		case DishActionTypes.DELETE_INGREDIENT_ERROR:
+		case DishActionTypes.HANDLE_ERROR:
 			return {
 				...state,
 				loading: false,
-				error: action.error,
+				loadingDetail: false,
+				error: { error: action.error, message: action.message },
+				successMessage: null,
 			}
 		default:
 			return state

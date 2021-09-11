@@ -50,6 +50,7 @@ const AddToListModal = ({ open, onClose, onCreateMeal, retreatId }: AddToListMod
           <Select
             value={mealsLoading ? '' : selectedMeal}
             onChange={handleMealChange}
+            disabled={!mealsList.length}
           >
             {mealsList.map(meal => (
               <MenuItem value={meal.id} key={meal.id}>
@@ -83,7 +84,7 @@ const AddToListModal = ({ open, onClose, onCreateMeal, retreatId }: AddToListMod
           color="primary"
           disabled={selectedMeal === ''}
         >
-          <Token value="create" />
+          <Token value="add" />
         </Button>
       </DialogActions>
     </Dialog>

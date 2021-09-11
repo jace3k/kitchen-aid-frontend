@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
 import { ApplicationState } from 'store'
 import { fetchAllDishesRequest } from 'store/dishes/actions'
-import { createDishInAMealRequest, deleteMealRequest, fetchMealDetailRequest } from 'store/meals/actions'
+import { addDishInAMealRequest, deleteMealRequest, fetchMealDetailRequest } from 'store/meals/actions'
 import { DishInaMealDto } from 'utils/interfaces/dish-ina-meal.interface'
 import * as routes from 'utils/routes'
 import AddToListModal from './AddToListModal'
@@ -60,7 +60,7 @@ const MealDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
   }
 
   const onCreateDish = (dish: DishInaMealDto) => {
-    dispatch(createDishInAMealRequest(dish))
+    dispatch(addDishInAMealRequest(dish))
     setAddToListModalOpen(false)
   }
 
@@ -71,7 +71,7 @@ const MealDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
         disableEditMode
         name={<MealName id={mealDetail?.id} type={mealDetail?.type} />}
         listTitle="dishes"
-
+        notFound={!mealDetail}
         onAddToListClick={() => {
           dispatch(fetchAllDishesRequest())
           setAddToListModalOpen(true)
