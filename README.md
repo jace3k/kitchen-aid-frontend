@@ -52,6 +52,8 @@ ___
 * Admin page
 * Migration to MUI v5
 * Cool datepicker (only in MUI v5)
+* Retreat's meals - grouping by date view (or table group hook)
+* Lazy loading - performance optimization
 * Cart:
   * ~Retreat tabs view~
   * ~Add new cart modal~
