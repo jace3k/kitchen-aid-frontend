@@ -12,6 +12,8 @@ import { fetchAllMealsRequest } from 'store/meals/actions'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import AddToListModal from './AddToListModal'
 import RetreatDetailMealList from './RetreatDetailMealList'
+import AddCartModal from './AddCartModal'
+import RetreatDetailCartList from './RetreatDetailCartList'
 
 
 const RetreatDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
@@ -19,6 +21,7 @@ const RetreatDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
   const { retreatDetail, loading, removed, error } = useSelector((state: ApplicationState) => state.retreats)
   const [addToListModalOpen, setAddToListModalOpen] = useState(false)
   const [dialogRemoveOpen, setDialogRemoveOpen] = useState(false)
+  const [addCartModalOpen, setAddCartModalOpen] = useState(false)
 
   useEffect(() => {
     const { id } = props.match.params
@@ -61,21 +64,42 @@ const RetreatDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
     dispatch(updateRetreatRequest({ id: retreatDetail.id, name }))
   }
 
+  // Cart actions
+  const onCloseAddCartModal = () => {
+    setAddCartModalOpen(false)
+  }
+
+  const onCreateCart = () => {
+    // dispatch create cart here
+    setAddCartModalOpen(false)
+  }
+
   return (
     <div>
       <DetailWithListView
         loading={loading}
         name={retreatDetail?.name}
-        listTitle="meals"
         notFound={!retreatDetail}
-        onAddToListClick={() => {
-          dispatch(fetchAllMealsRequest())
-          setAddToListModalOpen(true)
-        }}
         generateContent={(editMode) => {
           return <div>
             <Table>
               <TableBody>
+                <TableRow>
+                  <TableCell>
+                    <Token value="meals" />
+                  </TableCell>
+                  <TableCell>
+                    {retreatDetail?.meal_ina_retreat.length}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <Token value="carts" />
+                  </TableCell>
+                  <TableCell>
+                    0
+                  </TableCell>
+                </TableRow>
                 {editMode && (
                   <TableRow>
                     <TableCell colSpan={2} align="right" onClick={() => setDialogRemoveOpen(true)}>
@@ -87,14 +111,29 @@ const RetreatDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
             </Table>
           </div>
         }}
-        generateItemsList={() => {
-          return <RetreatDetailMealList />
-        }}
+        generateItemsList={[
+          {
+            name: 'meals',
+            list: () => <RetreatDetailMealList />,
+            onAddToListClick: () => {
+              dispatch(fetchAllMealsRequest())
+              setAddToListModalOpen(true)
+            }
+          },
+          {
+            name: 'carts',
+            list: () => <RetreatDetailCartList />,
+            onAddToListClick: () => {
+              setAddCartModalOpen(true)
+            }
+          }
+        ]}
         onCloseEditMode={handleUpdateRetreat}
       />
       {retreatDetail &&
         <>
           <AddToListModal open={addToListModalOpen} retreatId={retreatDetail.id} onClose={onCloseAddToListModal} onCreateMeal={onCreateMeal} />
+          <AddCartModal open={addCartModalOpen} retreatId={retreatDetail.id} onClose={onCloseAddCartModal} onCreateCart={onCreateCart} />
           <DialogRemove
             open={dialogRemoveOpen}
             handleRemove={handleRemoveRetreat}

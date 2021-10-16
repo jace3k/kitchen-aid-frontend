@@ -71,7 +71,6 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
       <DetailWithListView
         loading={loading}
         name={dishDetail?.name}
-        listTitle="ingredients"
         notFound={!dishDetail}
         onCloseEditMode={(name) => {
           if (!dishDetail)
@@ -82,10 +81,7 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
           }
           dispatch(updateDishRequest(dishDetail.id, name, dishSize))
         }}
-        onAddToListClick={() => {
-          dispatch(fetchAllIngredientsRequest())
-          setAddToListModalOpen(true)
-        }}
+
         generateContent={(editMode) => {
           return (
             <div>
@@ -116,9 +112,16 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
             </div>
           )
         }}
-        generateItemsList={() => {
-          return <DishDetailIngredientsList />
-        }}
+        generateItemsList={[
+          {
+            name: 'ingredients',
+            list: () => <DishDetailIngredientsList />,
+            onAddToListClick: () => {
+              dispatch(fetchAllIngredientsRequest())
+              setAddToListModalOpen(true)
+            }
+          }
+        ]}
       />
       {dishDetail &&
         <>

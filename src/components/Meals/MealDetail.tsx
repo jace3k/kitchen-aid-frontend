@@ -70,12 +70,7 @@ const MealDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
         loading={loading}
         disableEditMode
         name={<MealName id={mealDetail?.id} type={mealDetail?.type} />}
-        listTitle="dishes"
         notFound={!mealDetail}
-        onAddToListClick={() => {
-          dispatch(fetchAllDishesRequest())
-          setAddToListModalOpen(true)
-        }}
         generateContent={(editMode) => {
           return <div>
             <Table>
@@ -91,9 +86,16 @@ const MealDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
             </Table>
           </div>
         }}
-        generateItemsList={() => {
-          return <MealDetailDishList />
-        }}
+        generateItemsList={[
+          {
+            name: 'dishes',
+            list: () => <MealDetailDishList />,
+            onAddToListClick: () => {
+              dispatch(fetchAllDishesRequest())
+              setAddToListModalOpen(true)
+            }
+          }
+        ]}
       />
       {mealDetail &&
         <>

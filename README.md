@@ -47,7 +47,14 @@ ___
 * ~Code optimization (store refactor (only one error handler), ~code duplication~)~
 
 
-####### Future
+####### ~Future~ Now
 * Tables - sorting & filtering
 * Admin page
-* Cart
+* Migration to MUI v5
+* Cool datepicker (only in MUI v5)
+* Cart:
+  * ~Retreat tabs view~
+  * ~Add new cart modal~
+  * Cart API/actions/reducers definition
+  * Cart Detail View (details, table with ingredients)
+

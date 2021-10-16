@@ -1,24 +1,31 @@
-import { Backdrop, Button, Card, CardContent, Container, Divider, IconButton, List, Table, TableBody, TableCell, TableRow, TextField } from '@material-ui/core'
-import Token from 'components/Token'
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { ITranslations } from 'utils/languages/interface'
-import { TranslationTokensType } from 'utils/translations'
-import { useStyles } from '../styles'
+import React, { useState, useEffect } from 'react'
+import {
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Divider,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  TextField
+} from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import CloseIcon from '@material-ui/icons/Check'
-import PlusButton from '@material-ui/icons/Add'
-
-import { useEffect } from 'react'
+import Token from 'components/Token'
+import { useStyles } from '../styles'
+import SingleListView from './SingleListView'
+import { ListItemsInterface } from './list-items.interface'
+import MultiListView from './MultiListView'
 
 interface DetaiWithListViewProps {
   name: string | any
   generateContent: (editMode: boolean) => JSX.Element
-  generateItemsList: () => JSX.Element
-  listTitle: TranslationTokensType
+  generateItemsList: ListItemsInterface[]
   loading: boolean
   onCloseEditMode?: (itemName: string) => void
-  onAddToListClick?: () => void
   disableEditMode?: boolean,
   notFound?: boolean,
 }
@@ -27,10 +34,8 @@ const DetailWithListView = ({
   name,
   generateContent,
   generateItemsList,
-  listTitle,
   loading,
   onCloseEditMode,
-  onAddToListClick,
   disableEditMode,
   notFound
 }: DetaiWithListViewProps) => {
@@ -52,7 +57,6 @@ const DetailWithListView = ({
         </Button>
       </div>
     )
-
 
   return (
     <Container className={classes.detailContainer}>
@@ -94,29 +98,15 @@ const DetailWithListView = ({
               {generateContent(editMode)}
             </>
           )}
-
         </CardContent>
       </Card>
       <Card className={classes.itemList}>
         <CardContent>
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableCell>
-                  <h2><Token value={listTitle} /></h2>
-                </TableCell>
-                <TableCell>
-                  <span onClick={onAddToListClick}>
-                    <IconButton size="small" style={{ float: 'right' }}>
-                      <PlusButton />
-                    </IconButton>
-                  </span>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-          <Divider />
-          {generateItemsList()}
+          {generateItemsList.length > 1 ? (
+            <MultiListView generateItemsList={generateItemsList} />
+          ) : (
+            <SingleListView generateItem={generateItemsList[0]} />
+          )}
         </CardContent>
       </Card>
     </Container>
