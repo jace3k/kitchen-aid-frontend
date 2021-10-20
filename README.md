@@ -57,6 +57,8 @@ ___
 * Cart:
   * ~Retreat tabs view~
   * ~Add new cart modal~
-  * Cart API/actions/reducers definition
-  * Cart Detail View (details, table with ingredients)
+  * ~Cart API/actions/reducers definition~
+  * Cart Detail View (details, table with ingredients (fetched from retreat detail))
+  * Cart List view (with retreat names)
+* Error/Notification optimization (detailed messages/setting?)
 

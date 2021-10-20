@@ -6,6 +6,8 @@ import { MealDto } from "utils/interfaces/meal.interface"
 import { DishInaMealDto } from "utils/interfaces/dish-ina-meal.interface"
 import { Retreat, RetreatDetail, RetreatDto } from "utils/interfaces/retreat.interface"
 import { MealInaRetreatDto } from "utils/interfaces/meal-ina-retreat.interface"
+import { Cart, CartDto } from "utils/interfaces/cart.interface"
+import { CartItemDto } from "utils/interfaces/cart-item.interface"
 
 export const SimpleApi = {
   get: (): Promise<SimpleResponse> => {
@@ -114,5 +116,29 @@ export const RetreatsApi = {
   },
   removeMeal: (mealInaRetreatId: number) => {
     return axios.delete(`meal_ina_retreat/${mealInaRetreatId}/`)
+  }
+}
+
+export const CartsApi = {
+  getAll: () => {
+    return axios.get('cart/')
+  },
+  getDetail: (id: number) => {
+    return axios.get(`cart/${id}/`)
+  },
+  createCart: (cart: CartDto) => {
+    return axios.post(`cart/`, cart)
+  },
+  deleteCart: (id: number) => {
+    return axios.delete(`cart/${id}/`)
+  },
+  addCartItem: (cartItem: CartItemDto) => {
+    return axios.post(`cart_item/`, cartItem)
+  },
+  updateCartItem: (cartItem: CartItemDto) => {
+    return axios.put(`cart_item/${cartItem.id}/`, cartItem)
+  },
+  removeCartItem: (cartItemId: number) => {
+    return axios.delete(`cart_item/${cartItemId}/`)
   }
 }
