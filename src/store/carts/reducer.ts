@@ -34,7 +34,7 @@ const reducer: Reducer<CartsState, CartStateActionTypes> = (state = initialState
         ...state,
         loading: true,
         error: null,
-        cartDetail: null,
+        // cartDetail: null,
         cartItems: [],
       }
     case CartActionTypes.FETCH_CART_DETAIL_SUCCESS:
@@ -74,7 +74,7 @@ const reducer: Reducer<CartsState, CartStateActionTypes> = (state = initialState
         ...state,
         loading: false,
         error: null,
-        retreats: state.carts.filter(x => x.id !== action.id),
+        carts: state.carts.filter(x => x.id !== action.id),
         cartDetail: null,
         removed: true,
         successMessage: action.msg,
@@ -106,6 +106,13 @@ const reducer: Reducer<CartsState, CartStateActionTypes> = (state = initialState
         loading: false,
         error: null,
         successMessage: action.msg,
+        cartItems: state.cartItems.map(x => {
+          if (x.id !== action.cartItem.id)
+            return x
+
+          const { amount, due_date, status } = action.cartItem
+          return { ...x, amount, due_date, status }
+        })
       }
     case CartActionTypes.REMOVE_CART_ITEM_REQUEST:
       return {
@@ -118,7 +125,21 @@ const reducer: Reducer<CartsState, CartStateActionTypes> = (state = initialState
       return {
         ...state,
         loading: false,
-        meals: state.cartItems.filter(x => x.id !== action.cartItemId),
+        cartItems: state.cartItems.filter(x => x.id !== action.cartItemId),
+        error: null,
+        successMessage: action.msg,
+      }
+    case CartActionTypes.GENERATE_IN_RANGE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        successMessage: null,
+      }
+    case CartActionTypes.GENERATE_IN_RANGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
         error: null,
         successMessage: action.msg,
       }

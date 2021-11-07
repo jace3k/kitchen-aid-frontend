@@ -28,6 +28,7 @@ interface DetaiWithListViewProps {
   onCloseEditMode?: (itemName: string) => void
   disableEditMode?: boolean,
   notFound?: boolean,
+  wide?: boolean,
 }
 
 const DetailWithListView = ({
@@ -37,7 +38,8 @@ const DetailWithListView = ({
   loading,
   onCloseEditMode,
   disableEditMode,
-  notFound
+  notFound,
+  wide
 }: DetaiWithListViewProps) => {
   const classes = useStyles()
   const [editMode, setEditMode] = useState(false)
@@ -59,8 +61,8 @@ const DetailWithListView = ({
     )
 
   return (
-    <Container className={classes.detailContainer}>
-      <Card className={classes.detailInformationPanel}>
+    <Container className={wide ? classes.wideDetailContainer : classes.detailContainer}>
+      <Card className={wide ? classes.wideDetailInformationPanel : classes.detailInformationPanel}>
         <CardContent>
           {loading ? (
             <h2><Token value="loadingData" /></h2>

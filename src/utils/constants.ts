@@ -17,3 +17,5 @@ export const MEAL_TYPES_NAMES: Record<string, TranslationTokensType> = {
   LU: 'lunch',
   FE: 'feast',
 }
+
+export const MOMENT_DATE_FORMAT = 'yyyy-MM-DD'

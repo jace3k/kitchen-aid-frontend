@@ -14,6 +14,8 @@ import AddToListModal from './AddToListModal'
 import RetreatDetailMealList from './RetreatDetailMealList'
 import AddCartModal from './AddCartModal'
 import RetreatDetailCartList from './RetreatDetailCartList'
+import { CreateCartOptions } from 'components/Carts/types/create-cart.type'
+import { createCartRequest, generateInRangeRequest } from 'store/carts/actions'
 
 
 const RetreatDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
@@ -69,8 +71,23 @@ const RetreatDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
     setAddCartModalOpen(false)
   }
 
-  const onCreateCart = () => {
-    // dispatch create cart here
+  const onCreateCart = ({ type, from, to }: CreateCartOptions) => {
+    if (!retreatDetail)
+      return
+
+    if (type === 'empty') {
+      dispatch(createCartRequest({ retreat: retreatDetail.id }))
+    }
+
+    if (type === 'generated') {
+      dispatch(generateInRangeRequest({
+        begin_date: from,
+        begin_type: "string",
+        end_date: to,
+        end_type: "string",
+        retreat: retreatDetail.id,
+      }))
+    }
     setAddCartModalOpen(false)
   }
 
@@ -97,7 +114,7 @@ const RetreatDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
                     <Token value="carts" />
                   </TableCell>
                   <TableCell>
-                    0
+                  {retreatDetail?.cart.length}
                   </TableCell>
                 </TableRow>
                 {editMode && (

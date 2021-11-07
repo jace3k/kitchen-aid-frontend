@@ -1,28 +1,29 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, Input, InputLabel, MenuItem, Radio, RadioGroup, Select } from '@material-ui/core'
-import MealName from 'components/Meals/MealName'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, Input, InputLabel, Radio, RadioGroup } from '@material-ui/core'
+import { CreateCartOptions, CreateCartType } from 'components/Carts/types/create-cart.type'
 import Token from 'components/Token'
+import moment from 'moment'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { ApplicationState } from 'store'
+import { MOMENT_DATE_FORMAT } from 'utils/constants'
 
 
 interface AddCartModalProps {
   open: boolean
   retreatId: number
   onClose: () => void
-  onCreateCart: () => void
+  onCreateCart: (options: CreateCartOptions) => void
 }
 
 const getCurrentDate = () => {
-  const date = new Date().toLocaleDateString('pl-PL')
-  const [d, m, y] = date.split('.')
+  return moment().format(MOMENT_DATE_FORMAT)
+}
 
-  return [y, m, d].join('-')
+const getWeekAgoDate = () => {
+  return moment().subtract(7, 'days').format(MOMENT_DATE_FORMAT)
 }
 
 const AddCartModal = ({ open, onClose, onCreateCart, retreatId }: AddCartModalProps) => {
-  const [selectedCart, setSelectedCart] = useState("empty")
-  const [selectedDateFrom, setSelectedDateFrom] = useState(getCurrentDate());
+  const [selectedCart, setSelectedCart] = useState<CreateCartType>("empty")
+  const [selectedDateFrom, setSelectedDateFrom] = useState(getWeekAgoDate());
   const [selectedDateTo, setSelectedDateTo] = useState(getCurrentDate());
 
   const handleChange = (e: any) => {
@@ -56,7 +57,11 @@ const AddCartModal = ({ open, onClose, onCreateCart, retreatId }: AddCartModalPr
           <Token value="cancel" />
         </Button>
         <Button
-          onClick={() => onCreateCart()}
+          onClick={() => onCreateCart({
+            type: selectedCart,
+            from: selectedDateFrom,
+            to: selectedDateTo,
+          })}
           color="primary"
         >
           <Token value="create" />

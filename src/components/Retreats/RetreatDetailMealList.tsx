@@ -37,7 +37,6 @@ const RetreatDetailMealList = () => {
     if (meal.servings === newMeal.servings && meal.date === newMeal.date)
       return
 
-    console.log('[handleMealUpdate]', newMeal)
     dispatch(updateMealRequest(newMeal))
   }
 

@@ -1,3 +1,4 @@
+import { GenerateInRangeDto } from "utils/interfaces/cart-generate-in-range.interface";
 import { CartItem, CartItemDto } from "utils/interfaces/cart-item.interface";
 import { Cart, CartDetail, CartDto } from "utils/interfaces/cart.interface";
 import { AppError, HandleErrorType } from "utils/interfaces/error-handling.interface"
@@ -27,6 +28,9 @@ export enum CartActionTypes {
 
   REMOVE_CART_ITEM_REQUEST = '@@carts/REMOVE_CART_ITEM_REQUEST',
   REMOVE_CART_ITEM_SUCCESS = '@@carts/REMOVE_CART_ITEM_SUCCESS',
+
+  GENERATE_IN_RANGE_REQUEST = '@@carts/GENERATE_IN_RANGE_REQUEST',
+  GENERATE_IN_RANGE_SUCCESS = '@@carts/GENERATE_IN_RANGE_SUCCESS',
 
   HANDLE_ERROR = '@@carts/HANDLE_ERROR',
 }
@@ -67,7 +71,7 @@ interface CreateCartSuccessType {
 // DELETE
 export interface DeleteCartRequestType {
   type: typeof CartActionTypes.DELETE_CART_REQUEST,
-  id: number,
+  cart: Cart,
 }
 
 interface DeleteCartSuccessType {
@@ -112,6 +116,19 @@ interface RemoveCartItemSuccessType {
   msg: string,
 }
 
+// GENERATE IN RANGE
+
+export interface GenerateInRangeRequestType {
+  type: typeof CartActionTypes.GENERATE_IN_RANGE_REQUEST,
+  cartOptions: GenerateInRangeDto,
+}
+
+interface GenerateInRangeSuccessType {
+  type: typeof CartActionTypes.GENERATE_IN_RANGE_SUCCESS,
+  cartId: number,
+  msg: string,
+}
+
 export type FetchAllCartsType = FetchAllCartsRequestType | FetchAllCartsSuccessType
 export type FetchCartDetailType = FetchCartDetailRequestType | FetchCartDetailSuccessType
 export type CreateCartType = CreateCartRequestType | CreateCartSuccessType
@@ -119,6 +136,7 @@ export type DeleteCartType = DeleteCartRequestType | DeleteCartSuccessType
 export type AddCartItemType = AddCartItemRequestType | AddCartItemSuccessType
 export type UpdateCartItemType = UpdateCartItemRequestType | UpdateCartItemSuccessType
 export type RemoveCartItemType = RemoveCartItemRequestType | RemoveCartItemSuccessType
+export type GenerateInRangeType = GenerateInRangeRequestType | GenerateInRangeSuccessType
 
 export type CartStateActionTypes =
   FetchAllCartsType |
@@ -128,6 +146,7 @@ export type CartStateActionTypes =
   AddCartItemType |
   UpdateCartItemType |
   RemoveCartItemType |
+  GenerateInRangeType |
   HandleErrorType
 
 export interface CartsState {

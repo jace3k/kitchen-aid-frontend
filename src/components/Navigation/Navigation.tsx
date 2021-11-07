@@ -20,6 +20,7 @@ export const TabNavigationUrls: ITabNavigationUrls[] = [
   { url: routes.Meals, token: 'meals' },
   { url: routes.Dishes, token: 'dishes' },
   { url: routes.Ingredients, token: 'ingredients' },
+  { url: routes.Carts, token: 'carts' },
 ]
 
 const Navigation: React.FC<RouteComponentProps> = props => {

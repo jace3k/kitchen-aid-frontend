@@ -5,6 +5,7 @@ enum StorageKeys {
   darkMode = '@@KITCHEN_AID/darkMode',
   token = '@@KITCHEN_AID/authToken',
   itemsPerPage = '@@KITCHEN_AID/itemsPerPage',
+  settings = '@@KITCHEN_AID/settings',
 }
 
 const storage = {
@@ -60,7 +61,26 @@ const storage = {
   setDefaultItemsPerPage: (itemsPerPage: number) => {
     localStorage.setItem(StorageKeys.itemsPerPage, itemsPerPage + '')
   },
-  
+  addSetting: (key: string, value: string) => {
+    let settings = localStorage.getItem(StorageKeys.settings)
+    if (!settings) {
+      settings = '{}'
+    }
+    const settingsJson = JSON.parse(settings)
+
+    settingsJson[key] = value;
+
+    settings = JSON.stringify(settingsJson)
+    localStorage.setItem(StorageKeys.settings, settings)
+  },
+  getSetting: (key: string): string | null => {
+    let settings = localStorage.getItem(StorageKeys.settings)
+    if (!settings)
+      return null
+
+    const settingsJson = JSON.parse(settings)
+    return settingsJson[key]
+  }
 }
 
 export default storage

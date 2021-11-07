@@ -17,6 +17,11 @@ export const useStyles = makeStyles((theme: Theme) => createStyles({
       flexDirection: 'row',
     }
   },
+  wideDetailContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+  },
   detailInformationPanel: {
     width: 'auto',
     margin: 10,
@@ -24,6 +29,11 @@ export const useStyles = makeStyles((theme: Theme) => createStyles({
     [theme.breakpoints.up('md')]: {
       width: 300,
     }
+  },
+  wideDetailInformationPanel: {
+    width: 'auto',
+    margin: 10,
+    minWidth: 250,
   },
   itemList: {
     minWidth: 250,

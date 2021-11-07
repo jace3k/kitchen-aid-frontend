@@ -1,3 +1,4 @@
+import { Cart } from "utils/interfaces/cart.interface"
 import { AppError, HandleErrorType } from "utils/interfaces/error-handling.interface"
 import { MealInaRetreat, MealInaRetreatDto } from "utils/interfaces/meal-ina-retreat.interface"
 import { Retreat, RetreatDetail, RetreatDto } from "utils/interfaces/retreat.interface"
@@ -158,6 +159,7 @@ export interface RetreatsState {
   readonly retreats: Retreat[]
   readonly retreatDetail: RetreatDetail | null
   readonly meals: MealInaRetreat[],
+  readonly carts: Cart[],
   readonly removed: boolean,
   readonly successMessage: string | null,
 }

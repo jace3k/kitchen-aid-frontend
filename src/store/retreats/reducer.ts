@@ -1,4 +1,3 @@
-import RetreatDetail from 'components/Retreats/RetreatDetail'
 import { Reducer } from 'redux'
 import { RetreatsState, RetreatActionTypes, RetreatStateActionTypes } from './types'
 
@@ -6,6 +5,7 @@ const initialState: RetreatsState = {
   loading: false,
   retreats: [],
   meals: [],
+  carts: [],
   retreatDetail: null,
   error: null,
   removed: false,
@@ -44,6 +44,7 @@ const reducer: Reducer<RetreatsState, RetreatStateActionTypes> = (state = initia
         error: null,
         retreatDetail: action.retreatDetail,
         meals: action.retreatDetail.meal_ina_retreat,
+        carts: action.retreatDetail.cart.map(cartId => ({ id: cartId, retreat: action.retreatDetail.id }))
       }
     case RetreatActionTypes.CREATE_RETREAT_REQUEST:
       return {
@@ -96,6 +97,7 @@ const reducer: Reducer<RetreatsState, RetreatStateActionTypes> = (state = initia
           id: state.retreatDetail?.id || action.retreat.id,
           name: action.retreat.name,
           meal_ina_retreat: state.retreatDetail?.meal_ina_retreat || [],
+          cart: state.retreatDetail?.cart || [],
         },
         successMessage: action.msg,
       }

@@ -14,4 +14,5 @@ export interface RetreatDetail {
   id: number,
   name: string,
   meal_ina_retreat: MealInaRetreat[]
+  cart: number[] // cart id's
 }

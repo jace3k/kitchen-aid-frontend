@@ -1,9 +1,11 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Input, InputLabel, MenuItem, Select } from '@material-ui/core'
 import MealName from 'components/Meals/MealName'
 import Token from 'components/Token'
+import moment from 'moment'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { ApplicationState } from 'store'
+import { MOMENT_DATE_FORMAT } from 'utils/constants'
 import { MealInaRetreatDto } from 'utils/interfaces/meal-ina-retreat.interface'
 
 interface AddToListModalProps {
@@ -14,10 +16,7 @@ interface AddToListModalProps {
 }
 
 const getCurrentDate = () => {
-  const date = new Date().toLocaleDateString('pl-PL')
-  const [d, m, y] = date.split('.')
-
-  return [y, m, d].join('-')
+  return moment().format(MOMENT_DATE_FORMAT)
 }
 
 const AddToListModal = ({ open, onClose, onCreateMeal, retreatId }: AddToListModalProps) => {
@@ -61,7 +60,7 @@ const AddToListModal = ({ open, onClose, onCreateMeal, retreatId }: AddToListMod
         </FormControl>
         <div style={{ margin: 10 }} />
         <FormControl fullWidth>
-        <InputLabel><Token value="date" /></InputLabel>
+          <InputLabel><Token value="date" /></InputLabel>
           <Input value={selectedDate} onChange={handleDateChange} type="date" />
         </FormControl>
         <div style={{ margin: 10 }} />

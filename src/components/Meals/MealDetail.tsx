@@ -99,7 +99,12 @@ const MealDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
       />
       {mealDetail &&
         <>
-          <AddToListModal open={addToListModalOpen} mealId={mealDetail.id} onClose={onCloseAddToListModal} onCreateDish={onCreateDish} />
+          <AddToListModal
+            open={addToListModalOpen}
+            mealId={mealDetail.id}
+            onClose={onCloseAddToListModal}
+            onCreateDish={onCreateDish}
+          />
           <DialogRemove
             open={dialogRemoveOpen}
             handleRemove={handleRemoveMeal}

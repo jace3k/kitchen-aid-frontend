@@ -34,15 +34,12 @@ const TabPanel = (props: TabPanelProps) => {
   );
 }
 
-const MultiListView: React.FC<MultiListViewProps> = ({ generateItemsList, onAddToListClick }) => {
+const MultiListView: React.FC<MultiListViewProps> = ({ generateItemsList }) => {
   // in MultiListView - generateItemsList has multiple elements
   const [currentTab, setCurrentTab] = useState(0)
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setCurrentTab(newValue)
   }
-  const handleChangeIndex = (index: number) => {
-    setCurrentTab(index);
-  };
 
   return (
     <div>

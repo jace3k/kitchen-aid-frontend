@@ -18,6 +18,7 @@ const Notifications = () => {
   const { error: dishError, successMessage: dishSuccess } = useSelector((state: ApplicationState) => state.dishes)
   const { error: mealError, successMessage: mealSuccess } = useSelector((state: ApplicationState) => state.meals)
   const { error: retreatError, successMessage: retreatSuccess } = useSelector((state: ApplicationState) => state.retreats)
+  const { error: cartError, successMessage: cartSuccess } = useSelector((state: ApplicationState) => state.carts)
 
   const handleCloseNotification = () => setNotificationOpened(false)
 
@@ -89,6 +90,20 @@ const Notifications = () => {
     }
   }, [retreatError, retreatSuccess])
 
+  useEffect(() => {
+    if (cartError) {
+      setCurrentMessage('operationFailure')
+      setSeverity('error')
+      setNotificationOpened(true)
+      console.log(cartError)
+    }
+
+    if (cartSuccess) {
+      setCurrentMessage('operationSuccess')
+      setSeverity('success')
+      setNotificationOpened(true)
+    }
+  }, [cartError, cartSuccess])
 
   return (
     <Snackbar

@@ -8,6 +8,7 @@ import { Retreat, RetreatDetail, RetreatDto } from "utils/interfaces/retreat.int
 import { MealInaRetreatDto } from "utils/interfaces/meal-ina-retreat.interface"
 import { Cart, CartDto } from "utils/interfaces/cart.interface"
 import { CartItemDto } from "utils/interfaces/cart-item.interface"
+import { GenerateInRangeDto } from "utils/interfaces/cart-generate-in-range.interface"
 
 export const SimpleApi = {
   get: (): Promise<SimpleResponse> => {
@@ -140,5 +141,8 @@ export const CartsApi = {
   },
   removeCartItem: (cartItemId: number) => {
     return axios.delete(`cart_item/${cartItemId}/`)
+  },
+  generateInRange: (generateInRangeDto: GenerateInRangeDto) => {
+    return axios.post(`cart/generate_in_range/`, generateInRangeDto)
   }
 }
