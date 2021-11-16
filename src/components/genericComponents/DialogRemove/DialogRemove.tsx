@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider } from '@material-ui/core'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import Token from 'components/Token'
 
 

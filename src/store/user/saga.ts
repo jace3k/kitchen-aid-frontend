@@ -1,4 +1,4 @@
-import { AxiosInterceptorManager, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { AxiosError, AxiosInterceptorManager, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { UserApi } from 'store/api'
 import storage from 'utils/storage'
@@ -15,13 +15,13 @@ function* loginRequest({ username, password }: LoginRequestType) {
     console.log('decodedToken', decodedToken)
     jwt.checkExpirationTime(decodedToken)
     storage.saveToken(token)
-    
+
 
     yield put(loginSuccess(decodedToken))
   }
   catch (err: any) {
     // TODO: check if the error comes from the token or network
-    yield put(loginFailed(err))
+    yield put(loginFailed(err.message, err))
   }
 }
 
@@ -33,7 +33,7 @@ function* loginLocal() {
       const decodedToken = jwt.decode(fromStorage)
       jwt.checkExpirationTime(decodedToken)
 
-      yield put(loginSuccess(decodedToken))
+      yield put(loginSuccess(decodedToken, true))
     }
     catch (err) { storage.removeToken() }
   }

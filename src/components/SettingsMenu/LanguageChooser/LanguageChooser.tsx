@@ -1,10 +1,11 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
-import Token from 'components/Token'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { ApplicationState } from 'store'
 import { changeLanguage } from 'store/user/actions'
 import { LanguageType, TranslationTokensType } from 'utils/translations'
+import Token from 'components/Token'
+
 
 type Languages = {
   language: LanguageType,
@@ -20,7 +21,7 @@ const LanguageChooser = () => {
   const currentLanguage = useSelector((state: ApplicationState) => state.user.language)
   const dispatch = useDispatch()
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleChange = (event: SelectChangeEvent<LanguageType>) => {
     dispatch(changeLanguage(event.target.value as LanguageType))
   }
 

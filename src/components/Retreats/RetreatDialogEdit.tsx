@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core'
-import Token from 'components/Token'
 import { useDispatch } from 'react-redux'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material'
 import { createRetreatRequest } from 'store/retreats/actions'
+import Token from 'components/Token'
+
 
 interface RetreatDialogEdit {
   open: boolean,

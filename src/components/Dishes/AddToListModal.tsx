@@ -1,12 +1,9 @@
-import React, { useEffect } from 'react'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, MenuItem, OutlinedInput, Select, TextField } from '@material-ui/core'
-import Token from 'components/Token'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, MenuItem, Select, InputLabel, Input } from '@mui/material'
 import { ApplicationState } from 'store'
-import { InputLabel } from '@material-ui/core'
-import { useState } from 'react'
-import { Input } from '@material-ui/core'
 import { IngredientInaDishDto } from 'utils/interfaces/ingredient-ina-dish.interface'
+import Token from 'components/Token'
 
 
 interface AddToListModalProps {

@@ -1,9 +1,10 @@
-import { Chip, CircularProgress } from '@material-ui/core'
-import Token from 'components/Token'
 import React from 'react'
+import { Chip, CircularProgress } from '@mui/material'
+import IconOk from '@mui/icons-material/CheckCircleRounded'
+import { green } from '@mui/material/colors'
 import { TranslationTokensType } from 'utils/translations'
-import IconOk from '@material-ui/icons/CheckCircleRounded'
-import { green } from '@material-ui/core/colors'
+import Token from 'components/Token'
+
 
 interface DialogRemoveDescriptionProps {
   usedInElements?: string[]

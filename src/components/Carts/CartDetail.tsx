@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { addCartItemRequest, deleteCartRequest, fetchCartDetailRequest } from 'store/carts/actions'
 import { useDispatch, useSelector } from 'react-redux'
+import { Button, CircularProgress, Container, Divider } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import RemoveIcon from '@mui/icons-material/Delete'
+
 import { ApplicationState } from 'store'
-import CartName from './CartName'
-import CartItemList from './CartItemList'
+import { addCartItemRequest, deleteCartRequest, fetchCartDetailRequest } from 'store/carts/actions'
+import { fetchAllIngredientsRequest } from 'store/ingredients/actions'
 import * as routes from 'utils/routes'
 import { CartItemDto } from 'utils/interfaces/cart-item.interface'
-import { Button, CircularProgress, Container, Divider } from '@material-ui/core'
+import CartName from './CartName'
+import CartItemList from './CartItemList'
+import AddCartItemModal from './AddCartItemModal'
 import Token from 'components/Token'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
-import { fetchAllIngredientsRequest } from 'store/ingredients/actions'
-import AddCartItemModal from './AddCartItemModal'
-import AddIcon from '@material-ui/icons/Add'
+
 
 const CartDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
   const dispatch = useDispatch()
-  // TODO: CartDetail loading animation
   const { cartDetail, loading, removed, error } = useSelector((state: ApplicationState) => state.carts)
   const [addToListModalOpen, setAddToListModalOpen] = useState(false)
   const [dialogRemoveOpen, setDialogRemoveOpen] = useState(false)
@@ -69,12 +71,12 @@ const CartDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
     )
 
   if (loading && !cartDetail)
-      return (
-        <div style={{ textAlign: 'center' }}>
-          <h2><Token value="loadingData" /></h2>
-          <CircularProgress />
-        </div>
-      )
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <h2><Token value="loadingData" /></h2>
+        <CircularProgress />
+      </div>
+    )
 
   return (
     <div>
@@ -93,6 +95,11 @@ const CartDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
             setAddToListModalOpen(true)
           }}>
             <AddIcon /> <Token value="add" />
+          </Button>
+          <Button color="secondary" onClick={() => {
+            setDialogRemoveOpen(true)
+          }}>
+            <RemoveIcon /> <Token value="removeCart" />
           </Button>
         </div>
         <div>

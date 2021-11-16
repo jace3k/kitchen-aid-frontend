@@ -4,4 +4,6 @@ export interface ListItemsInterface {
   name: TranslationTokensType
   list: () => JSX.Element
   onAddToListClick?: () => void
+  initial?: boolean
+  tabUrl?: string
 }

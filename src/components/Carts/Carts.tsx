@@ -1,19 +1,18 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { Container } from '@material-ui/core'
-import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
-import { useStyles } from 'components/genericComponents/styles'
-import Token from 'components/Token'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect, useMemo } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 import { CellProps, Column, Row } from 'react-table'
+import { Container } from '@mui/material'
+import { ApplicationState } from 'store'
 import { fetchAllCartsRequest } from 'store/carts/actions'
 import { Cart } from 'utils/interfaces/cart.interface'
 import * as routes from 'utils/routes'
+import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
+import Token from 'components/Token'
 import CartName from './CartName'
-import { ApplicationState } from 'store'
+
 
 const Carts: React.FC<RouteComponentProps> = ({ history }) => {
-  const classes = useStyles()
   const dispatch = useDispatch()
   const { carts, loading } = useSelector((state: ApplicationState) => state.carts)
   const { retreats } = useSelector((state: ApplicationState) => state.retreats)

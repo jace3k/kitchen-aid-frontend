@@ -96,4 +96,5 @@ export interface ITranslations {
   BO: string,
   SE: string,
   addNewCartItem: string,
+  removeCart: string,
 }

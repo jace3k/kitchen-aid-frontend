@@ -1,8 +1,9 @@
-import { Chip } from '@material-ui/core'
-import Token from 'components/Token'
 import React from 'react'
+import { Chip } from '@mui/material'
 import { CartItemStatus } from 'utils/interfaces/cart-item.interface'
 import { TranslationTokensType } from 'utils/translations'
+import Token from 'components/Token'
+
 
 interface CartItemStatusChipProps {
   status: TranslationTokensType & CartItemStatus

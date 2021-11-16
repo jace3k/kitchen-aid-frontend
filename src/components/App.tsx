@@ -1,18 +1,12 @@
 import React, { useEffect, lazy, Suspense } from 'react'
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { ThemeProvider, createTheme, CssBaseline, CircularProgress } from '@mui/material'
+import { ApplicationState } from 'store'
+import { changeLanguage, tryLogin, toggleDarkMode, setDefaultItemsPerPage } from 'store/user/actions'
+import { getPalette } from 'utils/palette'
+import storage from 'utils/storage'
 
-// import Navigation from './Navigation/Navigation'
-
-// import NotFound from './NotFound'
-// import Login from './Login/Login'
-// import Retreats from './Retreats/Retreats'
-// import RetreatDetail from './Retreats/RetreatDetail'
-// import Ingredients from './Ingredients/Ingredients'
-// import Dishes from './Dishes/Dishes'
-// import DishesDetail from './Dishes/DishesDetail'
-// import Meals from './Meals/Meals'
-// import MealDetail from './Meals/MealDetail'
-// import Notifications from './Notifications/Notifications'
 
 const Navigation = lazy(() => import('./Navigation/Navigation'))
 const NotFound = lazy(() => import('components/NotFound'))
@@ -25,15 +19,8 @@ const DishesDetail = lazy(() => import('components/Dishes/DishesDetail'))
 const Meals = lazy(() => import('components/Meals/Meals'))
 const MealDetail = lazy(() => import('components/Meals/MealDetail'))
 const Notifications = lazy(() => import('components/Notifications/Notifications'))
-
-import { useDispatch, useSelector } from 'react-redux'
-import { ApplicationState } from 'store'
-import { ThemeProvider, createTheme, CssBaseline, CircularProgress } from '@material-ui/core'
-import { getPalette } from 'utils/palette'
-import storage from 'utils/storage'
-import { changeLanguage, tryLogin, toggleDarkMode, setDefaultItemsPerPage } from 'store/user/actions'
-import CartDetail from './Carts/CartDetail'
-import Carts from './Carts/Carts'
+const CartDetail = lazy(() => import('./Carts/CartDetail'))
+const Carts = lazy(() => import('./Carts/Carts'))
 
 
 const App: React.FC = () => {
@@ -78,6 +65,7 @@ const App: React.FC = () => {
             <Route exact path="/" component={Retreats} />
             <Route exact path="/retreats" component={Retreats} />
             <Route exact path="/retreats/:id" component={RetreatDetail} />
+            <Route exact path="/retreats/:id/:card" component={RetreatDetail} />
             <Route exact path="/meals" component={Meals} />
             <Route exact path="/meals/:id" component={MealDetail} />
             <Route exact path="/dishes" component={Dishes} />

@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf ./dist && webpack --mode production",
-    "start": "webpack serve --open --mode development"
+    "build": "rimraf ./dist && webpack --profile --mode production",
+    "start": "webpack serve --open --mode development",
+    "deploy": "npm run build && firebase deploy"
   },
   "keywords": [],
   "author": "",
@@ -34,9 +35,12 @@
     "webpack-dev-server": "^4.1.0"
   },
   "dependencies": {
-    "@material-ui/core": "^4.12.3",
-    "@material-ui/icons": "^4.11.2",
-    "@material-ui/lab": "^4.0.0-alpha.60",
+    "@date-io/moment": "^2.11.0",
+    "@emotion/react": "^11.5.0",
+    "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.5",
+    "@mui/lab": "^5.0.0-alpha.54",
+    "@mui/material": "^5.0.6",
     "axios": "^0.21.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",

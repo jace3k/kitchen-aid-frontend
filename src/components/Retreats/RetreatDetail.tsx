@@ -1,33 +1,42 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Table, TableBody, TableCell, TableRow } from '@material-ui/core'
 import { RouteComponentProps } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { Button, Table, TableBody, TableCell, TableRow } from '@mui/material'
 import { ApplicationState } from 'store'
-import Token from 'components/Token'
-import DetailWithListView from 'components/genericComponents/DetailWithListView/DetailWithListView'
+import { createCartRequest, generateInRangeRequest } from 'store/carts/actions'
+import { fetchAllMealsRequest } from 'store/meals/actions'
 import { addMealRequest, deleteRetreatRequest, fetchRetreatDetailRequest, updateRetreatRequest } from 'store/retreats/actions'
 import * as routes from 'utils/routes'
 import { MealInaRetreatDto } from 'utils/interfaces/meal-ina-retreat.interface'
-import { fetchAllMealsRequest } from 'store/meals/actions'
+import DetailWithListView from 'components/genericComponents/DetailWithListView/DetailWithListView'
+import Token from 'components/Token'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import AddToListModal from './AddToListModal'
 import RetreatDetailMealList from './RetreatDetailMealList'
 import AddCartModal from './AddCartModal'
 import RetreatDetailCartList from './RetreatDetailCartList'
 import { CreateCartOptions } from 'components/Carts/types/create-cart.type'
-import { createCartRequest, generateInRangeRequest } from 'store/carts/actions'
 
 
-const RetreatDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
+const RetreatDetail: React.FC<RouteComponentProps<{ id: string, card: string }>> = props => {
   const dispatch = useDispatch()
   const { retreatDetail, loading, removed, error } = useSelector((state: ApplicationState) => state.retreats)
   const [addToListModalOpen, setAddToListModalOpen] = useState(false)
   const [dialogRemoveOpen, setDialogRemoveOpen] = useState(false)
   const [addCartModalOpen, setAddCartModalOpen] = useState(false)
+  const [currentCard, setCurrentCard] = useState('')
 
   useEffect(() => {
-    const { id } = props.match.params
+    const { id, card } = props.match.params
     dispatch(fetchRetreatDetailRequest(parseInt(id)))
+    console.log('props', props)
+    if (!card) {
+      props.history.push(`${routes.Retreats}/${id}/meals`)
+      setCurrentCard('meals')
+    }
+    else {
+      setCurrentCard(card)
+    }
   }, [])
 
   useEffect(() => {
@@ -114,7 +123,7 @@ const RetreatDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
                     <Token value="carts" />
                   </TableCell>
                   <TableCell>
-                  {retreatDetail?.cart.length}
+                    {retreatDetail?.cart.length}
                   </TableCell>
                 </TableRow>
                 {editMode && (
@@ -135,14 +144,18 @@ const RetreatDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
             onAddToListClick: () => {
               dispatch(fetchAllMealsRequest())
               setAddToListModalOpen(true)
-            }
+            },
+            tabUrl: `${routes.Retreats}/${props.match.params.id}/meals`,
+            initial: currentCard === 'meals'
           },
           {
             name: 'carts',
             list: () => <RetreatDetailCartList />,
             onAddToListClick: () => {
               setAddCartModalOpen(true)
-            }
+            },
+            tabUrl: `${routes.Retreats}/${props.match.params.id}/carts`,
+            initial: currentCard === 'carts'
           }
         ]}
         onCloseEditMode={handleUpdateRetreat}

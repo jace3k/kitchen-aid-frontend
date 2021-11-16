@@ -3,22 +3,26 @@ import {
   Button,
   Card,
   CardContent,
+  CardProps,
   Container,
+  ContainerProps,
   Divider,
   IconButton,
   Table,
   TableBody,
   TableCell,
   TableRow,
-  TextField
-} from '@material-ui/core'
-import EditIcon from '@material-ui/icons/Edit'
-import CloseIcon from '@material-ui/icons/Check'
-import Token from 'components/Token'
-import { useStyles } from '../styles'
-import SingleListView from './SingleListView'
+  TextField,
+  Typography
+} from '@mui/material'
+import EditIcon from '@mui/icons-material/Edit'
+import CloseIcon from '@mui/icons-material/Check'
+import { styled } from '@mui/material/styles'
 import { ListItemsInterface } from './list-items.interface'
+import Token from 'components/Token'
+import SingleListView from './SingleListView'
 import MultiListView from './MultiListView'
+
 
 interface DetaiWithListViewProps {
   name: string | any
@@ -41,7 +45,6 @@ const DetailWithListView = ({
   notFound,
   wide
 }: DetaiWithListViewProps) => {
-  const classes = useStyles()
   const [editMode, setEditMode] = useState(false)
   const [itemName, setItemName] = useState(name)
 
@@ -60,9 +63,53 @@ const DetailWithListView = ({
       </div>
     )
 
+  const StyledContainer = styled(Container)<ContainerProps>(({ theme }) => {
+    if (wide)
+      return {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+      }
+
+    return {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'stretch',
+      [theme.breakpoints.up('md')]: {
+        flexDirection: 'row',
+      }
+    }
+  })
+
+  const DetailInfoCard = styled(Card)<CardProps>(({ theme }) => {
+    if (wide)
+      return {
+        width: 'auto',
+        margin: 5,
+        minWidth: 300,
+      }
+
+    return {
+      width: 'auto',
+      margin: 5,
+      minWidth: 300,
+      [theme.breakpoints.up('md')]: {
+        width: 300,
+      }
+    }
+  })
+
+  const ItemsListCard = styled(Card)<CardProps>(({ theme }) => {
+    return {
+      minWidth: 300,
+      flexGrow: 1,
+      margin: 5,
+    }
+  })
+
   return (
-    <Container className={wide ? classes.wideDetailContainer : classes.detailContainer}>
-      <Card className={wide ? classes.wideDetailInformationPanel : classes.detailInformationPanel}>
+    <StyledContainer>
+      <DetailInfoCard>
         <CardContent>
           {loading ? (
             <h2><Token value="loadingData" /></h2>
@@ -72,7 +119,17 @@ const DetailWithListView = ({
                 <TableBody>
                   <TableRow>
                     <TableCell>
-                      {!disableEditMode && editMode ? <TextField value={itemName} onChange={(e) => setItemName(e.target.value)} /> : <h3>{itemName}</h3>}
+                      {!disableEditMode && editMode
+                        ? (
+                          <TextField
+                            size="small"
+                            value={itemName}
+                            onChange={(e) => setItemName(e.target.value)}
+                          />
+                        )
+                        : (
+                          <Typography>{itemName}</Typography>
+                        )}
                     </TableCell>
                     <TableCell>
                       {editMode ? (
@@ -82,7 +139,7 @@ const DetailWithListView = ({
                             onCloseEditMode(itemName)
                         }}>
                           <IconButton size="small" style={{ float: 'right' }} >
-                            <CloseIcon />
+                            <CloseIcon color="success" />
                           </IconButton>
                         </span>
                       ) : (
@@ -101,8 +158,8 @@ const DetailWithListView = ({
             </>
           )}
         </CardContent>
-      </Card>
-      <Card className={classes.itemList}>
+      </DetailInfoCard>
+      <ItemsListCard>
         <CardContent>
           {generateItemsList.length > 1 ? (
             <MultiListView generateItemsList={generateItemsList} />
@@ -110,8 +167,8 @@ const DetailWithListView = ({
             <SingleListView generateItem={generateItemsList[0]} />
           )}
         </CardContent>
-      </Card>
-    </Container>
+      </ItemsListCard>
+    </StyledContainer>
   )
 }
 

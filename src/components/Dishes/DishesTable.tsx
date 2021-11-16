@@ -1,11 +1,12 @@
-import Token from 'components/Token'
 import React, { useEffect, useMemo } from 'react'
 import { Column, Row } from 'react-table'
 import { useSelector, useDispatch } from 'react-redux'
+import Token from 'components/Token'
 import { ApplicationState } from 'store'
 import { fetchAllDishesRequest } from 'store/dishes/actions'
 import { Dish } from 'utils/interfaces/dish.interface'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
+
 
 interface DishesTableProps {
 	onRowClick: (row: Row<Dish>) => void

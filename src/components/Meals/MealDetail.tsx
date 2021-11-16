@@ -1,19 +1,20 @@
-import { Button, Table, TableBody, TableCell, TableRow } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { RouteComponentProps } from 'react-router-dom'
+import { Button, Table, TableBody, TableCell, TableRow } from '@mui/material'
+import { ApplicationState } from 'store'
+import { fetchAllDishesRequest } from 'store/dishes/actions'
+import { DishInaMealDto } from 'utils/interfaces/dish-ina-meal.interface'
+import * as routes from 'utils/routes'
 import DetailWithListView from 'components/genericComponents/DetailWithListView/DetailWithListView'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import DialogRemoveDescription from 'components/genericComponents/DialogRemove/DialogRemoveDescription'
 import Token from 'components/Token'
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { RouteComponentProps } from 'react-router-dom'
-import { ApplicationState } from 'store'
-import { fetchAllDishesRequest } from 'store/dishes/actions'
 import { addDishInAMealRequest, deleteMealRequest, fetchMealDetailRequest } from 'store/meals/actions'
-import { DishInaMealDto } from 'utils/interfaces/dish-ina-meal.interface'
-import * as routes from 'utils/routes'
 import AddToListModal from './AddToListModal'
 import MealDetailDishList from './MealDetailDishList'
 import MealName from './MealName'
+
 
 const MealDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
   const dispatch = useDispatch()

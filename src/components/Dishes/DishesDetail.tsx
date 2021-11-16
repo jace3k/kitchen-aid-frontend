@@ -1,19 +1,20 @@
-import { Button, Table, TableBody, TableCell, TableFooter, TableRow, TextField } from '@material-ui/core'
-import DetailWithListView from 'components/genericComponents/DetailWithListView/DetailWithListView'
-import Token from 'components/Token'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RouteComponentProps } from 'react-router-dom'
+import { Button, Table, TableBody, TableCell, TableFooter, TableRow, TextField } from '@mui/material'
+import DetailWithListView from 'components/genericComponents/DetailWithListView/DetailWithListView'
 import { ApplicationState } from 'store'
+import { fetchAllIngredientsRequest } from 'store/ingredients/actions'
 import { addIngredientInADishRequest, deleteDishRequest, fetchDishDetailRequest, updateDishRequest } from 'store/dishes/actions'
 import * as routes from 'utils/routes'
+import { IngredientInaDishDto } from 'utils/interfaces/ingredient-ina-dish.interface'
 import DishDetailIngredientsList from './DishDetailIngredientsList'
 import AddToListModal from './AddToListModal'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
-import { fetchAllIngredientsRequest } from 'store/ingredients/actions'
-import { IngredientInaDishDto } from 'utils/interfaces/ingredient-ina-dish.interface'
 import MealName from 'components/Meals/MealName'
 import DialogRemoveDescription from 'components/genericComponents/DialogRemove/DialogRemoveDescription'
+import Token from 'components/Token'
+
 
 const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
   const dispatch = useDispatch()
@@ -91,9 +92,13 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
                     <TableCell>
                       <Token value="dishSizeLabel" />:
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{ textAlign: 'right' }}>
                       {editMode ? (
-                        <TextField value={dishSize} onChange={(e) => setDishSize(parseInt(e.target.value) || 0)} />
+                        <TextField
+                          size="small"
+                          value={dishSize}
+                          onChange={(e) => setDishSize(parseInt(e.target.value) || 0)}
+                        />
                       ) : dishSize}
                     </TableCell>
                   </TableRow>

@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
-import { AppBar, Tabs, Tab, Box } from '@material-ui/core'
-import Token from 'components/Token'
+import React, { useState, useEffect } from 'react'
+import { AppBar, Tabs, Tab, Box } from '@mui/material'
+import { useHistory } from "react-router-dom";
 import { ListItemsInterface } from './list-items.interface'
+import Token from 'components/Token'
 import SingleListView from './SingleListView'
+
 
 interface MultiListViewProps {
   generateItemsList: ListItemsInterface[]
@@ -35,24 +37,25 @@ const TabPanel = (props: TabPanelProps) => {
 }
 
 const MultiListView: React.FC<MultiListViewProps> = ({ generateItemsList }) => {
-  // in MultiListView - generateItemsList has multiple elements
-  const [currentTab, setCurrentTab] = useState(0)
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setCurrentTab(newValue)
-  }
+  const history = useHistory();
+  const tabIndex = generateItemsList.findIndex(x => x.name == history.location.pathname.split('/').pop())
+  const [currentTab, setCurrentTab] = useState(tabIndex > 0 ? tabIndex : 0)
 
   return (
     <div>
       <AppBar position="static" color="transparent" elevation={0}>
         <Tabs
           value={currentTab}
-          onChange={handleChange}
           indicatorColor="primary"
           textColor="primary"
           variant="fullWidth"
         >
           {generateItemsList.map((item, i) => (
-            <Tab label={<Token value={item.name} />} key={`tab-${i}`} />
+            <Tab label={<Token value={item.name} />} key={`tab-${i}`}
+              onClick={() => {
+                history.push(item.tabUrl || history.location.pathname)
+              }}
+            />
           ))}
         </Tabs>
       </AppBar>

@@ -74,9 +74,14 @@ module.exports = {
   },
   optimization: {
     emitOnErrors: false,
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+      minSize: 512000
+    }
   },
   performance: {
     maxEntrypointSize: 512000,
-    maxAssetSize: 512000
+    maxAssetSize: 512000,
   },
 };

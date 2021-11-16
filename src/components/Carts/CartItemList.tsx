@@ -1,18 +1,21 @@
-import React, { useState } from 'react'
-import { IconButton, MenuItem, Select, TextField } from '@material-ui/core'
-import Token from 'components/Token'
-import { useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CellProps, Column } from 'react-table'
+import moment, { Moment } from 'moment';
+import { IconButton, MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
+import { DesktopDatePicker, MobileDatePicker, LocalizationProvider } from '@mui/lab';
+import AdapterMoment from '@mui/lab/AdapterMoment';
+import CloseIcon from '@mui/icons-material/Check'
+import RemoveIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
 import { ApplicationState } from 'store'
-import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
-import { DishInaMeal } from 'utils/interfaces/dish-ina-meal.interface'
-import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
-import { CartItemDto, CartItemInCart } from 'utils/interfaces/cart-item.interface'
 import { removeCartItemRequest, updateCartItemRequest } from 'store/carts/actions'
-import CloseIcon from '@material-ui/icons/Check'
-import RemoveIcon from '@material-ui/icons/Delete'
-import EditIcon from '@material-ui/icons/Edit'
+import { DishInaMeal } from 'utils/interfaces/dish-ina-meal.interface'
+import { CartItemDto, CartItemInCart, CartItemStatus } from 'utils/interfaces/cart-item.interface'
+import { DATE_PICKER_MASK, MOMENT_DATE_DISPLAY_FORMAT, MOMENT_DATE_SAVE_FORMAT } from 'utils/constants';
+import Token from 'components/Token'
+import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
+import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
 import CartItemStatusChip from './CartItemStatusChip'
 
 
@@ -50,35 +53,31 @@ const CartItemList = () => {
       id: '1',
       Header: <Token value="cartItem" />,
       Cell: ({ row }: CellProps<CartItemInCart>) => {
-        return row.original.ingredient.name
+        return (
+          <Typography sx={{ minWidth: 150 }}>
+            {row.original.ingredient.name}
+          </Typography>
+        )
       }
     },
     {
       id: '2',
       Header: <Token value="amount" />,
       Cell: ({ row }: CellProps<CartItemInCart>) => {
-        const [currentEditAmount, setCurrentEditAmount] = useState(row.original.amount)
         if (currentEdit?.id === row.original.id) {
           return (
             <TextField
-              value={currentEditAmount}
-              onChange={e => setCurrentEditAmount(e.target.value)}
-              onBlur={() => {
-                handleCartItemUpdate(row.original, {
-                  id: row.original.id,
-                  amount: currentEditAmount.replace(',', '.'),
-                  due_date: row.original.due_date,
-                  status: row.original.status,
-                  ingredient: row.original.ingredient.id,
-                  cart: row.original.cart,
-                })
-                setCurrentEdit(null)
+              size="small"
+              type="number"
+              sx={{ minWidth: 150 }}
+              value={row.state.currentEditAmount || row.original.amount}
+              onChange={event => {
+                row.setState((state: any) => ({ ...state, currentEditAmount: event.target.value }))
               }}
             />
           )
         }
         return (
-          // <TextField disabled value={row.original.amount} />
           row.original.amount
         )
       }
@@ -87,30 +86,25 @@ const CartItemList = () => {
       id: '3',
       Header: <Token value="dueDate" />,
       Cell: ({ row }: CellProps<CartItemInCart>) => {
-        const [currentEditDueDate, setCurrentEditDueDate] = useState(row.original.due_date)
         if (currentEdit?.id === row.original.id) {
           return (
-            <TextField
-              type="date"
-              value={currentEditDueDate}
-              onChange={e => setCurrentEditDueDate(e.target.value)}
-              onBlur={() => {
-                handleCartItemUpdate(row.original, {
-                  id: row.original.id,
-                  amount: row.original.amount,
-                  due_date: currentEditDueDate,
-                  status: row.original.status,
-                  ingredient: row.original.ingredient.id,
-                  cart: row.original.cart,
-                })
-                setCurrentEdit(null)
-              }}
-            />
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DesktopDatePicker
+                mask={DATE_PICKER_MASK}
+                inputFormat={MOMENT_DATE_DISPLAY_FORMAT}
+                value={row.state.currentEditDueDate || row.original.due_date}
+                onChange={value => {
+                  row.setState((state: any) => ({ ...state, currentEditDueDate: value }))
+                }}
+                renderInput={(params) => <TextField {...params} size="small" sx={{ minWidth: 150 }} />}
+              />
+            </LocalizationProvider>
           )
         }
         return (
-          // <TextField disabled type="date" value={row.original.due_date} />
-          row.original.due_date
+          <Typography variant="body2" sx={{ minWidth: 100 }}>
+            {moment(row.original.due_date).format(MOMENT_DATE_DISPLAY_FORMAT)}
+          </Typography>
         )
       }
     },
@@ -118,22 +112,14 @@ const CartItemList = () => {
       id: '4',
       Header: <Token value="status" />,
       Cell: ({ row }: CellProps<CartItemInCart>) => {
-        const [currentEditStatus, setCurrentEditStatus] = useState(row.original.status)
         if (currentEdit?.id === row.original.id) {
           return (
             <Select
-              value={currentEditStatus}
-              onChange={(e: any) => setCurrentEditStatus(e.target.value)}
-              onBlur={() => {
-                handleCartItemUpdate(row.original, {
-                  id: row.original.id,
-                  amount: row.original.amount,
-                  due_date: row.original.due_date,
-                  status: currentEditStatus,
-                  ingredient: row.original.ingredient.id,
-                  cart: row.original.cart,
-                })
-                setCurrentEdit(null)
+              sx={{ minWidth: 150 }}
+              size="small"
+              value={row.state.currentEditStatus || row.original.status}
+              onChange={event => {
+                row.setState((state: any) => ({ ...state, currentEditStatus: event.target.value }))
               }}
             >
               <MenuItem value="PE"><Token value="PE" /></MenuItem>
@@ -150,15 +136,28 @@ const CartItemList = () => {
       Header: <Token value="more" />,
       Cell: ({ row }: CellProps<CartItemInCart>) => {
         return (
-          <div style={{ minWidth: 60 }}>
+          <Stack direction="row" justifyContent="end">
             {
               currentEdit?.id === row.original.id
                 ? (
                   <IconButton
                     size="small"
-                    onClick={() => setCurrentEdit(null)}
+                    onClick={() => {
+                      setCurrentEdit(null)
+                      const newCart = {
+                        id: row.original.id,
+                        ingredient: row.original.ingredient.id,
+                        cart: row.original.cart,
+                        amount: row.state.currentEditAmount as string || row.original.amount,
+                        due_date: row.state.currentEditDueDate
+                          ? (row.state.currentEditDueDate as Moment).format(MOMENT_DATE_SAVE_FORMAT)
+                          : row.original.due_date,
+                        status: row.state.currentEditStatus as CartItemStatus || row.original.status,
+                      }
+                      handleCartItemUpdate(row.original, newCart)
+                    }}
                   >
-                    <CloseIcon />
+                    <CloseIcon color="success" />
                   </IconButton>
                 )
                 : (
@@ -179,7 +178,7 @@ const CartItemList = () => {
             >
               <RemoveIcon />
             </IconButton>
-          </div>
+          </Stack>
         )
       },
     }

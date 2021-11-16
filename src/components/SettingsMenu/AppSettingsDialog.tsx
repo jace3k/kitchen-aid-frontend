@@ -1,8 +1,9 @@
 import React from 'react'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Table, TableBody, TableCell, TableRow } from '@material-ui/core'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Table, TableBody, TableCell, TableRow } from '@mui/material'
 import Token from 'components/Token'
 import LanguageChooser from 'components/SettingsMenu/LanguageChooser/LanguageChooser'
 import DefaultRowsPerPageChooser from './DefaultRowsPerPageChooser/DefaultRowsPerPageChooser'
+
 
 interface AppSettingsDialogProps {
   open: boolean,

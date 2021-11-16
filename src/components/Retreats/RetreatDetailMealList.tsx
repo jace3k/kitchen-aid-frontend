@@ -1,16 +1,20 @@
 import React, { useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CellProps, Column } from 'react-table'
-import { IconButton, TextField } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Check'
-import RemoveIcon from '@material-ui/icons/Delete'
-import EditIcon from '@material-ui/icons/Edit'
-import NewTabIcon from '@material-ui/icons/OpenInNew'
+import moment, { Moment } from 'moment';
+import { IconButton, Stack, TextField, Typography } from '@mui/material'
+import { DesktopDatePicker, MobileDatePicker, LocalizationProvider } from '@mui/lab';
+import AdapterMoment from '@mui/lab/AdapterMoment';
+import CloseIcon from '@mui/icons-material/Check'
+import RemoveIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
+import NewTabIcon from '@mui/icons-material/OpenInNew'
 import { ApplicationState } from 'store'
+import { removeMealRequest, updateMealRequest } from 'store/retreats/actions'
+import { MealInaRetreat, MealInaRetreatDto } from 'utils/interfaces/meal-ina-retreat.interface'
+import { DATE_PICKER_MASK, MOMENT_DATE_DISPLAY_FORMAT, MOMENT_DATE_SAVE_FORMAT } from 'utils/constants';
 import Token from 'components/Token'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
-import { MealInaRetreat, MealInaRetreatDto } from 'utils/interfaces/meal-ina-retreat.interface'
-import { removeMealRequest, updateMealRequest } from 'store/retreats/actions'
 import MealName from 'components/Meals/MealName'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
 
@@ -45,28 +49,26 @@ const RetreatDetailMealList = () => {
       id: '1',
       Header: <Token value="mealLabel" />,
       Cell: ({ row }: CellProps<MealInaRetreat>) => {
-        return <MealName id={row.original.meal.id} type={row.original.meal.type} />
+        return (
+          <Typography sx={{ minWidth: 150 }} variant="body2">
+            <MealName id={row.original.meal.id} type={row.original.meal.type} />
+          </Typography>
+        )
       }
     },
     {
       id: '2',
       Header: <Token value="servings" />,
       Cell: ({ row }: CellProps<MealInaRetreat>) => {
-        const [currentEditServings, setCurrentEditServings] = useState<number>(row.original.servings)
         if (currentEdit?.id === row.original.id) {
           return (
             <TextField
-              value={currentEditServings}
-              onChange={(e) => setCurrentEditServings(parseInt(e.target.value) || 0)}
-              onBlur={() => {
-                handleMealUpdate(row.original, {
-                  id: row.original.id,
-                  meal: row.original.meal.id,
-                  retreat: row.original.retreat,
-                  servings: currentEditServings,
-                  date: row.original.date,
-                })
-                setCurrentEdit(null)
+              size="small"
+              type="number"
+              sx={{ minWidth: 150 }}
+              value={row.state.currentEditServings || row.original.servings}
+              onChange={event => {
+                row.setState((state: any) => ({ ...state, currentEditServings: event.target.value }))
               }}
             />
           )
@@ -80,30 +82,26 @@ const RetreatDetailMealList = () => {
       id: '3',
       Header: <Token value="date" />,
       Cell: ({ row }: CellProps<MealInaRetreat>) => {
-        const [currentEditDate, setCurrentEditDate] = useState(row.original.date)
         if (currentEdit?.id === row.original.id) {
           return (
-            <TextField
-              type="date"
-              value={currentEditDate}
-              onChange={(e) => setCurrentEditDate(e.target.value)}
-              onBlur={() => {
-                handleMealUpdate(row.original, {
-                  id: row.original.id,
-                  meal: row.original.meal.id,
-                  retreat: row.original.retreat,
-                  servings: row.original.servings,
-                  date: currentEditDate,
-                })
-                setCurrentEdit(null)
-              }}
-            />
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DesktopDatePicker
+                mask={DATE_PICKER_MASK}
+                inputFormat={MOMENT_DATE_DISPLAY_FORMAT}
+                value={row.state.currentEditDate || row.original.date}
+                onChange={value => {
+                  row.setState((state: any) => ({ ...state, currentEditDate: value }))
+                }}
+                renderInput={(params) => <TextField {...params} size="small" sx={{ minWidth: 150 }} />}
+              />
+            </LocalizationProvider>
           )
         }
-        else {
-          const date = new Date(row.original.date).toLocaleDateString('pl-PL')
-          return date
-        }
+        return (
+          <Typography variant="body2" sx={{ minWidth: 100 }}>
+            {moment(row.original.date).format(MOMENT_DATE_DISPLAY_FORMAT)}
+          </Typography>
+        )
       }
     },
     {
@@ -111,15 +109,27 @@ const RetreatDetailMealList = () => {
       Header: <Token value="more" />,
       Cell: ({ row }: CellProps<MealInaRetreat>) => {
         return (
-          <div style={{ minWidth: 60 }}>
+          <Stack direction="row" justifyContent="end">
             {
               currentEdit?.id === row.original.id
                 ? (
                   <IconButton
                     size="small"
-                    onClick={() => setCurrentEdit(null)}
+                    onClick={() => {
+                      setCurrentEdit(null)
+                      const newMeal = {
+                        id: row.original.id,
+                        meal: row.original.meal.id,
+                        retreat: row.original.retreat,
+                        servings: row.state.currentEditServings as number || row.original.servings,
+                        date: row.state.currentEditDate
+                          ? (row.state.currentEditDate as Moment).format(MOMENT_DATE_SAVE_FORMAT)
+                          : row.original.date
+                      }
+                      handleMealUpdate(row.original, newMeal)
+                    }}
                   >
-                    <CloseIcon />
+                    <CloseIcon color="success" />
                   </IconButton>
                 )
                 : (
@@ -150,7 +160,7 @@ const RetreatDetailMealList = () => {
             >
               <RemoveIcon />
             </IconButton>
-          </div>
+          </Stack>
         )
       }
     }

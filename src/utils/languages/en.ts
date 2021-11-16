@@ -97,5 +97,6 @@ export const en: ITranslations = {
   PE: 'Pending',
   BO: 'Bought',
   SE: 'Settled',
-  addNewCartItem: 'Add new ingredient to the cart'
+  addNewCartItem: 'Add new ingredient to the cart',
+  removeCart: 'Remove cart'
 }

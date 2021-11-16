@@ -2,8 +2,8 @@ import { LanguageType } from "utils/translations";
 import { UserActionTypes, LoginType, User, ToggleDarkModeType, ChangeLanguageType, SetItemsPerPageType } from "./types";
 
 export const loginRequest = (username: string, password: string): LoginType => ({ type: UserActionTypes.LOGIN_REQUEST, username, password })
-export const loginSuccess = (user: User): LoginType => ({ type: UserActionTypes.LOGIN_SUCCESS, user })
-export const loginFailed = (error: string): LoginType => ({ type: UserActionTypes.LOGIN_ERROR, error })
+export const loginSuccess = (user: User, loginLocal: boolean = false): LoginType => ({ type: UserActionTypes.LOGIN_SUCCESS, user, loginLocal })
+export const loginFailed = (message: string, error: string): LoginType => ({ type: UserActionTypes.LOGIN_ERROR, message, error })
 
 export const tryLogin = (): LoginType => ({ type: UserActionTypes.LOGIN_LOCAL })
 export const logout = (): LoginType => ({ type: UserActionTypes.LOGOUT })

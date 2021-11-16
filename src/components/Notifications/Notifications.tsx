@@ -1,10 +1,10 @@
-import { Snackbar } from '@material-ui/core'
-import { Alert, AlertProps } from '@material-ui/lab'
-import Token from 'components/Token'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { Alert, AlertProps, Snackbar } from '@mui/material'
 import { ApplicationState } from 'store'
 import { TranslationTokensType } from 'utils/translations'
+import Token from 'components/Token'
+
 
 type SeverityProp = JSX.LibraryManagedAttributes<typeof Alert, AlertProps['severity']>
 
@@ -13,7 +13,7 @@ const Notifications = () => {
   const [currentMessage, setCurrentMessage] = useState<TranslationTokensType>('empty')
   const [severity, setSeverity] = useState<SeverityProp>('info')
 
-  const userAuthorizedState = useSelector((state: ApplicationState) => state.user.authorized)
+  const { authorized: userAuthorizedState, error: userError, loginLocal } = useSelector((state: ApplicationState) => state.user)
   const { error: ingredientError, successMessage: ingredientSuccess } = useSelector((state: ApplicationState) => state.ingredients)
   const { error: dishError, successMessage: dishSuccess } = useSelector((state: ApplicationState) => state.dishes)
   const { error: mealError, successMessage: mealSuccess } = useSelector((state: ApplicationState) => state.meals)
@@ -23,12 +23,19 @@ const Notifications = () => {
   const handleCloseNotification = () => setNotificationOpened(false)
 
   useEffect(() => {
-    if (userAuthorizedState) {
+    if (userAuthorizedState && !loginLocal) {
       setCurrentMessage('loginSuccess')
       setNotificationOpened(true)
       setSeverity('success')
     }
-  }, [userAuthorizedState])
+
+    if (userError) {
+      setCurrentMessage('operationFailure')
+      setNotificationOpened(true)
+      setSeverity('error')
+      console.log(userError)
+    }
+  }, [userAuthorizedState, userError])
 
   useEffect(() => {
     if (ingredientError) {

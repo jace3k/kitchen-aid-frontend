@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { IconButton, Menu, MenuItem } from '@material-ui/core'
-import SettingsIcon from '@material-ui/icons/Settings'
-import Token from 'components/Token'
-import AppSettingsDialog from './AppSettingsDialog'
 import { useDispatch } from 'react-redux'
+import { IconButton, Menu, MenuItem } from '@mui/material'
+import SettingsIcon from '@mui/icons-material/Settings'
 import { logout } from 'store/user/actions'
+import AppSettingsDialog from './AppSettingsDialog'
+import Token from 'components/Token'
+
 
 const SettingsMenuButton = () => {
   const dispatch = useDispatch()
@@ -43,7 +44,6 @@ const SettingsMenuButton = () => {
       <Menu
         id='settings-menu-button'
         anchorEl={anchorEl}
-        getContentAnchorEl={null}
         open={menuOpen}
         onClose={handleMenuClose}
       >

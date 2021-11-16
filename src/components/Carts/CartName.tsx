@@ -1,5 +1,6 @@
-import Token from 'components/Token'
 import React from 'react'
+import Token from 'components/Token'
+
 
 interface CartNameProps {
   id?: number,

@@ -1,8 +1,9 @@
 import React from 'react'
-import { Table, TableBody, TableRow, TableCell, IconButton, Divider } from '@material-ui/core'
-import PlusButton from '@material-ui/icons/Add'
-import Token from 'components/Token'
+import { Table, TableBody, TableRow, TableCell, IconButton, Divider } from '@mui/material'
+import PlusButton from '@mui/icons-material/Add'
 import { ListItemsInterface } from './list-items.interface'
+import Token from 'components/Token'
+
 
 interface SingleListViewProps {
   generateItem: ListItemsInterface

@@ -1,13 +1,38 @@
 import React, { FormEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Card, CardActions, CardContent, TextField, Typography, Snackbar } from '@material-ui/core'
-import { useStyles } from './styles'
+import { Button, Card, CardActions, CardContent, TextField, Typography, Snackbar } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { ApplicationState } from 'store'
 import { loginRequest } from 'store/user/actions'
 import Token from 'components/Token'
 
+const LoginContainer = styled('div')(({ theme }) => {
+  return {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    height: '100%',
+    flexDirection: 'column-reverse',
+    [theme.breakpoints.up('md')]: {
+      flexDirection: 'row',
+    },
+    minWidth: 300,
+  }
+})
+
+const Title = styled(Typography)(({ theme }) => {
+  return {
+    fontSize: 20,
+    [theme.breakpoints.up('sm')]: {
+      fontSize: 40,
+    },
+    [theme.breakpoints.up('md')]: {
+      fontSize: 70,
+    },
+  }
+})
+
 const Login = () => {
-  const classes = useStyles()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
@@ -18,44 +43,60 @@ const Login = () => {
     dispatch(loginRequest(username, password))
   }
 
+  const handleChangeUsername = (e: any) => {
+    setUsername(e.target.value)
+  }
+
+  const handleChangePassword = (e: any) => {
+    setPassword(e.target.value)
+  }
+
   return (
-    <div className={classes.container}>
-      <Typography className={classes.title} variant="h1">
+    <LoginContainer>
+      <Title variant="h1">
         <Token value="welcomeIn" />
-        <div className={classes.bold}><Token value="kitchenAid" />!</div>
-      </Typography>
+        <div style={{ fontWeight: 'bold' }}>
+          <Token value="kitchenAid" />!
+        </div>
+      </Title>
       <div />
       <Card>
         <form onSubmit={handleSubmit} noValidate autoComplete="off">
-          <CardContent className={classes.formContainer}>
-            <Typography variant='h5' className={classes.formTitle}>
+          <CardContent sx={{
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
+            <Typography sx={{
+              textAlign: 'center',
+              marginBottom: '30px',
+            }}>
               <Token value="kitchenAid" />
             </Typography>
             <TextField
               label={<Token value="username" />}
               variant='outlined'
-              className={classes.littleMargin}
+              sx={{ margin: '5px' }}
               size='small'
               value={username}
-              onChange={e => setUsername(e.target.value)}
+              onChange={handleChangeUsername}
               disabled={loading}
-              autoFocus
+            // autoFocus
             />
 
             <TextField
               label={<Token value="password" />}
               type='password'
               variant='outlined'
-              className={classes.littleMargin}
+              sx={{ margin: '5px' }}
               size='small'
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={handleChangePassword}
               disabled={loading}
             />
           </CardContent>
           <CardActions>
             <Button
-              className={classes.fullWidth}
+              sx={{ width: '100%' }}
               variant='contained'
               type='submit'
               color='primary'
@@ -67,7 +108,7 @@ const Login = () => {
         </form>
       </Card>
       <div />
-    </div>
+    </LoginContainer>
   )
 }
 

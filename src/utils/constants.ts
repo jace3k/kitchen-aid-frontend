@@ -18,4 +18,6 @@ export const MEAL_TYPES_NAMES: Record<string, TranslationTokensType> = {
   FE: 'feast',
 }
 
-export const MOMENT_DATE_FORMAT = 'yyyy-MM-DD'
+export const MOMENT_DATE_DISPLAY_FORMAT = 'DD.MM.YYYY'
+export const MOMENT_DATE_SAVE_FORMAT = 'YYYY-MM-DD'
+export const DATE_PICKER_MASK = "__.__.____"

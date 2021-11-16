@@ -1,13 +1,11 @@
-import React from 'react'
-import { CircularProgress, Paper, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from '@material-ui/core'
-import { Column, useTable, usePagination, Row } from 'react-table'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { Column, useTable, usePagination, Row, useRowState } from 'react-table'
+import { CircularProgress, Paper, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, Table } from '@mui/material'
+import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNewTwoTone'
 import { ApplicationState } from 'store'
-import { Table } from '@material-ui/core'
-import Token from 'components/Token'
-import { useState } from 'react'
 import { ROWS_PER_PAGE_OPTIONS } from 'utils/constants'
-import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNewTwoTone'
+import Token from 'components/Token'
 
 interface GenericTableProps {
   columns: Column<any>[],
@@ -50,7 +48,7 @@ const GenericTable = ({ columns, data, loading, onRowClick }: GenericTableProps)
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({ columns, data }, usePagination)
+  } = useTable({ columns, data }, usePagination, useRowState)
 
   return (
     <TableContainer component={Paper} variant="elevation" square>
@@ -63,6 +61,7 @@ const GenericTable = ({ columns, data, loading, onRowClick }: GenericTableProps)
                   headerGroup.headers.map(column => (
                     <TableCell {...column.getHeaderProps()}
                       align={column.id === '99' ? 'right' : 'left'}
+                      sx={{ fontWeight: 'bold' }}
                     >
                       {column.render('Header')}
                     </TableCell>

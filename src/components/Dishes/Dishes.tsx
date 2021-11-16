@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
-import Container from '@material-ui/core/Container'
-import DishesTable from './DishesTable'
-import Token from 'components/Token'
 import { RouteComponentProps } from 'react-router-dom'
 import { Row } from 'react-table'
+import { Tooltip, Container } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
 import { Dish } from 'utils/interfaces/dish.interface'
 import * as routes from 'utils/routes'
-import { Fab, Tooltip } from '@material-ui/core'
-import AddIcon from '@material-ui/icons/Add'
-import { useStyles } from 'components/genericComponents/styles'
+import DishesTable from './DishesTable'
+import Token from 'components/Token'
 import DishEditDialog from './DishEditDialog'
+import StyledFab from 'components/genericComponents/StyledFab/StyledFab'
+
 
 const Dishes: React.FC<RouteComponentProps> = ({ history }) => {
-  const classes = useStyles()
   const [editDialogOpen, setEditDialogOpen] = useState(false)
 
   const onRowClick = (row: Row<Dish>) => {
@@ -20,7 +19,7 @@ const Dishes: React.FC<RouteComponentProps> = ({ history }) => {
   }
 
   const openDishDialogCreate = () => {
-      setEditDialogOpen(true)
+    setEditDialogOpen(true)
   }
 
   const onDishDialogClose = () => {
@@ -33,9 +32,9 @@ const Dishes: React.FC<RouteComponentProps> = ({ history }) => {
       <DishesTable onRowClick={onRowClick} />
       <DishEditDialog open={editDialogOpen} onClose={onDishDialogClose} />
       <Tooltip title={<Token value="addNewDish" />} placement='left'>
-        <Fab color="primary" className={classes.fab} onClick={openDishDialogCreate}>
+        <StyledFab color="primary" onClick={openDishDialogCreate}>
           <AddIcon />
-        </Fab>
+        </StyledFab>
       </Tooltip>
     </Container>
   )

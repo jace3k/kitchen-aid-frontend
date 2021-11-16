@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { ApplicationState } from 'store'
 import { getTranslation, TranslationTokensType } from 'utils/translations'
 
+
 interface TokenProps {
   value: TranslationTokensType,
 }

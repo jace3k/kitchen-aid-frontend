@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CellProps, Row } from 'react-table'
-import { IconButton } from '@material-ui/core'
-import RemoveIcon from '@material-ui/icons/Delete'
-import NewTabIcon from '@material-ui/icons/OpenInNew'
+import { Typography } from '@mui/material'
 import { ApplicationState } from 'store'
+import { deleteCartRequest } from 'store/carts/actions'
+import { Cart } from 'utils/interfaces/cart.interface'
+import * as routes from 'utils/routes'
 import Token from 'components/Token'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
-import { Cart } from 'utils/interfaces/cart.interface'
-import { deleteCartRequest } from 'store/carts/actions'
 import CartName from '../Carts/CartName'
-import * as routes from 'utils/routes'
+
 
 const RetreatDetailCartList = () => {
   const dispatch = useDispatch()
@@ -42,26 +41,13 @@ const RetreatDetailCartList = () => {
       id: '1',
       Header: <Token value="cartLabel" />,
       Cell: ({ row }: CellProps<Cart>) => {
-        return <CartName id={row.original.id} />
+        return (
+          <Typography sx={{ minWidth: 150, marginTop: 1, marginBottom: 1 }} variant="body2">
+            <CartName id={row.original.id} />
+          </Typography>
+        )
       }
     },
-    {
-      id: '99',
-      Header: <Token value="more" />,
-      Cell: ({ row }: CellProps<Cart>) => {
-        return <div style={{ minWidth: 60 }}>
-          <IconButton
-            size="small"
-            onClick={() => {
-              setCurrentEdit(row.original)
-              setCartRemoveDialogOpen(true)
-            }}
-          >
-            <RemoveIcon />
-          </IconButton>
-        </div>
-      }
-    }
   ]
   return (
     <>

@@ -1,9 +1,10 @@
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@material-ui/core'
-import Token from 'components/Token'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material'
 import { createIngredientRequest, updateIngredientRequest } from 'store/ingredients/actions'
 import { Ingredient } from 'store/ingredients/types'
+import Token from 'components/Token'
+
 
 interface IngredientEditDialogProps {
   open: boolean,

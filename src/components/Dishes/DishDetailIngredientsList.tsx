@@ -1,17 +1,16 @@
-import { CircularProgress, IconButton, TableCell, TableRow, TextField } from '@material-ui/core'
-import Token from 'components/Token'
-import React, { useState } from 'react'
-import { useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CellProps, Column } from 'react-table'
+import { IconButton, Stack, TextField, Typography } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Check'
+import RemoveIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
 import { ApplicationState } from 'store'
 import { deleteIngredientInADishRequest, updateIngredientInADishRequest } from 'store/dishes/actions'
 import { IngredientInADish, IngredientInaDishDto } from 'utils/interfaces/ingredient-ina-dish.interface'
-import CloseIcon from '@material-ui/icons/Check'
-import RemoveIcon from '@material-ui/icons/Delete'
-import EditIcon from '@material-ui/icons/Edit'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
+import Token from 'components/Token'
 
 
 const DishDetailIngredientsList = () => {
@@ -45,28 +44,26 @@ const DishDetailIngredientsList = () => {
       id: '1',
       Header: <Token value="ingredientNameLabel" />,
       Cell: ({ row }: CellProps<IngredientInADish>) => {
-        return row.original.ingredient.name
+        return (
+          <Typography sx={{ minWidth: 150 }}>
+            {row.original.ingredient.name}
+          </Typography>
+        )
       }
     },
     {
       id: '2',
       Header: <Token value="margin" />,
       Cell: ({ row }: CellProps<IngredientInADish>) => {
-        const [currentEditMargin, setCurrentEditMargin] = useState<number>(row.original.margin)
         if (currentEdit?.id === row.original.id) {
           return (
             <TextField
-              value={currentEditMargin}
-              onChange={(e) => setCurrentEditMargin(parseInt(e.target.value) || 0)}
-              onBlur={() => {
-                handleIngredientUpdate(row.original, {
-                  id: row.original.id,
-                  dish: row.original.dish,
-                  margin: currentEditMargin,
-                  part: row.original.part,
-                  ingredient: row.original.ingredient.id,
-                })
-                setCurrentEdit(null)
+              size="small"
+              type="number"
+              sx={{ minWidth: 150 }}
+              value={row.state.currentEditMargin || row.original.margin}
+              onChange={event => {
+                row.setState((state: any) => ({ ...state, currentEditMargin: event.target.value }))
               }}
             />
           )
@@ -80,21 +77,15 @@ const DishDetailIngredientsList = () => {
       id: '3',
       Header: <Token value="part" />,
       Cell: ({ row }: CellProps<IngredientInADish>) => {
-        const [currentEditPart, setCurrentEditPart] = useState<number>(row.original.part)
         if (currentEdit?.id === row.original.id) {
           return (
             <TextField
-              value={currentEditPart}
-              onChange={(e) => setCurrentEditPart(parseInt(e.target.value) || 0)}
-              onBlur={() => {
-                handleIngredientUpdate(row.original, {
-                  id: row.original.id,
-                  dish: row.original.dish,
-                  margin: row.original.margin,
-                  part: currentEditPart,
-                  ingredient: row.original.ingredient.id,
-                })
-                setCurrentEdit(null)
+              size="small"
+              type="number"
+              sx={{ minWidth: 150 }}
+              value={row.state.currentEditPart || row.original.part}
+              onChange={event => {
+                row.setState((state: any) => ({ ...state, currentEditPart: event.target.value }))
               }}
             />
           )
@@ -109,15 +100,25 @@ const DishDetailIngredientsList = () => {
       Header: <Token value="more" />,
       Cell: ({ row }: CellProps<IngredientInADish>) => {
         return (
-          <div style={{ minWidth: 60 }}>
+          <Stack direction="row" justifyContent="end">
             {
               currentEdit?.id === row.original.id
                 ? (
                   <IconButton
                     size="small"
-                    onClick={() => setCurrentEdit(null)}
+                    onClick={() => {
+                      setCurrentEdit(null)
+                      const newIngredient = {
+                        id: row.original.id,
+                        dish: row.original.dish,
+                        ingredient: row.original.ingredient.id,
+                        margin: row.state.currentEditMargin as number || row.original.margin,
+                        part: row.state.currentEditPart as number || row.original.part,
+                      }
+                      handleIngredientUpdate(row.original, newIngredient)
+                    }}
                   >
-                    <CloseIcon />
+                    <CloseIcon color="success" />
                   </IconButton>
                 )
                 : (
@@ -138,7 +139,7 @@ const DishDetailIngredientsList = () => {
             >
               <RemoveIcon />
             </IconButton>
-          </div>
+          </Stack>
         )
       },
     }

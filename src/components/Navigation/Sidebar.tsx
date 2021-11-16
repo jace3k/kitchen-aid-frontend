@@ -1,13 +1,14 @@
 import React from 'react'
-import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import RetreatIcon from '@material-ui/icons/Assignment'
-import IngredientIcon from '@material-ui/icons/Grain'
-import MealsIcon from '@material-ui/icons/Kitchen'
-import DishesIcon from '@material-ui/icons/Fastfood'
-import CartsIcon from '@material-ui/icons/ShoppingCart'
+import { Divider, Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material'
+import RetreatIcon from '@mui/icons-material/Assignment'
+import IngredientIcon from '@mui/icons-material/Grain'
+import MealsIcon from '@mui/icons-material/Kitchen'
+import DishesIcon from '@mui/icons-material/Fastfood'
+import CartsIcon from '@mui/icons-material/ShoppingCart'
 import { TabNavigationUrls } from './Navigation'
 import Token from 'components/Token'
 import * as routes from 'utils/routes'
+
 
 interface SidebarProps {
   open: boolean,

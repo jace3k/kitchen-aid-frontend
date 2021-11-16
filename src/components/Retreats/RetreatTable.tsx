@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo } from 'react'
-import { Column, Row } from 'react-table'
-import { Retreat } from 'utils/interfaces/retreat.interface'
 import { useSelector, useDispatch } from 'react-redux'
+import { Column, Row } from 'react-table'
 import { ApplicationState } from 'store'
-import Token from 'components/Token'
 import { fetchAllRetreatsRequest } from 'store/retreats/actions'
+import { Retreat } from 'utils/interfaces/retreat.interface'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
+import Token from 'components/Token'
+
 
 interface RetreatTableProps {
   onRowClick: (row: Row<Retreat>) => void

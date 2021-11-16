@@ -98,4 +98,5 @@ export const pl: ITranslations = {
   BO: 'Kupiony',
   SE: 'Gotowy',
   addNewCartItem: 'Dodaj nowy składnik do koszyka',
+  removeCart: 'Usuń koszyk'
 }

@@ -1,3 +1,4 @@
+import { AppError } from "utils/interfaces/error-handling.interface"
 import { LanguageType } from "utils/translations"
 
 // type fetched from api
@@ -39,10 +40,12 @@ export interface LoginRequestType {
 interface LoginSuccessType {
   type: typeof UserActionTypes.LOGIN_SUCCESS,
   user: User,
+  loginLocal: boolean,
 }
 
 interface LoginErrorType {
   type: typeof UserActionTypes.LOGIN_ERROR,
+  message: string,
   error: string,
 }
 
@@ -80,11 +83,12 @@ export type UserStateActionTypes =
 
 export interface UserState {
   readonly loading: boolean,
-  readonly error: string | null,
+  readonly error: AppError | null,
   readonly authorized: boolean,
   readonly user: User | null,
   readonly darkMode: boolean,
   readonly language: LanguageType,
   readonly itemsPerPage: number,
   readonly redirect: string | null,
+  readonly loginLocal: boolean,
 }

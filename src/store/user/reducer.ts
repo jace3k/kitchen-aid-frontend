@@ -10,6 +10,7 @@ const initialState: UserState = {
   language: "pl",
   itemsPerPage: 10,
   redirect: null,
+  loginLocal: false,
 }
 
 const reducer: Reducer<UserState, UserStateActionTypes> = (state = initialState, action) => {
@@ -28,12 +29,13 @@ const reducer: Reducer<UserState, UserStateActionTypes> = (state = initialState,
         error: null,
         authorized: true,
         user: action.user,
+        loginLocal: action.loginLocal
       }
     case UserActionTypes.LOGIN_ERROR:
       return {
         ...state,
         loading: false,
-        error: action.error,
+        error: { message: action.message, error: action.error },
         authorized: false,
         user: null,
       }

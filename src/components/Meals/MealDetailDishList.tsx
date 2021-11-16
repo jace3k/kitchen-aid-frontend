@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
-import { IconButton } from '@material-ui/core'
-import Token from 'components/Token'
-import { useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CellProps, Column } from 'react-table'
+import { IconButton } from '@mui/material'
+import RemoveIcon from '@mui/icons-material/Delete'
+import NewTabIcon from '@mui/icons-material/OpenInNew'
 import { ApplicationState } from 'store'
-import RemoveIcon from '@material-ui/icons/Delete'
-import NewTabIcon from '@material-ui/icons/OpenInNew'
-import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
-import { DishInaMeal } from 'utils/interfaces/dish-ina-meal.interface'
 import { deleteDishInAMealRequest } from 'store/meals/actions'
+import { DishInaMeal } from 'utils/interfaces/dish-ina-meal.interface'
+import Token from 'components/Token'
+import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
+
 
 const MealDetailDishList = () => {
   const dispatch = useDispatch()

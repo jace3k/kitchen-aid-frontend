@@ -89,7 +89,6 @@ function* addMealToRetreat({ meal }: AddMealRequestType) {
 function* updateMealInRetreat({ meal }: UpdateMealRequestType) {
   try {
     const response: AxiosResponse = yield call(RetreatsApi.updateMeal, meal)
-    console.log('updateMealInRetreat - saga', meal)
     yield put(updateMealSuccess(response.data, 'Meal updated successfully!'))
     yield put(fetchRetreatDetailRequest(meal.retreat))
   }

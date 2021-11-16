@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import Token from 'components/Token'
-import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@material-ui/core'
+import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material'
 import { Dish } from 'utils/interfaces/dish.interface'
 import { createDishRequest } from 'store/dishes/actions'
+import Token from 'components/Token'
+
 
 interface DishEditDialogProps {
   open: boolean

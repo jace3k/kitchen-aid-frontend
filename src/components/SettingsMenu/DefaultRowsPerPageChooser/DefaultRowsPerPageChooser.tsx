@@ -1,16 +1,17 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
-import Token from 'components/Token'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { ApplicationState } from 'store'
 import { setDefaultItemsPerPage } from 'store/user/actions'
 import { ROWS_PER_PAGE_OPTIONS } from 'utils/constants'
+import Token from 'components/Token'
+
 
 const DefaultRowsPerPageChooser = () => {
   const currentRowsPerPage = useSelector((state: ApplicationState) => state.user.itemsPerPage)
   const dispatch = useDispatch()
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleChange = (event: SelectChangeEvent<number>) => {
     dispatch(setDefaultItemsPerPage(event.target.value as number))
   }
 

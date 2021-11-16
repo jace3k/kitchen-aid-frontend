@@ -1,11 +1,14 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, FormControl, InputLabel, MenuItem, Select, Input } from '@material-ui/core'
-import Token from 'components/Token'
 import React, { useState } from 'react'
-import { CartItemDto, CartItemStatus } from 'utils/interfaces/cart-item.interface'
 import { useSelector } from 'react-redux'
+import moment, { Moment } from 'moment'
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material'
+import { LocalizationProvider, DesktopDatePicker } from '@mui/lab'
+import AdapterMoment from '@mui/lab/AdapterMoment'
 import { ApplicationState } from 'store'
-import moment from 'moment'
-import { MOMENT_DATE_FORMAT } from 'utils/constants'
+import { DATE_PICKER_MASK, MOMENT_DATE_DISPLAY_FORMAT, MOMENT_DATE_SAVE_FORMAT } from 'utils/constants'
+import { CartItemDto, CartItemStatus } from 'utils/interfaces/cart-item.interface'
+import Token from 'components/Token'
+
 
 interface AddCartItemModalProps {
   open: boolean
@@ -15,7 +18,7 @@ interface AddCartItemModalProps {
 }
 
 const getCurrentDate = () => {
-  return moment().format(MOMENT_DATE_FORMAT)
+  return moment()
 }
 
 const AddCartItemModal = ({ open, cartId, onClose, onCreateCartItem }: AddCartItemModalProps) => {
@@ -24,7 +27,7 @@ const AddCartItemModal = ({ open, cartId, onClose, onCreateCartItem }: AddCartIt
 
   const [selectedIngredient, setSelectedIngredient] = useState('')
   const [selectedAmount, setSelectedAmount] = useState('')
-  const [selectedDueDate, setSelectedDueDate] = useState(getCurrentDate())
+  const [selectedDueDate, setSelectedDueDate] = useState<Moment | null>(getCurrentDate())
   const [selectedStatus, setSelectedStatus] = useState<CartItemStatus>('PE')
 
   const handleIngredientChange = (e: any) => {
@@ -35,10 +38,6 @@ const AddCartItemModal = ({ open, cartId, onClose, onCreateCartItem }: AddCartIt
     setSelectedAmount(e.target.value)
   }
 
-  const handleDueDateChange = (e: any) => {
-    setSelectedDueDate(e.target.value)
-  }
-
   const handleStatusChange = (e: any) => {
     setSelectedStatus(e.target.value)
   }
@@ -47,37 +46,60 @@ const AddCartItemModal = ({ open, cartId, onClose, onCreateCartItem }: AddCartIt
     <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle><Token value="addNewCartItem" /> </DialogTitle>
       <DialogContent>
-        <FormControl fullWidth disabled={ingredientsLoading}>
-          <InputLabel><Token value="ingredient" /></InputLabel>
-          <Select
-            value={ingredientsLoading ? '' : selectedIngredient}
-            onChange={handleIngredientChange}
-            disabled={!ingredientList.length}
-          >
-            {ingredientList.map(ing => (
-              <MenuItem value={ing.id} key={ing.id}>{ing.name}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <div style={{ margin: 10 }} />
-        <FormControl fullWidth>
-          <InputLabel><Token value="amount" /></InputLabel>
-          <Input value={selectedAmount} onChange={handleAmountChange} type="number" />
-        </FormControl>
-        <div style={{ margin: 10 }} />
-        <FormControl fullWidth>
-          <InputLabel><Token value="dueDate" /></InputLabel>
-          <Input value={selectedDueDate} onChange={handleDueDateChange} type="date" />
-        </FormControl>
-        <div style={{ margin: 10 }} />
-        <FormControl fullWidth>
-          <InputLabel><Token value="status" /></InputLabel>
-          <Select value={selectedStatus} onChange={handleStatusChange} >
-            <MenuItem value="PE"><Token value="PE" /></MenuItem>
-            <MenuItem value="BO"><Token value="BO" /></MenuItem>
-            <MenuItem value="SE"><Token value="SE" /></MenuItem>
-          </Select>
-        </FormControl>
+        <Stack spacing={1}>
+          <FormControl fullWidth size="small" sx={{ marginTop: 1 }}>
+            <InputLabel><Token value="ingredient" /></InputLabel>
+            <Select
+              value={ingredientsLoading ? '' : selectedIngredient}
+              onChange={handleIngredientChange}
+              disabled={ingredientsLoading || !ingredientList.length}
+              fullWidth
+              size="small"
+              label={<Token value="ingredient" />}
+            >
+              {ingredientList.map(ing => (
+                <MenuItem value={ing.id} key={ing.id}>{ing.name}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl fullWidth>
+            <TextField
+              label={<Token value="amount" />}
+              size="small"
+              type="number"
+              value={selectedAmount}
+              onChange={handleAmountChange}
+            />
+          </FormControl>
+
+          <FormControl fullWidth>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <DesktopDatePicker
+                mask={DATE_PICKER_MASK}
+                inputFormat={MOMENT_DATE_DISPLAY_FORMAT}
+                value={selectedDueDate}
+                onChange={setSelectedDueDate}
+                renderInput={(params) => <TextField {...params} size="small" sx={{ minWidth: 150 }} />}
+              />
+            </LocalizationProvider>
+          </FormControl>
+
+          <FormControl fullWidth size="small" sx={{ marginTop: 1 }}>
+            <InputLabel><Token value="status" /></InputLabel>
+            <Select
+              value={selectedStatus}
+              onChange={handleStatusChange}
+              fullWidth
+              size="small"
+              label={<Token value="status" />}
+            >
+              <MenuItem value="PE"><Token value="PE" /></MenuItem>
+              <MenuItem value="BO"><Token value="BO" /></MenuItem>
+              <MenuItem value="SE"><Token value="SE" /></MenuItem>
+            </Select>
+          </FormControl>
+        </Stack>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="secondary">
@@ -88,7 +110,7 @@ const AddCartItemModal = ({ open, cartId, onClose, onCreateCartItem }: AddCartIt
           onClick={() => {
             onCreateCartItem({
               amount: selectedAmount,
-              due_date: selectedDueDate,
+              due_date: selectedDueDate ? (selectedDueDate as Moment).format(MOMENT_DATE_SAVE_FORMAT) : '',
               status: selectedStatus,
               ingredient: parseInt(selectedIngredient),
               cart: cartId,
