@@ -56,7 +56,7 @@ module.exports = {
     }),
   ],
   output: {
-    filename: '[name].[contenthash:4].bundle.js',
+    filename: '[name].[contenthash:6].bundle.js',
     publicPath: '/',
   },
   devServer: {
