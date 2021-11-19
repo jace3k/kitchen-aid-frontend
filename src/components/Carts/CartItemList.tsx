@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { CellProps, Column } from 'react-table'
+import { CellProps, Column, Row } from 'react-table'
 import moment, { Moment } from 'moment';
 import { IconButton, MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
 import { DesktopDatePicker, MobileDatePicker, LocalizationProvider } from '@mui/lab';
@@ -12,11 +12,14 @@ import { ApplicationState } from 'store'
 import { removeCartItemRequest, updateCartItemRequest } from 'store/carts/actions'
 import { DishInaMeal } from 'utils/interfaces/dish-ina-meal.interface'
 import { CartItemDto, CartItemInCart, CartItemStatus } from 'utils/interfaces/cart-item.interface'
-import { DATE_PICKER_MASK, MOMENT_DATE_DISPLAY_FORMAT, MOMENT_DATE_SAVE_FORMAT } from 'utils/constants';
+import { DATE_PICKER_MASK, MOMENT_DATE_DISPLAY_FORMAT, MOMENT_DATE_SAVE_FORMAT, STATUS_MAP } from 'utils/constants';
 import Token from 'components/Token'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
 import CartItemStatusChip from './CartItemStatusChip'
+import TextFilter from 'components/genericComponents/Filters/TextFilter';
+import CartItemStatusFilter from 'components/genericComponents/Filters/CartItemStatusFilter';
+import { v } from 'utils/helper';
 
 
 const CartItemList = () => {
@@ -48,21 +51,30 @@ const CartItemList = () => {
     setRemoveDialogOpen(false)
   }
 
-  const columns: Column<DishInaMeal>[] = useMemo(() => [
+  const columns: Column<CartItemInCart>[] = useMemo(() => [
     {
       id: '1',
       Header: <Token value="cartItem" />,
+      accessor: 'ingredient',
+      sortType: (a: Row<CartItemInCart>, b: Row<CartItemInCart>) => {
+        return a.original.ingredient.name.toLowerCase().localeCompare(b.original.ingredient.name.toLowerCase())
+      },
       Cell: ({ row }: CellProps<CartItemInCart>) => {
         return (
           <Typography sx={{ minWidth: 150 }}>
             {row.original.ingredient.name}
           </Typography>
         )
+      },
+      Filter: TextFilter,
+      filter: (rows: Row<CartItemInCart>[], columnIds: String[], filterValue: string) => {
+        return rows.filter(row => row.original.ingredient.name.toLowerCase().includes(filterValue.toLowerCase()))
       }
     },
     {
       id: '2',
       Header: <Token value="amount" />,
+      accessor: 'amount',
       Cell: ({ row }: CellProps<CartItemInCart>) => {
         if (currentEdit?.id === row.original.id) {
           return (
@@ -70,7 +82,7 @@ const CartItemList = () => {
               size="small"
               type="number"
               sx={{ minWidth: 150 }}
-              value={row.state.currentEditAmount || row.original.amount}
+              value={v(row.state.currentEditAmount, row.original.amount)}
               onChange={event => {
                 row.setState((state: any) => ({ ...state, currentEditAmount: event.target.value }))
               }}
@@ -80,11 +92,18 @@ const CartItemList = () => {
         return (
           row.original.amount
         )
-      }
+      },
+      Filter: TextFilter
     },
     {
       id: '3',
       Header: <Token value="dueDate" />,
+      accessor: 'due_date',
+      sortType: (a: Row<CartItemInCart>, b: Row<CartItemInCart>) => {
+        if (new Date(a.original.due_date) > new Date(b.original.due_date))
+          return 1
+        return -1
+      },
       Cell: ({ row }: CellProps<CartItemInCart>) => {
         if (currentEdit?.id === row.original.id) {
           return (
@@ -106,11 +125,19 @@ const CartItemList = () => {
             {moment(row.original.due_date).format(MOMENT_DATE_DISPLAY_FORMAT)}
           </Typography>
         )
-      }
+      },
+      Filter: TextFilter,
+      filter: (rows: Row<CartItemInCart>[], columnIds: String[], filterValue: string) => {
+        return rows.filter(row => moment(row.original.due_date).format(MOMENT_DATE_DISPLAY_FORMAT).includes(filterValue))
+      },
     },
     {
       id: '4',
       Header: <Token value="status" />,
+      accessor: 'status',
+      sortType: (a: Row<CartItemInCart>, b: Row<CartItemInCart>) => {
+        return STATUS_MAP[a.original.status] - STATUS_MAP[b.original.status]
+      },
       Cell: ({ row }: CellProps<CartItemInCart>) => {
         if (currentEdit?.id === row.original.id) {
           return (
@@ -129,7 +156,8 @@ const CartItemList = () => {
           )
         }
         return <CartItemStatusChip status={row.original.status} />
-      }
+      },
+      Filter: CartItemStatusFilter,
     },
     {
       id: '99',

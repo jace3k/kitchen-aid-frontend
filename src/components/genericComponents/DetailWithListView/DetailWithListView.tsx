@@ -34,6 +34,50 @@ interface DetaiWithListViewProps {
   notFound?: boolean,
   wide?: boolean,
 }
+const StyledContainer = styled(Container)<ContainerProps & { wide: boolean | undefined }>(({ theme, wide }) => {
+  if (wide)
+    return {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'stretch',
+    }
+
+  return {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    [theme.breakpoints.up('md')]: {
+      flexDirection: 'row',
+    }
+  }
+})
+
+const DetailInfoCard = styled(Card)<CardProps & { wide: boolean | undefined }>(({ theme, wide }) => {
+  if (wide)
+    return {
+      width: 'auto',
+      margin: 5,
+      minWidth: 300,
+    }
+
+  return {
+    width: 'auto',
+    margin: 5,
+    minWidth: 300,
+    [theme.breakpoints.up('md')]: {
+      width: 300,
+    }
+  }
+})
+
+const ItemsListCard = styled(Card)<CardProps>(({ theme }) => {
+  return {
+    minWidth: 300,
+    flexGrow: 1,
+    margin: 5,
+  }
+})
+
 
 const DetailWithListView = ({
   name,
@@ -63,53 +107,11 @@ const DetailWithListView = ({
       </div>
     )
 
-  const StyledContainer = styled(Container)<ContainerProps>(({ theme }) => {
-    if (wide)
-      return {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'stretch',
-      }
 
-    return {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'stretch',
-      [theme.breakpoints.up('md')]: {
-        flexDirection: 'row',
-      }
-    }
-  })
-
-  const DetailInfoCard = styled(Card)<CardProps>(({ theme }) => {
-    if (wide)
-      return {
-        width: 'auto',
-        margin: 5,
-        minWidth: 300,
-      }
-
-    return {
-      width: 'auto',
-      margin: 5,
-      minWidth: 300,
-      [theme.breakpoints.up('md')]: {
-        width: 300,
-      }
-    }
-  })
-
-  const ItemsListCard = styled(Card)<CardProps>(({ theme }) => {
-    return {
-      minWidth: 300,
-      flexGrow: 1,
-      margin: 5,
-    }
-  })
 
   return (
-    <StyledContainer>
-      <DetailInfoCard>
+    <StyledContainer wide={wide}>
+      <DetailInfoCard wide={wide}>
         <CardContent>
           {loading ? (
             <h2><Token value="loadingData" /></h2>

@@ -7,6 +7,7 @@ import { Meal } from 'utils/interfaces/meal.interface'
 import MealName from './MealName'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
 import Token from 'components/Token'
+import TextFilter from 'components/genericComponents/Filters/TextFilter'
 
 
 interface MealsTableProps {
@@ -25,9 +26,14 @@ const MealsTable = ({ onRowClick }: MealsTableProps) => {
     {
       id: '1',
       Header: <Token value="mealLabel" />,
+      accessor: 'id',
       Cell: ({ row }: CellProps<Meal>) => {
         return <MealName id={row.original.id} type={row.original.type} />
-      }
+      },
+      sortType: (a: Row<Meal>, b: Row<Meal>) => {
+        return a.original.type.localeCompare(b.original.type)
+      },
+      Filter: TextFilter,
     }
   ], [])
 

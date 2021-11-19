@@ -97,4 +97,7 @@ export interface ITranslations {
   SE: string,
   addNewCartItem: string,
   removeCart: string,
+  onOffFilters: string,
+  changeRowsPerPage: string,
+  all: string,
 }

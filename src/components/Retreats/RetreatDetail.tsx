@@ -146,7 +146,6 @@ const RetreatDetail: React.FC<RouteComponentProps<{ id: string, card: string }>>
               setAddToListModalOpen(true)
             },
             tabUrl: `${routes.Retreats}/${props.match.params.id}/meals`,
-            initial: currentCard === 'meals'
           },
           {
             name: 'carts',
@@ -155,7 +154,6 @@ const RetreatDetail: React.FC<RouteComponentProps<{ id: string, card: string }>>
               setAddCartModalOpen(true)
             },
             tabUrl: `${routes.Retreats}/${props.match.params.id}/carts`,
-            initial: currentCard === 'carts'
           }
         ]}
         onCloseEditMode={handleUpdateRetreat}

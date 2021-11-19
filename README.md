@@ -48,10 +48,7 @@ ___
 
 
 ####### ~Future~ Now
-* Tables - sorting & filtering
-* Admin page
-* Retreat's meals - grouping by date view (or table group hook)
-* Error/Notification optimization (detailed messages/setting?)
+* ~Tables - sorting & filtering~
 * ~Migration to MUI v5~
 * ~Cool datepicker (only in MUI v5)~
 * ~Lazy loading - performance optimization~
@@ -61,4 +58,7 @@ ___
   * ~Cart API/actions/reducers definition~
   * ~Cart List view (with retreat names)~
   * ~Cart Detail View (details, table with ingredients)~
-
+* Retreat's meals - grouping by date view (or table group hook)
+* Highlight currently updated row/do not show loading screen when updating
+* Admin page
+* Error/Notification optimization (detailed messages/setting?)

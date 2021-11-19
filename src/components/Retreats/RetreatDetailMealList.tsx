@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { CellProps, Column } from 'react-table'
+import { CellProps, Column, Row } from 'react-table'
 import moment, { Moment } from 'moment';
 import { IconButton, Stack, TextField, Typography } from '@mui/material'
 import { DesktopDatePicker, MobileDatePicker, LocalizationProvider } from '@mui/lab';
@@ -17,6 +17,8 @@ import Token from 'components/Token'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import MealName from 'components/Meals/MealName'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
+import TextFilter from 'components/genericComponents/Filters/TextFilter';
+import { v } from 'utils/helper';
 
 const RetreatDetailMealList = () => {
   const dispatch = useDispatch()
@@ -48,17 +50,26 @@ const RetreatDetailMealList = () => {
     {
       id: '1',
       Header: <Token value="mealLabel" />,
+      accessor: 'meal',
+      sortType: (a: Row<MealInaRetreat>, b: Row<MealInaRetreat>) => {
+        return a.original.meal.type.localeCompare(b.original.meal.type)
+      },
       Cell: ({ row }: CellProps<MealInaRetreat>) => {
         return (
           <Typography sx={{ minWidth: 150 }} variant="body2">
             <MealName id={row.original.meal.id} type={row.original.meal.type} />
           </Typography>
         )
+      },
+      Filter: TextFilter,
+      filter: (rows: Row<MealInaRetreat>[], columnIds: String[], filterValue: string) => {
+        return rows.filter(row => row.original.meal.id.toString().includes(filterValue.toLowerCase()))
       }
     },
     {
       id: '2',
       Header: <Token value="servings" />,
+      accessor: 'servings',
       Cell: ({ row }: CellProps<MealInaRetreat>) => {
         if (currentEdit?.id === row.original.id) {
           return (
@@ -66,7 +77,7 @@ const RetreatDetailMealList = () => {
               size="small"
               type="number"
               sx={{ minWidth: 150 }}
-              value={row.state.currentEditServings || row.original.servings}
+              value={v(row.state.currentEditServings, row.original.servings)}
               onChange={event => {
                 row.setState((state: any) => ({ ...state, currentEditServings: event.target.value }))
               }}
@@ -76,11 +87,18 @@ const RetreatDetailMealList = () => {
         else {
           return row.original.servings
         }
-      }
+      },
+      Filter: TextFilter,
     },
     {
       id: '3',
       Header: <Token value="date" />,
+      accessor: 'date',
+      sortType: (a: Row<MealInaRetreat>, b: Row<MealInaRetreat>) => {
+        if (new Date(a.original.date) > new Date(b.original.date))
+          return 1
+        return -1
+      },
       Cell: ({ row }: CellProps<MealInaRetreat>) => {
         if (currentEdit?.id === row.original.id) {
           return (
@@ -102,7 +120,11 @@ const RetreatDetailMealList = () => {
             {moment(row.original.date).format(MOMENT_DATE_DISPLAY_FORMAT)}
           </Typography>
         )
-      }
+      },
+      Filter: TextFilter,
+      filter: (rows: Row<MealInaRetreat>[], columnIds: String[], filterValue: string) => {
+        return rows.filter(row => moment(row.original.date).format(MOMENT_DATE_DISPLAY_FORMAT).includes(filterValue))
+      },
     },
     {
       id: '99',

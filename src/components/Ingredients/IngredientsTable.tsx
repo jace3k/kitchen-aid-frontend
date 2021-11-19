@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { IconButton, Stack, TextField, Typography } from '@mui/material'
-import { CellProps, Column } from 'react-table'
+import { CellProps, Column, Row } from 'react-table'
 import { useSelector, useDispatch } from 'react-redux'
 import CloseIcon from '@mui/icons-material/Check'
 import RemoveIcon from '@mui/icons-material/Delete'
@@ -10,6 +10,8 @@ import { fetchAllIngredientsRequest, fetchIngredientDetailRequest, updateIngredi
 import { Ingredient } from 'store/ingredients/types'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
 import Token from 'components/Token'
+import TextFilter from 'components/genericComponents/Filters/TextFilter'
+import { v } from 'utils/helper'
 
 
 interface IngredientsTableProps {
@@ -37,13 +39,17 @@ const IngredientsTable = ({ handleOpenConfirmDialogRemove }: IngredientsTablePro
     {
       id: '1',
       Header: <Token value="ingredientNameLabel" />,
+      accessor: 'name',
+      sortType: (a: Row<Ingredient>, b: Row<Ingredient>) => {
+        return a.original.name.toLowerCase().localeCompare(b.original.name.toLowerCase())
+      },
       Cell: ({ row }: CellProps<Ingredient>) => {
         if (currentEdit?.id === row.original.id) {
           return (
             <TextField
               size="small"
               sx={{ minWidth: 150 }}
-              value={row.state.currentEditName || row.original.name}
+              value={v(row.state.currentEditName, row.original.name)}
               onChange={event => {
                 row.setState((state: any) => ({ ...state, currentEditName: event.target.value }))
               }}
@@ -52,12 +58,13 @@ const IngredientsTable = ({ handleOpenConfirmDialogRemove }: IngredientsTablePro
         }
         else {
           return (
-            <Typography sx={{ minWidth: 150 }}>
+            <Typography variant="body2" sx={{ minWidth: 150 }}>
               {row.original.name}
             </Typography>
           )
         }
-      }
+      },
+      Filter: TextFilter,
     },
     {
       id: '99',

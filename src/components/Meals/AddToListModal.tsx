@@ -27,12 +27,15 @@ const AddToListModal = ({ open, onClose, onCreateDish, mealId }: AddToListModalP
     <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle><Token value="addNewDish" /> </DialogTitle>
       <DialogContent>
-        <FormControl fullWidth disabled={dishesLoading}>
+        <FormControl fullWidth size="small" sx={{ marginTop: 1 }}>
           <InputLabel><Token value="dish" /></InputLabel>
           <Select
             value={dishesLoading ? '' : selectedDish}
             onChange={handleDishChange}
             disabled={!dishList.length}
+            fullWidth
+            size="small"
+            label={<Token value="dish" />}
           >
             {dishList.map(dish => (
               <MenuItem value={dish.id} key={dish.id}>{dish.name}</MenuItem>

@@ -10,6 +10,7 @@ import Token from 'components/Token'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
 import CartName from '../Carts/CartName'
+import TextFilter from 'components/genericComponents/Filters/TextFilter'
 
 
 const RetreatDetailCartList = () => {
@@ -39,6 +40,7 @@ const RetreatDetailCartList = () => {
   const columns = [
     {
       id: '1',
+      accessor: 'id',
       Header: <Token value="cartLabel" />,
       Cell: ({ row }: CellProps<Cart>) => {
         return (
@@ -46,7 +48,8 @@ const RetreatDetailCartList = () => {
             <CartName id={row.original.id} />
           </Typography>
         )
-      }
+      },
+      Filter: TextFilter,
     },
   ]
   return (

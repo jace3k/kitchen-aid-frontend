@@ -10,6 +10,7 @@ import * as routes from 'utils/routes'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
 import Token from 'components/Token'
 import CartName from './CartName'
+import TextFilter from 'components/genericComponents/Filters/TextFilter'
 
 
 const Carts: React.FC<RouteComponentProps> = ({ history }) => {
@@ -28,18 +29,38 @@ const Carts: React.FC<RouteComponentProps> = ({ history }) => {
   const columns: Column<Cart>[] = useMemo(() => [
     {
       id: '1',
+      accessor: 'id',
       Header: <Token value="cartLabel" />,
       Cell: ({ row }: CellProps<Cart>) => {
         return <CartName id={row.original.id} />
-      }
+      },
+      Filter: TextFilter,
     },
     {
       id: '2',
+      accessor: 'retreat',
       Header: <Token value="retreatName" />,
+      sortType: (a: Row<Cart>, b: Row<Cart>) => {
+        const retreatA = retreats.find(x => x.id === a.original.retreat)
+        const retreatB = retreats.find(x => x.id === b.original.retreat)
+        if (retreatA && retreatB) {
+          return retreatA.name.toLowerCase().localeCompare(retreatB.name.toLowerCase())
+        }
+        return 1
+      },
+      disableSortBy: !retreats.length,
       Cell: ({ row }: CellProps<Cart>) => {
         const retreat = retreats.find(x => x.id === row.original.retreat)
         return retreat?.name || ''
-      }
+      },
+      Filter: TextFilter,
+      // TODO: get retreats from backend in one carts fetch
+      // filter: (rows: Row<Cart>[], columnIds: String[], filterValue: string) => {
+      //   const retreatsMap = {}
+
+      //   return rows.filter(row => )
+      // },
+      disableFilters: true
     },
   ], [])
 

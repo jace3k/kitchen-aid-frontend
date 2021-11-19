@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { CellProps, Column } from 'react-table'
+import { CellProps, Column, Row } from 'react-table'
 import { IconButton, Stack, TextField, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Check'
 import RemoveIcon from '@mui/icons-material/Delete'
@@ -11,6 +11,8 @@ import { IngredientInADish, IngredientInaDishDto } from 'utils/interfaces/ingred
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
 import Token from 'components/Token'
+import TextFilter from 'components/genericComponents/Filters/TextFilter'
+import { v } from 'utils/helper'
 
 
 const DishDetailIngredientsList = () => {
@@ -42,6 +44,10 @@ const DishDetailIngredientsList = () => {
   const columns: Column<IngredientInADish>[] = useMemo(() => [
     {
       id: '1',
+      accessor: 'ingredient',
+      sortType: (a: Row<IngredientInADish>, b: Row<IngredientInADish>) => {
+        return a.original.ingredient.name.toLowerCase().localeCompare(b.original.ingredient.name.toLowerCase())
+      },
       Header: <Token value="ingredientNameLabel" />,
       Cell: ({ row }: CellProps<IngredientInADish>) => {
         return (
@@ -49,11 +55,16 @@ const DishDetailIngredientsList = () => {
             {row.original.ingredient.name}
           </Typography>
         )
-      }
+      },
+      Filter: TextFilter,
+      filter: (rows: Row<IngredientInADish>[], columnIds: String[], filterValue: string) => {
+        return rows.filter(row => row.original.ingredient.name.toLowerCase().includes(filterValue.toLowerCase()))
+      },
     },
     {
       id: '2',
       Header: <Token value="margin" />,
+      accessor: 'margin',
       Cell: ({ row }: CellProps<IngredientInADish>) => {
         if (currentEdit?.id === row.original.id) {
           return (
@@ -61,7 +72,7 @@ const DishDetailIngredientsList = () => {
               size="small"
               type="number"
               sx={{ minWidth: 150 }}
-              value={row.state.currentEditMargin || row.original.margin}
+              value={v(row.state.currentEditMargin, row.original.margin)}
               onChange={event => {
                 row.setState((state: any) => ({ ...state, currentEditMargin: event.target.value }))
               }}
@@ -71,11 +82,13 @@ const DishDetailIngredientsList = () => {
         else {
           return row.original.margin
         }
-      }
+      },
+      Filter: TextFilter,
     },
     {
       id: '3',
       Header: <Token value="part" />,
+      accessor: 'part',
       Cell: ({ row }: CellProps<IngredientInADish>) => {
         if (currentEdit?.id === row.original.id) {
           return (
@@ -83,7 +96,7 @@ const DishDetailIngredientsList = () => {
               size="small"
               type="number"
               sx={{ minWidth: 150 }}
-              value={row.state.currentEditPart || row.original.part}
+              value={v(row.state.currentEditPart, row.original.part)}
               onChange={event => {
                 row.setState((state: any) => ({ ...state, currentEditPart: event.target.value }))
               }}
@@ -93,7 +106,8 @@ const DishDetailIngredientsList = () => {
         else {
           return row.original.part
         }
-      }
+      },
+      Filter: TextFilter,
     },
     {
       id: '99',

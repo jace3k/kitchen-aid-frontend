@@ -98,5 +98,8 @@ export const en: ITranslations = {
   BO: 'Bought',
   SE: 'Settled',
   addNewCartItem: 'Add new ingredient to the cart',
-  removeCart: 'Remove cart'
+  removeCart: 'Remove cart',
+  onOffFilters: 'On/Off filters',
+  changeRowsPerPage: 'Change rows per page',
+  all: 'All',
 }

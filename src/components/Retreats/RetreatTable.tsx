@@ -6,6 +6,7 @@ import { fetchAllRetreatsRequest } from 'store/retreats/actions'
 import { Retreat } from 'utils/interfaces/retreat.interface'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
 import Token from 'components/Token'
+import TextFilter from 'components/genericComponents/Filters/TextFilter'
 
 
 interface RetreatTableProps {
@@ -25,6 +26,7 @@ const RetreatTable = ({ onRowClick }: RetreatTableProps) => {
       id: '1',
       Header: <Token value="name" />,
       accessor: 'name',
+      Filter: TextFilter
     },
   ], [])
 

@@ -6,6 +6,7 @@ import { ApplicationState } from 'store'
 import { fetchAllDishesRequest } from 'store/dishes/actions'
 import { Dish } from 'utils/interfaces/dish.interface'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
+import TextFilter from 'components/genericComponents/Filters/TextFilter'
 
 
 interface DishesTableProps {
@@ -25,11 +26,16 @@ const DishesTable = ({ onRowClick }: DishesTableProps) => {
 			id: '1',
 			Header: <Token value="name" />,
 			accessor: 'name',
+			sortType: (a: Row<Dish>, b: Row<Dish>) => {
+				return a.original.name.toLowerCase().localeCompare(b.original.name.toLowerCase())
+			},
+			Filter: TextFilter,
 		},
 		{
 			id: '2',
 			Header: <Token value="size" />,
 			accessor: 'size',
+			Filter: TextFilter,
 		},
 	], [])
 

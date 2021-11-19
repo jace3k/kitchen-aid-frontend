@@ -38,8 +38,12 @@ const TabPanel = (props: TabPanelProps) => {
 
 const MultiListView: React.FC<MultiListViewProps> = ({ generateItemsList }) => {
   const history = useHistory();
-  const tabIndex = generateItemsList.findIndex(x => x.name == history.location.pathname.split('/').pop())
-  const [currentTab, setCurrentTab] = useState(tabIndex > 0 ? tabIndex : 0)
+  const [currentTab, setCurrentTab] = useState(0)
+
+  useEffect(() => {
+    const tabIndex = generateItemsList.findIndex(x => x.name == history.location.pathname.split('/').pop())
+    setCurrentTab(tabIndex === -1 ? 0 : tabIndex)
+  }, [])
 
   return (
     <div>
@@ -54,6 +58,7 @@ const MultiListView: React.FC<MultiListViewProps> = ({ generateItemsList }) => {
             <Tab label={<Token value={item.name} />} key={`tab-${i}`}
               onClick={() => {
                 history.push(item.tabUrl || history.location.pathname)
+                setCurrentTab(i)
               }}
             />
           ))}

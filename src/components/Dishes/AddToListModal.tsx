@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, MenuItem, Select, InputLabel, Input } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, MenuItem, Select, InputLabel, Input, Stack, TextField } from '@mui/material'
 import { ApplicationState } from 'store'
 import { IngredientInaDishDto } from 'utils/interfaces/ingredient-ina-dish.interface'
 import Token from 'components/Token'
@@ -37,28 +37,43 @@ const AddToListModal = ({ open, onClose, onCreateIngredient, dishId }: AddToList
     <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle><Token value="addNewIngredient" /> </DialogTitle>
       <DialogContent>
-        <FormControl fullWidth disabled={ingredientsLoading}>
-          <InputLabel><Token value="ingredient" /></InputLabel>
-          <Select
-            value={ingredientsLoading ? '' : selectedIngredient}
-            onChange={handleIngredientChange}
-            disabled={!ingredientList.length}
-          >
-            {ingredientList.map(ing => (
-              <MenuItem value={ing.id} key={ing.id}>{ing.name}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <div style={{ margin: 10 }} />
-        <FormControl fullWidth>
-          <InputLabel><Token value="margin" /></InputLabel>
-          <Input value={selectedMargin} onChange={handleMarginChange} type="number" />
-        </FormControl>
-        <div style={{ margin: 10 }} />
-        <FormControl fullWidth>
-          <InputLabel><Token value="part" /></InputLabel>
-          <Input value={selectedPart} onChange={handlePartChange} type="number" />
-        </FormControl>
+        <Stack spacing={1}>
+          <FormControl fullWidth size="small" sx={{ marginTop: 1 }}>
+            <InputLabel><Token value="ingredient" /></InputLabel>
+            <Select
+              value={ingredientsLoading ? '' : selectedIngredient}
+              onChange={handleIngredientChange}
+              disabled={!ingredientList.length}
+              fullWidth
+              size="small"
+              label={<Token value="ingredient" />}
+            >
+              {ingredientList.map(ing => (
+                <MenuItem value={ing.id} key={ing.id}>{ing.name}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl fullWidth>
+            <TextField
+              label={<Token value="margin" />}
+              size="small"
+              type="number"
+              value={selectedMargin}
+              onChange={handleMarginChange}
+            />
+          </FormControl>
+
+          <FormControl fullWidth>
+            <TextField
+              label={<Token value="part" />}
+              size="small"
+              type="number"
+              value={selectedPart}
+              onChange={handlePartChange}
+            />
+          </FormControl>
+        </Stack>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="secondary">

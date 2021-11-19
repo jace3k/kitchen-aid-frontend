@@ -21,3 +21,9 @@ export const MEAL_TYPES_NAMES: Record<string, TranslationTokensType> = {
 export const MOMENT_DATE_DISPLAY_FORMAT = 'DD.MM.YYYY'
 export const MOMENT_DATE_SAVE_FORMAT = 'YYYY-MM-DD'
 export const DATE_PICKER_MASK = "__.__.____"
+
+export const STATUS_MAP = {
+  'PE': 1,
+  'BO': 2,
+  'SE': 3,
+}

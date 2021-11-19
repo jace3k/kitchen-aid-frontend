@@ -98,5 +98,8 @@ export const pl: ITranslations = {
   BO: 'Kupiony',
   SE: 'Gotowy',
   addNewCartItem: 'Dodaj nowy składnik do koszyka',
-  removeCart: 'Usuń koszyk'
+  removeCart: 'Usuń koszyk',
+  onOffFilters: 'Włącz/Wyłącz pasek filtrów',
+  changeRowsPerPage: 'Zmień ilość elementów na stronie',
+  all: 'Wszystko',
 }
