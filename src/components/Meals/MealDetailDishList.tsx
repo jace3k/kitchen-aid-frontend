@@ -1,9 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CellProps, Column, Row } from 'react-table'
-import { IconButton } from '@mui/material'
-import RemoveIcon from '@mui/icons-material/Delete'
-import NewTabIcon from '@mui/icons-material/OpenInNew'
 import { ApplicationState } from 'store'
 import { deleteDishInAMealRequest } from 'store/meals/actions'
 import { DishInaMeal } from 'utils/interfaces/dish-ina-meal.interface'
@@ -11,6 +8,7 @@ import Token from 'components/Token'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
 import TextFilter from 'components/genericComponents/Filters/TextFilter'
+import CellMore from 'components/genericComponents/CellMore/CellMore'
 
 
 const MealDetailDishList = () => {
@@ -68,47 +66,16 @@ const MealDetailDishList = () => {
       Header: <Token value="more" />,
       Cell: ({ row }: CellProps<DishInaMeal>) => {
         return (
-          <div style={{ minWidth: 60 }}>
-            {/* currently no edit options in DishInaMeal */}
-            {/* {
-              currentEdit?.id === row.original.id
-                ? (
-                  <IconButton
-                    size="small"
-                    onClick={() => setCurrentEdit(null)}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                )
-                : (
-                  <IconButton
-                    size="small"
-                    onClick={() => setCurrentEdit(row.original)}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                )
-            } */}
-            <IconButton
-              size="small"
-              onClick={() => {
-                const id = row.original.dish.id
-                console.log(id)
-                window.open(`/dishes/${row.original.dish.id}`, '_blank')
-              }}
-            >
-              <NewTabIcon />
-            </IconButton>
-            <IconButton
-              size="small"
-              onClick={() => {
-                setCurrentEdit(row.original)
-                setDishRemoveDialogOpen(true)
-              }}
-            >
-              <RemoveIcon />
-            </IconButton>
-          </div>
+          <CellMore canOpenNewWindow canRemove
+            handleOpenNewWindow={() => {
+              const id = row.original.dish.id
+              window.open(`/dishes/${row.original.dish.id}`, '_blank')
+            }}
+            handleRemove={() => {
+              setCurrentEdit(row.original)
+              setDishRemoveDialogOpen(true)
+            }}
+          />
         )
       }
     }

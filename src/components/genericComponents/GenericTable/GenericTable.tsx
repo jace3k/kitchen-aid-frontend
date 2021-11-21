@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Column, useTable, Row, useRowState, useSortBy, useFilters } from 'react-table'
-import { CircularProgress, Paper, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, Table, Stack, Button, Pagination, Typography, IconButton, Badge, styled, Tooltip } from '@mui/material'
+import { CircularProgress, Paper, TableBody, TableCell, TableContainer, TableHead, TableRow, Table, Stack, Pagination, IconButton, Badge, styled, Tooltip, Skeleton, Typography } from '@mui/material'
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown'
 import ArrowDropUp from '@mui/icons-material/ArrowDropUp'
 import FilterIcon from '@mui/icons-material/FilterAlt'
@@ -10,12 +10,14 @@ import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNewTwoTone'
 import { ApplicationState } from 'store'
 import { ROWS_PER_PAGE_OPTIONS } from 'utils/constants'
 import Token from 'components/Token'
+import { typography } from '@mui/system'
 
 interface GenericTableProps {
   columns: Column<any>[],
   data: any[],
   loading: boolean,
   onRowClick?: (row: Row<any>) => void,
+  lastUpdatedId?: string,
 }
 
 const LoadingDataRow = ({ colSpan }: { colSpan: number }) => {
@@ -50,7 +52,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const GenericTable = ({ columns, data, loading, onRowClick }: GenericTableProps) => {
+const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId }: GenericTableProps) => {
   const itemsPerPageFromSettings = useSelector((state: ApplicationState) => state.user.itemsPerPage)
   const [rowsPerPage, setRowsPerPage] = useState(itemsPerPageFromSettings)
   const [currentPage, setCurrentPage] = useState(1)
@@ -92,14 +94,10 @@ const GenericTable = ({ columns, data, loading, onRowClick }: GenericTableProps)
                           setRowsPerPage(ROWS_PER_PAGE_OPTIONS[index + 1])
                         }
                       }}>
-                        <RowsPerPageIcon
-
-
-                        />
+                        <RowsPerPageIcon />
                       </IconButton>
                     </StyledBadge>
                   </Tooltip>
-
                 </Stack >
                 <Pagination color="primary" count={Math.ceil(rows.length / rowsPerPage)} page={currentPage} onChange={(e, v) => setCurrentPage(v)} />
                 <div></div>
@@ -115,12 +113,7 @@ const GenericTable = ({ columns, data, loading, onRowClick }: GenericTableProps)
                 <TableRow {...headerGroup.getHeaderGroupProps()} key={`table-head-keyz-${i}`}>
                   {
                     headerGroup.headers.map(column => (
-                      <TableCell {...column.getHeaderProps()}
-                        // align={column.id === '99' ? 'right' : 'left'}
-                        sx={{
-                          fontWeight: 'bold',
-                        }}
-                      >
+                      <TableCell {...column.getHeaderProps()} sx={{ fontWeight: 'bold' }}>
                         <Stack direction="row" justifyContent={column.id === '99' ? 'end' : 'start'} {...column.getSortByToggleProps()}>
                           {column.render('Header')}
                           {column.isSorted
@@ -151,7 +144,7 @@ const GenericTable = ({ columns, data, loading, onRowClick }: GenericTableProps)
         </TableHead>
 
         <TableBody {...getTableBodyProps()}>
-          {loading
+          {(loading && !rows.length)
             ? <LoadingDataRow colSpan={columns.length} />
             : !rows.length
               ? <EmptyRow colSpan={columns.length} />
@@ -166,11 +159,10 @@ const GenericTable = ({ columns, data, loading, onRowClick }: GenericTableProps)
                       if (onRowClick)
                         onRowClick(row)
                     }}
-                    style={{ cursor: onRowClick ? 'pointer' : '' }}
+                    style={{ cursor: onRowClick ? 'pointer' : '', opacity: (loading && lastUpdatedId === row.id) ? '.5' : '' }}
                   >
                     {
                       row.cells.map(cell => {
-
                         return (
                           <TableCell
                             width={100}

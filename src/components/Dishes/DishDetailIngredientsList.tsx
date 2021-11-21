@@ -1,10 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CellProps, Column, Row } from 'react-table'
-import { IconButton, Stack, TextField, Typography } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Check'
-import RemoveIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
+import { Typography } from '@mui/material'
 import { ApplicationState } from 'store'
 import { deleteIngredientInADishRequest, updateIngredientInADishRequest } from 'store/dishes/actions'
 import { IngredientInADish, IngredientInaDishDto } from 'utils/interfaces/ingredient-ina-dish.interface'
@@ -13,6 +10,8 @@ import GenericTable from 'components/genericComponents/GenericTable/GenericTable
 import Token from 'components/Token'
 import TextFilter from 'components/genericComponents/Filters/TextFilter'
 import { v } from 'utils/helper'
+import CellTextField from 'components/genericComponents/CellTextField/CellTextField'
+import CellMore from 'components/genericComponents/CellMore/CellMore'
 
 
 const DishDetailIngredientsList = () => {
@@ -20,12 +19,26 @@ const DishDetailIngredientsList = () => {
   const { ingredients, loading } = useSelector((state: ApplicationState) => state.dishes)
   const [currentEdit, setCurrentEdit] = useState<null | IngredientInADish>(null)
   const [ingredientRemoveDialogOpen, setIngredientRemoveDialogOpen] = useState(false)
+  const [lastUpdatedId, setLastUpdatedId] = useState<string | undefined>()
 
   const handleIngredientUpdate = (ingredient: IngredientInADish, newIngredient: IngredientInaDishDto) => {
     if (ingredient.margin === newIngredient.margin && ingredient.part === newIngredient.part)
       return
 
     dispatch(updateIngredientInADishRequest(newIngredient))
+  }
+
+  const handleUpdate = (row: Row<IngredientInADish>) => {
+    setCurrentEdit(null)
+    setLastUpdatedId(row.id)
+    const newIngredient = {
+      id: row.original.id,
+      dish: row.original.dish,
+      ingredient: row.original.ingredient.id,
+      margin: row.state.currentEditMargin as number || row.original.margin,
+      part: row.state.currentEditPart as number || row.original.part,
+    }
+    handleIngredientUpdate(row.original, newIngredient)
   }
 
   const handleIngredientRemove = () => {
@@ -68,14 +81,12 @@ const DishDetailIngredientsList = () => {
       Cell: ({ row }: CellProps<IngredientInADish>) => {
         if (currentEdit?.id === row.original.id) {
           return (
-            <TextField
-              size="small"
-              type="number"
-              sx={{ minWidth: 150 }}
+            <CellTextField
               value={v(row.state.currentEditMargin, row.original.margin)}
               onChange={event => {
                 row.setState((state: any) => ({ ...state, currentEditMargin: event.target.value }))
               }}
+              handleUpdate={() => handleUpdate(row)}
             />
           )
         }
@@ -92,14 +103,12 @@ const DishDetailIngredientsList = () => {
       Cell: ({ row }: CellProps<IngredientInADish>) => {
         if (currentEdit?.id === row.original.id) {
           return (
-            <TextField
-              size="small"
-              type="number"
-              sx={{ minWidth: 150 }}
+            <CellTextField
               value={v(row.state.currentEditPart, row.original.part)}
               onChange={event => {
                 row.setState((state: any) => ({ ...state, currentEditPart: event.target.value }))
               }}
+              handleUpdate={() => handleUpdate(row)}
             />
           )
         }
@@ -113,55 +122,24 @@ const DishDetailIngredientsList = () => {
       id: '99',
       Header: <Token value="more" />,
       Cell: ({ row }: CellProps<IngredientInADish>) => {
-        return (
-          <Stack direction="row" justifyContent="end">
-            {
-              currentEdit?.id === row.original.id
-                ? (
-                  <IconButton
-                    size="small"
-                    onClick={() => {
-                      setCurrentEdit(null)
-                      const newIngredient = {
-                        id: row.original.id,
-                        dish: row.original.dish,
-                        ingredient: row.original.ingredient.id,
-                        margin: row.state.currentEditMargin as number || row.original.margin,
-                        part: row.state.currentEditPart as number || row.original.part,
-                      }
-                      handleIngredientUpdate(row.original, newIngredient)
-                    }}
-                  >
-                    <CloseIcon color="success" />
-                  </IconButton>
-                )
-                : (
-                  <IconButton
-                    size="small"
-                    onClick={() => setCurrentEdit(row.original)}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                )
-            }
-            <IconButton
-              size="small"
-              onClick={() => {
-                setCurrentEdit(row.original)
-                setIngredientRemoveDialogOpen(true)
-              }}
-            >
-              <RemoveIcon />
-            </IconButton>
-          </Stack>
-        )
+        return <CellMore canEdit canRemove
+          handleUpdate={() => handleUpdate(row)}
+          handleClose={() => setCurrentEdit(null)}
+          handleEdit={() => setCurrentEdit(row.original)}
+          handleRemove={() => {
+            setCurrentEdit(row.original)
+            setIngredientRemoveDialogOpen(true)
+          }}
+          editMode={currentEdit?.id === row.original.id}
+          loading={loading}
+        />
       },
     }
-  ], [currentEdit]);
+  ], [currentEdit, loading]);
 
   return (
     <>
-      <GenericTable columns={columns} data={ingredients} loading={loading} />
+      <GenericTable columns={columns} data={ingredients} loading={loading} lastUpdatedId={lastUpdatedId} />
       {currentEdit && <DialogRemove open={ingredientRemoveDialogOpen} handleRemove={handleIngredientRemove} onClose={onCloseIngredientRemove} elementName={currentEdit.ingredient.name} />}
     </>
   )

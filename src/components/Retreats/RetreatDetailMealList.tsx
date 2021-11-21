@@ -2,13 +2,9 @@ import React, { useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CellProps, Column, Row } from 'react-table'
 import moment, { Moment } from 'moment';
-import { IconButton, Stack, TextField, Typography } from '@mui/material'
-import { DesktopDatePicker, MobileDatePicker, LocalizationProvider } from '@mui/lab';
+import { TextField, Typography } from '@mui/material'
+import { DesktopDatePicker, LocalizationProvider } from '@mui/lab';
 import AdapterMoment from '@mui/lab/AdapterMoment';
-import CloseIcon from '@mui/icons-material/Check'
-import RemoveIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
-import NewTabIcon from '@mui/icons-material/OpenInNew'
 import { ApplicationState } from 'store'
 import { removeMealRequest, updateMealRequest } from 'store/retreats/actions'
 import { MealInaRetreat, MealInaRetreatDto } from 'utils/interfaces/meal-ina-retreat.interface'
@@ -19,12 +15,15 @@ import MealName from 'components/Meals/MealName'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
 import TextFilter from 'components/genericComponents/Filters/TextFilter';
 import { v } from 'utils/helper';
+import CellTextField from 'components/genericComponents/CellTextField/CellTextField'
+import CellMore from 'components/genericComponents/CellMore/CellMore'
 
 const RetreatDetailMealList = () => {
   const dispatch = useDispatch()
   const { meals, loading } = useSelector((state: ApplicationState) => state.retreats)
   const [currentEdit, setCurrentEdit] = useState<null | MealInaRetreat>(null)
   const [mealRemoveDialogOpen, setMealRemoveDialogOpen] = useState(false)
+  const [lastUpdatedId, setLastUpdatedId] = useState<string | undefined>()
 
   const handleMealRemove = () => {
     if (!currentEdit)
@@ -44,6 +43,21 @@ const RetreatDetailMealList = () => {
       return
 
     dispatch(updateMealRequest(newMeal))
+  }
+
+  const handleUpdate = (row: Row<MealInaRetreat>) => {
+    setCurrentEdit(null)
+    setLastUpdatedId(row.id)
+    const newMeal = {
+      id: row.original.id,
+      meal: row.original.meal.id,
+      retreat: row.original.retreat,
+      servings: row.state.currentEditServings as number || row.original.servings,
+      date: row.state.currentEditDate
+        ? (row.state.currentEditDate as Moment).format(MOMENT_DATE_SAVE_FORMAT)
+        : row.original.date
+    }
+    handleMealUpdate(row.original, newMeal)
   }
 
   const columns: Column<MealInaRetreat>[] = useMemo(() => [
@@ -73,14 +87,12 @@ const RetreatDetailMealList = () => {
       Cell: ({ row }: CellProps<MealInaRetreat>) => {
         if (currentEdit?.id === row.original.id) {
           return (
-            <TextField
-              size="small"
-              type="number"
-              sx={{ minWidth: 150 }}
+            <CellTextField number
               value={v(row.state.currentEditServings, row.original.servings)}
               onChange={event => {
                 row.setState((state: any) => ({ ...state, currentEditServings: event.target.value }))
               }}
+              handleUpdate={() => handleUpdate(row)}
             />
           )
         }
@@ -131,66 +143,29 @@ const RetreatDetailMealList = () => {
       Header: <Token value="more" />,
       Cell: ({ row }: CellProps<MealInaRetreat>) => {
         return (
-          <Stack direction="row" justifyContent="end">
-            {
-              currentEdit?.id === row.original.id
-                ? (
-                  <IconButton
-                    size="small"
-                    onClick={() => {
-                      setCurrentEdit(null)
-                      const newMeal = {
-                        id: row.original.id,
-                        meal: row.original.meal.id,
-                        retreat: row.original.retreat,
-                        servings: row.state.currentEditServings as number || row.original.servings,
-                        date: row.state.currentEditDate
-                          ? (row.state.currentEditDate as Moment).format(MOMENT_DATE_SAVE_FORMAT)
-                          : row.original.date
-                      }
-                      handleMealUpdate(row.original, newMeal)
-                    }}
-                  >
-                    <CloseIcon color="success" />
-                  </IconButton>
-                )
-                : (
-                  <IconButton
-                    size="small"
-                    onClick={() => setCurrentEdit(row.original)}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                )
-            }
-            <IconButton
-              size="small"
-              onClick={() => {
-                const id = row.original.meal.id
-                console.log(id)
-                window.open(`/meals/${id}`, '_blank')
-              }}
-            >
-              <NewTabIcon />
-            </IconButton>
-            <IconButton
-              size="small"
-              onClick={() => {
-                setCurrentEdit(row.original)
-                setMealRemoveDialogOpen(true)
-              }}
-            >
-              <RemoveIcon />
-            </IconButton>
-          </Stack>
+          <CellMore canEdit canOpenNewWindow canRemove
+            handleUpdate={() => handleUpdate(row)}
+            handleClose={() => setCurrentEdit(null)}
+            handleEdit={() => setCurrentEdit(row.original)}
+            handleRemove={() => {
+              setCurrentEdit(row.original)
+              setMealRemoveDialogOpen(true)
+            }}
+            handleOpenNewWindow={() => {
+              const id = row.original.meal.id
+              window.open(`/meals/${id}`, '_blank')
+            }}
+            editMode={currentEdit?.id === row.original.id}
+            loading={loading}
+          />
         )
       }
     }
-  ], [currentEdit])
+  ], [currentEdit, loading])
 
   return (
     <>
-      <GenericTable columns={columns} data={meals} loading={loading} />
+      <GenericTable columns={columns} data={meals} loading={loading} lastUpdatedId={lastUpdatedId} />
       {currentEdit && <DialogRemove
         open={mealRemoveDialogOpen}
         handleRemove={handleMealRemove}
