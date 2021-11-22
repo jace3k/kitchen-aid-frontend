@@ -1,23 +1,27 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Column, useTable, Row, useRowState, useSortBy, useFilters } from 'react-table'
-import { CircularProgress, Paper, TableBody, TableCell, TableContainer, TableHead, TableRow, Table, Stack, Pagination, IconButton, Badge, styled, Tooltip, Skeleton, Typography } from '@mui/material'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { Column, useTable, Row, useRowState, useSortBy, useFilters, useGroupBy } from 'react-table'
+import { CircularProgress, Paper, TableBody, TableCell, TableContainer, TableHead, TableRow, Table, Stack, Pagination, IconButton, Badge, styled, Tooltip, Skeleton, Typography, Collapse } from '@mui/material'
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown'
 import ArrowDropUp from '@mui/icons-material/ArrowDropUp'
 import FilterIcon from '@mui/icons-material/FilterAlt'
 import RowsPerPageIcon from '@mui/icons-material/ListAlt'
+import GroupByDateButton from '@mui/icons-material/DateRangeOutlined'
 import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNewTwoTone'
 import { ApplicationState } from 'store'
 import { ROWS_PER_PAGE_OPTIONS } from 'utils/constants'
 import Token from 'components/Token'
-import { typography } from '@mui/system'
+import GenericRow from './GenericRow'
+import GenericRowGroup from './GenericRowGroup'
+import { setGroupByView } from 'store/user/actions'
 
 interface GenericTableProps {
-  columns: Column<any>[],
-  data: any[],
-  loading: boolean,
-  onRowClick?: (row: Row<any>) => void,
-  lastUpdatedId?: string,
+  columns: Column<any>[]
+  data: any[]
+  loading: boolean
+  onRowClick?: (row: Row<any>) => void
+  lastUpdatedId?: string
+  hasGroupBy?: string
 }
 
 const LoadingDataRow = ({ colSpan }: { colSpan: number }) => {
@@ -52,11 +56,16 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId }: GenericTableProps) => {
+const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId, hasGroupBy }: GenericTableProps) => {
+  const dispatch = useDispatch()
   const itemsPerPageFromSettings = useSelector((state: ApplicationState) => state.user.itemsPerPage)
+  const groupedByViews = useSelector((state: ApplicationState) => state.user.groupByViews)
   const [rowsPerPage, setRowsPerPage] = useState(itemsPerPageFromSettings)
   const [currentPage, setCurrentPage] = useState(1)
   const [isFilterRowOn, setIsFilterRowOn] = useState(false)
+
+  const isGroupByViewFromStore = groupedByViews.find(x => x === location.pathname)
+  const initialState = { groupBy: (isGroupByViewFromStore && hasGroupBy) ? [hasGroupBy] : [] }
 
   const {
     getTableProps,
@@ -64,7 +73,16 @@ const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId }: Gen
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({ columns, data }, useFilters, useSortBy, useRowState)
+    toggleGroupBy,
+  } = useTable({ columns, data, initialState }, useFilters, useRowState, useGroupBy, useSortBy)
+
+
+  useEffect(() => {
+    if (rows.some(x => x.isGrouped))
+      console.log('GRUPPED')
+  }, [rows])
+
+  const isGroupByView = rows.some(x => x.isGrouped)
 
   return (
     <TableContainer component={Paper} variant="elevation">
@@ -81,10 +99,21 @@ const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId }: Gen
                       </IconButton>
                     </StyledBadge>
                   </Tooltip>
+                  {hasGroupBy && (
+                    <Tooltip placement="top" title={<Token value="toggleGroupByView" />}>
+                      <StyledBadge badgeContent={isGroupByView ? "ON" : "OFF"} color={isGroupByView ? "success" : "primary"}>
+                        <IconButton size="small" onClick={() => {
+                          dispatch(setGroupByView(location.pathname, !isGroupByView))
+                          toggleGroupBy(hasGroupBy, !isGroupByView)
+                        }}>
+                          <GroupByDateButton />
+                        </IconButton>
+                      </StyledBadge>
+                    </Tooltip>
+                  )}
                   <Tooltip placement="top" title={<Token value="changeRowsPerPage" />}>
                     <StyledBadge badgeContent={rowsPerPage} color="primary" max={100}>
                       <IconButton size="small" onClick={() => {
-                        // change rows per page
                         const index = ROWS_PER_PAGE_OPTIONS.findIndex(v => v === rowsPerPage)
 
                         if (index === ROWS_PER_PAGE_OPTIONS.length - 1) {
@@ -113,8 +142,12 @@ const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId }: Gen
                 <TableRow {...headerGroup.getHeaderGroupProps()} key={`table-head-keyz-${i}`}>
                   {
                     headerGroup.headers.map(column => (
-                      <TableCell {...column.getHeaderProps()} sx={{ fontWeight: 'bold' }}>
-                        <Stack direction="row" justifyContent={column.id === '99' ? 'end' : 'start'} {...column.getSortByToggleProps()}>
+                      <TableCell {...column.getHeaderProps()} sx={{ fontWeight: 'bold', minWidth: '100px' }}>
+                        <Stack
+                          direction="row"
+                          justifyContent={column.id === '99' ? 'end' : 'start'}
+                          {...(rows.some(x => x.isGrouped) ? {} : column.getSortByToggleProps())}
+                        >
                           {column.render('Header')}
                           {column.isSorted
                             ? column.isSortedDesc
@@ -150,38 +183,33 @@ const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId }: Gen
               ? <EmptyRow colSpan={columns.length} />
               : rows.slice((currentPage - 1) * rowsPerPage, (currentPage - 1) * rowsPerPage + rowsPerPage).map(row => {
                 prepareRow(row)
-
-                return (
-                  <TableRow
-                    {...row.getRowProps()}
-                    hover
-                    onClick={() => {
-                      if (onRowClick)
-                        onRowClick(row)
-                    }}
-                    style={{ cursor: onRowClick ? 'pointer' : '', opacity: (loading && lastUpdatedId === row.id) ? '.5' : '' }}
-                  >
-                    {
-                      row.cells.map(cell => {
-                        return (
-                          <TableCell
-                            width={100}
-                            {...cell.getCellProps()}
-                            align={cell.column.id === '99' ? 'right' : 'left'}
-                          >
-                            {cell.render('Cell')}
-                          </TableCell>
-                        )
-                      })
-                    }
-                  </TableRow>
-                )
+                return row.isGrouped && hasGroupBy
+                  ? (
+                    <GenericRowGroup
+                      key={`key-${row.id}`}
+                      row={row}
+                      columns={columns}
+                      prepareRow={prepareRow}
+                      getTableBodyProps={getTableBodyProps}
+                      loading={loading}
+                      lastUpdatedId={lastUpdatedId}
+                      onRowClick={onRowClick}
+                    />
+                  )
+                  : (
+                    <GenericRow
+                      key={`key-${row.id}`}
+                      row={row}
+                      loading={loading}
+                      lastUpdatedId={lastUpdatedId}
+                      onRowClick={onRowClick}
+                    />
+                  )
               })
           }
         </TableBody>
-
       </Table>
-    </TableContainer>
+    </TableContainer >
   )
 }
 

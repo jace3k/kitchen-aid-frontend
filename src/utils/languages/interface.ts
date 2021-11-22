@@ -100,4 +100,5 @@ export interface ITranslations {
   onOffFilters: string,
   changeRowsPerPage: string,
   all: string,
+  toggleGroupByView: string,
 }

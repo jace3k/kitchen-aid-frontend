@@ -102,4 +102,5 @@ export const en: ITranslations = {
   onOffFilters: 'On/Off filters',
   changeRowsPerPage: 'Change rows per page',
   all: 'All',
+  toggleGroupByView: 'Toggle group view',
 }

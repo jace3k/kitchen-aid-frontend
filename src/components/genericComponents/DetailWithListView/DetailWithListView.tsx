@@ -46,6 +46,7 @@ const StyledContainer = styled(Container)<ContainerProps & { wide: boolean | und
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'stretch',
+    padding: 0,
     [theme.breakpoints.up('md')]: {
       flexDirection: 'row',
     }
@@ -162,7 +163,7 @@ const DetailWithListView = ({
         </CardContent>
       </DetailInfoCard>
       <ItemsListCard>
-        <CardContent>
+        <CardContent sx={{ padding: 0 }}>
           {generateItemsList.length > 1 ? (
             <MultiListView generateItemsList={generateItemsList} />
           ) : (

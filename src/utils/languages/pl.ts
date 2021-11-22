@@ -102,4 +102,5 @@ export const pl: ITranslations = {
   onOffFilters: 'Włącz/Wyłącz pasek filtrów',
   changeRowsPerPage: 'Zmień ilość elementów na stronie',
   all: 'Wszystko',
+  toggleGroupByView: 'Grupuj według dat',
 }

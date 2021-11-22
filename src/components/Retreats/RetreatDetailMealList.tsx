@@ -165,7 +165,7 @@ const RetreatDetailMealList = () => {
 
   return (
     <>
-      <GenericTable columns={columns} data={meals} loading={loading} lastUpdatedId={lastUpdatedId} />
+      <GenericTable columns={columns} data={meals} loading={loading} lastUpdatedId={lastUpdatedId} hasGroupBy={'3'} />
       {currentEdit && <DialogRemove
         open={mealRemoveDialogOpen}
         handleRemove={handleMealRemove}

@@ -11,6 +11,8 @@ const initialState: UserState = {
   itemsPerPage: 10,
   redirect: null,
   loginLocal: false,
+  groupByViews: [],
+  expandedStates: [],
 }
 
 const reducer: Reducer<UserState, UserStateActionTypes> = (state = initialState, action) => {
@@ -61,6 +63,13 @@ const reducer: Reducer<UserState, UserStateActionTypes> = (state = initialState,
       return {
         ...state,
         itemsPerPage: action.itemsPerPage,
+      }
+    case UserActionTypes.SET_GROUP_BY_VIEW:
+      return {
+        ...state,
+        groupByViews: action.set
+          ? state.groupByViews.concat(action.groupKey)
+          : state.groupByViews.filter(x => x !== action.groupKey)
       }
     default:
       return state

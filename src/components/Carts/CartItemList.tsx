@@ -193,7 +193,7 @@ const CartItemList = () => {
 
   return (
     <>
-      <GenericTable columns={columns} data={cartItems} loading={loading} lastUpdatedId={lastUpdatedId} />
+      <GenericTable columns={columns} data={cartItems} loading={loading} lastUpdatedId={lastUpdatedId} hasGroupBy={'3'} />
       {currentEdit && <DialogRemove open={removeDialogOpen} handleRemove={handleRemove} onClose={onCloseRemove} elementName={currentEdit.ingredient.name} />}
     </>
   )

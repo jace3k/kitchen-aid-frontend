@@ -29,6 +29,9 @@ export enum UserActionTypes {
   TOGGLE_DARK_MODE = '@@user/TOGGLE_DARK_MODE',
   CHANGE_LANGUAGE = '@@user/CHANGE_LANGUAGE',
   SET_ITEMS_PER_PAGE = '@@user/SET_ITEMS_PER_PAGE',
+
+  SET_GROUP_BY_VIEW = '@@user/SET_GROUP_BY_VIEW',
+  SET_EXPANDED_STATE = '@@user/SET_EXPANDED_STATE',
 }
 
 export interface LoginRequestType {
@@ -74,12 +77,18 @@ export type SetItemsPerPageType = {
   itemsPerPage: number,
 }
 
+export type Table_SetGroupByViewType = {
+  type: UserActionTypes.SET_GROUP_BY_VIEW,
+  groupKey: string,
+  set: boolean,
+}
 
 export type UserStateActionTypes =
   LoginType
   | ToggleDarkModeType
   | ChangeLanguageType
   | SetItemsPerPageType
+  | Table_SetGroupByViewType
 
 export interface UserState {
   readonly loading: boolean,
@@ -91,4 +100,6 @@ export interface UserState {
   readonly itemsPerPage: number,
   readonly redirect: string | null,
   readonly loginLocal: boolean,
+  readonly groupByViews: string[],
+  readonly expandedStates: string[],
 }
