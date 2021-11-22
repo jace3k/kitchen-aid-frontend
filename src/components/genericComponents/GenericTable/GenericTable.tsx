@@ -94,7 +94,7 @@ const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId, hasGr
                 <Stack direction="row" spacing={3}>
                   <Tooltip placement="top" title={<Token value="onOffFilters" />}>
                     <StyledBadge badgeContent={isFilterRowOn ? "ON" : "OFF"} color={isFilterRowOn ? "success" : "primary"}>
-                      <IconButton size="small" onClick={() => setIsFilterRowOn(!isFilterRowOn)}>
+                      <IconButton disabled={loading} size="small" onClick={() => setIsFilterRowOn(!isFilterRowOn)}>
                         <FilterIcon />
                       </IconButton>
                     </StyledBadge>
@@ -102,7 +102,7 @@ const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId, hasGr
                   {hasGroupBy && (
                     <Tooltip placement="top" title={<Token value="toggleGroupByView" />}>
                       <StyledBadge badgeContent={isGroupByView ? "ON" : "OFF"} color={isGroupByView ? "success" : "primary"}>
-                        <IconButton size="small" onClick={() => {
+                        <IconButton disabled={loading} size="small" onClick={() => {
                           dispatch(setGroupByView(location.pathname, !isGroupByView))
                           toggleGroupBy(hasGroupBy, !isGroupByView)
                         }}>
@@ -113,7 +113,7 @@ const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId, hasGr
                   )}
                   <Tooltip placement="top" title={<Token value="changeRowsPerPage" />}>
                     <StyledBadge badgeContent={rowsPerPage} color="primary" max={100}>
-                      <IconButton size="small" onClick={() => {
+                      <IconButton disabled={loading} size="small" onClick={() => {
                         const index = ROWS_PER_PAGE_OPTIONS.findIndex(v => v === rowsPerPage)
 
                         if (index === ROWS_PER_PAGE_OPTIONS.length - 1) {

@@ -4,6 +4,8 @@ import { TableRow, TableCell, Collapse, Table, TableBody, Paper, Typography, Sta
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown'
 import ArrowDropUp from '@mui/icons-material/ArrowDropUp'
 import GenericRow from './GenericRow'
+import moment from 'moment'
+import { MOMENT_DATE_DISPLAY_FORMAT } from 'utils/constants'
 
 interface GenericRowGroup {
   row: Row
@@ -31,8 +33,9 @@ const GenericRowGroup: React.FC<GenericRowGroup> = ({ row, columns, prepareRow, 
           <Stack justifyContent="start" direction="row" alignItems="center" height={40} spacing={1}>
             {expanded ? <ArrowDropDown /> : <ArrowDropUp />}
             <div>
-              <Typography variant="h6">
-                {row.groupByVal} ({row.subRows.length})
+              <Typography variant="overline" sx={{ fontSize: '.95rem' }}>
+                {/* Change required here when more group by columns will be implemented */}
+                {moment(row.groupByVal).format(MOMENT_DATE_DISPLAY_FORMAT)} ({row.subRows.length})
               </Typography>
             </div>
           </Stack>
@@ -52,22 +55,6 @@ const GenericRowGroup: React.FC<GenericRowGroup> = ({ row, columns, prepareRow, 
                     onRowClick={onRowClick}
                   />
                 )
-                // return (
-                //   <TableRow key={`tableSubrow-${row.id}-${i}`}>
-                //     {subRow.cells.map(subRowCell => {
-
-                //       return (
-                //         <TableCell
-                //           width={100}
-                //           {...subRowCell.getCellProps()}
-                //           align={subRowCell.column.id === '99' ? 'right' : 'left'}
-                //         >
-                //           {subRowCell.render('Cell')}
-                //         </TableCell>
-                //       )
-                //     })}
-                //   </TableRow>
-                // )
               })}
             </TableBody>
           </Table>
