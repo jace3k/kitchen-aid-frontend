@@ -11,7 +11,7 @@ import { MealInaRetreatDto } from 'utils/interfaces/meal-ina-retreat.interface'
 import DetailWithListView from 'components/genericComponents/DetailWithListView/DetailWithListView'
 import Token from 'components/Token'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
-import AddToListModal from './AddToListModal'
+import AddMealModal from './AddMealModal'
 import RetreatDetailMealList from './RetreatDetailMealList'
 import AddCartModal from './AddCartModal'
 import RetreatDetailCartList from './RetreatDetailCartList'
@@ -160,7 +160,7 @@ const RetreatDetail: React.FC<RouteComponentProps<{ id: string, card: string }>>
       />
       {retreatDetail &&
         <>
-          <AddToListModal open={addToListModalOpen} retreatId={retreatDetail.id} onClose={onCloseAddToListModal} onCreateMeal={onCreateMeal} />
+          <AddMealModal open={addToListModalOpen} retreatId={retreatDetail.id} onClose={onCloseAddToListModal} onCreateMeal={onCreateMeal} />
           <AddCartModal open={addCartModalOpen} retreatId={retreatDetail.id} onClose={onCloseAddCartModal} onCreateCart={onCreateCart} />
           <DialogRemove
             open={dialogRemoveOpen}

@@ -28,32 +28,33 @@ const Meals: React.FC<RouteComponentProps> = ({ history }) => {
   return (
     <Container style={{ minWidth: 300 }}>
       <h1><Token value="meals" /></h1>
-      <MealsTable onRowClick={onRowClick} />
       <div style={{ textAlign: 'center', margin: 10 }}>
         <ButtonGroup orientation={isDesktop ? 'horizontal' : 'vertical'} disabled={mealsLoading}>
           <Button
-            variant='contained'
-            style={{ background: MEAL_TYPES_COLORS.BR, width: 200 }}
+            variant='outlined'
+            sx={{ width: 200 }}
             onClick={() => handleCreateMeal("BR")}
           >
             <Token value="createBreakfast" />
           </Button>
           <Button
-            variant='contained'
-            style={{ background: MEAL_TYPES_COLORS.LU, width: 200 }}
+            variant='outlined'
+            sx={{ width: 200 }}
             onClick={() => handleCreateMeal("LU")}
           >
             <Token value="createLunch" />
           </Button>
           <Button
-            variant='contained'
-            style={{ background: MEAL_TYPES_COLORS.FE, width: 200 }}
+            variant='outlined'
+            sx={{ width: 200 }}
             onClick={() => handleCreateMeal("FE")}
           >
             <Token value="createFeast" />
           </Button>
         </ButtonGroup>
       </div>
+      <MealsTable onRowClick={onRowClick} />
+
     </Container>
   )
 }

@@ -11,7 +11,7 @@ import MealName from 'components/Meals/MealName'
 import Token from 'components/Token'
 
 
-interface AddToListModalProps {
+interface AddMealModalProps {
   open: boolean
   retreatId: number
   onClose: () => void
@@ -22,7 +22,7 @@ const getCurrentDate = () => {
   return moment()
 }
 
-const AddToListModal = ({ open, onClose, onCreateMeal, retreatId }: AddToListModalProps) => {
+const AddMealModal = ({ open, onClose, onCreateMeal, retreatId }: AddMealModalProps) => {
   const mealsList = useSelector((state: ApplicationState) => state.meals.meals)
   const mealsLoading = useSelector((state: ApplicationState) => state.meals.loading)
 
@@ -97,7 +97,7 @@ const AddToListModal = ({ open, onClose, onCreateMeal, retreatId }: AddToListMod
             servings: parseInt(selectedServings),
           })}
           color="primary"
-          disabled={selectedMeal === ''}
+          disabled={selectedMeal === '' || selectedServings === ''}
         >
           <Token value="add" />
         </Button>
@@ -106,4 +106,4 @@ const AddToListModal = ({ open, onClose, onCreateMeal, retreatId }: AddToListMod
   )
 }
 
-export default AddToListModal
+export default AddMealModal

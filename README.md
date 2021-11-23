@@ -46,8 +46,6 @@ ___
 * ~Log events~
 * ~Code optimization (store refactor (only one error handler), ~code duplication~)~
 
-
-####### ~Future~ Now
 * ~Tables - sorting & filtering~
 * ~Migration to MUI v5~
 * ~Cool datepicker (only in MUI v5)~
@@ -60,5 +58,4 @@ ___
   * ~Cart Detail View (details, table with ingredients)~
 * ~Retreat's meals - grouping by date view (or table group hook)~
 * ~Highlight currently updated row/do not show loading screen when updating~
-* Admin page
-* Error/Notification optimization (detailed messages/setting?)
+* Admin page (to be discussed)
