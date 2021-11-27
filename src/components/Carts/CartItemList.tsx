@@ -103,7 +103,9 @@ const CartItemList = () => {
           )
         }
         return (
-          row.original.amount
+          <Typography sx={{ minWidth: 150 }}>
+            {row.original.amount}
+          </Typography>
         )
       },
       Filter: TextFilter
@@ -134,7 +136,7 @@ const CartItemList = () => {
           )
         }
         return (
-          <Typography variant="body2" sx={{ minWidth: 100 }}>
+          <Typography sx={{ minWidth: 100 }}>
             {moment(row.original.due_date).format(MOMENT_DATE_DISPLAY_FORMAT)}
           </Typography>
         )

@@ -63,7 +63,7 @@ function* deleteCart({ cart }: DeleteCartRequestType) {
     const response: AxiosResponse = yield call(CartsApi.deleteCart, cart.id)
     yield put(deleteCartSuccess(cart.id, 'Cart deleted successfully!'))
     // Retreat Detail list of carts have to be refreshed
-    yield put(fetchRetreatDetailRequest(cart.retreat))
+    yield put(fetchRetreatDetailRequest(cart.retreat.id))
   }
   catch (err: any) {
     yield put(handleError('Failed to delete cart', err))

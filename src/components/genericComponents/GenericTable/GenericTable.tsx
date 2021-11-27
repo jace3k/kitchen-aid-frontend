@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Column, useTable, Row, useRowState, useSortBy, useFilters, useGroupBy } from 'react-table'
-import { CircularProgress, Paper, TableBody, TableCell, TableContainer, TableHead, TableRow, Table, Stack, Pagination, IconButton, Badge, styled, Tooltip } from '@mui/material'
+import { CircularProgress, Paper, TableBody, TableCell, TableContainer, TableHead, TableRow, Table, Stack, Pagination, IconButton, Badge, styled, Tooltip, useMediaQuery } from '@mui/material'
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown'
 import ArrowDropUp from '@mui/icons-material/ArrowDropUp'
 import FilterIcon from '@mui/icons-material/FilterAlt'
@@ -57,6 +57,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId, hasGroupBy }: GenericTableProps) => {
+  const isDesktop = useMediaQuery('(min-width:960px)')
   const dispatch = useDispatch()
   const itemsPerPageFromSettings = useSelector((state: ApplicationState) => state.user.itemsPerPage)
   const groupedByViews = useSelector((state: ApplicationState) => state.user.groupByViews)
@@ -128,8 +129,15 @@ const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId, hasGr
                     </StyledBadge>
                   </Tooltip>
                 </Stack >
-                <Pagination color="primary" count={Math.ceil(rows.length / rowsPerPage)} page={currentPage} onChange={(e, v) => setCurrentPage(v)} />
-                <div></div>
+                <Pagination
+                  color="primary"
+                  count={Math.ceil(rows.length / rowsPerPage)}
+                  page={currentPage}
+                  onChange={(e, v) => setCurrentPage(v)}
+                  sx={{ marginLeft: 3 }}
+                />
+
+                {isDesktop && <div></div>}
               </Stack>
             </TableCell>
           </TableRow>

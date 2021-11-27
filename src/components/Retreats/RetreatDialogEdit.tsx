@@ -5,12 +5,12 @@ import { createRetreatRequest } from 'store/retreats/actions'
 import Token from 'components/Token'
 
 
-interface RetreatDialogEdit {
+interface RetreatDialogEditProps {
   open: boolean,
   onClose: () => void,
 }
 
-const RetreatDialogEdit: React.FC<RetreatDialogEdit> = ({ open, onClose }) => {
+const RetreatDialogEdit: React.FC<RetreatDialogEditProps> = ({ open, onClose }) => {
   const dispatch = useDispatch()
   const [name, setName] = useState('')
 

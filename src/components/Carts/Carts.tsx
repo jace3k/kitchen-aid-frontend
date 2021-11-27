@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { CellProps, Column, Row } from 'react-table'
-import { Container } from '@mui/material'
+import { Container, Typography } from '@mui/material'
 import { ApplicationState } from 'store'
 import { fetchAllCartsRequest } from 'store/carts/actions'
 import { Cart } from 'utils/interfaces/cart.interface'
@@ -41,26 +41,19 @@ const Carts: React.FC<RouteComponentProps> = ({ history }) => {
       accessor: 'retreat',
       Header: <Token value="retreatName" />,
       sortType: (a: Row<Cart>, b: Row<Cart>) => {
-        const retreatA = retreats.find(x => x.id === a.original.retreat)
-        const retreatB = retreats.find(x => x.id === b.original.retreat)
-        if (retreatA && retreatB) {
-          return retreatA.name.toLowerCase().localeCompare(retreatB.name.toLowerCase())
-        }
-        return 1
+        return a.original.retreat.name.toLowerCase().localeCompare(b.original.retreat.name.toLowerCase())
       },
-      disableSortBy: !retreats.length,
       Cell: ({ row }: CellProps<Cart>) => {
-        const retreat = retreats.find(x => x.id === row.original.retreat)
-        return retreat?.name || ''
+        return (
+          <Typography sx={{ minWidth: 150 }}>
+            {row.original.retreat.name}
+          </Typography>
+        )
       },
       Filter: TextFilter,
-      // TODO: get retreats from backend in one carts fetch
-      // filter: (rows: Row<Cart>[], columnIds: String[], filterValue: string) => {
-      //   const retreatsMap = {}
-
-      //   return rows.filter(row => )
-      // },
-      disableFilters: true
+      filter: (rows: Row<Cart>[], columnIds: String[], filterValue: string) => {
+        return rows.filter(row => row.original.retreat.name.toLowerCase().includes(filterValue.toLowerCase()))
+      },
     },
   ], [])
 

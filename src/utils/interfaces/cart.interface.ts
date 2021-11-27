@@ -3,7 +3,7 @@ import { Retreat } from "./retreat.interface";
 
 export interface Cart {
   id: number
-  retreat: number
+  retreat: Retreat
 }
 
 export interface CartDto {

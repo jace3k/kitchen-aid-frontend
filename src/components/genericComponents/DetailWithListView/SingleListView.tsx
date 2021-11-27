@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, TableBody, TableRow, TableCell, IconButton, Divider } from '@mui/material'
+import { Table, TableBody, TableRow, TableCell, IconButton, Divider, Fab, Tooltip } from '@mui/material'
 import PlusButton from '@mui/icons-material/Add'
 import { ListItemsInterface } from './list-items.interface'
 import Token from 'components/Token'
@@ -22,18 +22,18 @@ const SingleListView: React.FC<SingleListViewProps> = ({ generateItem }) => {
               <h2><Token value={name} /></h2>
             </TableCell>
             <TableCell>
-              <span onClick={onAddToListClick}>
-                <IconButton size="small" style={{ float: 'right' }}>
+              <Tooltip title={<Token value="add"/>} placement="top" >
+                <Fab onClick={onAddToListClick} size="small" color="primary" sx={{ float: 'right' }}>
                   <PlusButton />
-                </IconButton>
-              </span>
+                </Fab>
+              </Tooltip>
             </TableCell>
           </TableRow>
         </TableBody>
       </Table>
       <Divider />
-      {list()}
-    </div>
+      { list() }
+    </div >
   )
 }
 

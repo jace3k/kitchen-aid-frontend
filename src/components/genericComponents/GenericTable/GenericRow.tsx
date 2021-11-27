@@ -18,7 +18,11 @@ const GenericRow: React.FC<GenericRowProps> = ({ row, loading, lastUpdatedId, on
         if (onRowClick)
           onRowClick(row)
       }}
-      style={{ cursor: onRowClick ? 'pointer' : '', opacity: (loading && lastUpdatedId === row.id) ? '.5' : '' }}
+      sx={{
+        cursor: onRowClick ? 'pointer' : '',
+        opacity: (loading && lastUpdatedId === row.id) ? '.5' : '',
+        height: '47px',
+      }}
     >
       {
         row.cells.map(cell => {

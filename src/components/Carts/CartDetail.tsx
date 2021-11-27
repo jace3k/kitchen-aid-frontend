@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, CircularProgress, Container, Divider } from '@mui/material'
+import { Button, Container, Divider, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Delete'
 
@@ -42,7 +42,7 @@ const CartDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
     if (cartDetail) {
       const cart = {
         id: cartDetail.id,
-        retreat: cartDetail.retreat.id
+        retreat: cartDetail.retreat
       }
       dispatch(deleteCartRequest(cart))
     }
@@ -70,23 +70,14 @@ const CartDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
       </div>
     )
 
-  if (loading && !cartDetail)
-    return (
-      <div style={{ textAlign: 'center' }}>
-        <h2><Token value="loadingData" /></h2>
-        <CircularProgress />
-      </div>
-    )
-
   return (
     <div>
       <Container>
         <div>
-          <h2>
-            <CartName id={cartDetail?.id} />
-            {' '}
-            ({cartDetail?.retreat.name})
-          </h2>
+          {loading
+            ? <h2><Token value="loadingData" /></h2>
+            : <CartName id={cartDetail?.id} isTitle withRetreatName={cartDetail?.retreat.name} />}
+
         </div>
         <Divider style={{ marginBottom: 10 }} />
         <div style={{ margin: 10 }}>

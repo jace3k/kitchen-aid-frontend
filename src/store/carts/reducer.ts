@@ -19,7 +19,6 @@ const reducer: Reducer<CartsState, CartStateActionTypes> = (state = initialState
         loading: true,
         error: null,
         errorMessage: null,
-        carts: [],
       }
     case CartActionTypes.FETCH_ALL_SUCCESS:
       return {
@@ -34,8 +33,8 @@ const reducer: Reducer<CartsState, CartStateActionTypes> = (state = initialState
         ...state,
         loading: true,
         error: null,
-        // cartDetail: null,
-        cartItems: [],
+        cartDetail: null,
+        // cartItems: [],
       }
     case CartActionTypes.FETCH_CART_DETAIL_SUCCESS:
       return {

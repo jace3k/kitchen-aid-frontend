@@ -23,7 +23,7 @@ export const pl: ITranslations = {
   editName: 'Edytuj nazwę',
   addNewRetreat: 'Dodaj nowe wydarzenie',
   create: 'Utwórz',
-  more: 'Więcej',
+  more: 'Więcej opcji',
   logout: 'Wyloguj',
   polish: 'Polski',
   english: 'Angielski',
@@ -103,4 +103,8 @@ export const pl: ITranslations = {
   changeRowsPerPage: 'Zmień ilość elementów na stronie',
   all: 'Wszystko',
   toggleGroupByView: 'Grupuj według dat',
+  BR: 'Śniadanie',
+  LU: 'Lunch',
+  FE: 'Uczta',
+  openNewWindow: 'Otwórz na osobnej karcie',
 }

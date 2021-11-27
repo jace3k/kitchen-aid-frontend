@@ -91,7 +91,11 @@ const DishDetailIngredientsList = () => {
           )
         }
         else {
-          return row.original.margin
+          return (
+            <Typography sx={{ minWidth: 150 }}>
+              {row.original.margin}
+            </Typography>
+          )
         }
       },
       Filter: TextFilter,
@@ -113,7 +117,11 @@ const DishDetailIngredientsList = () => {
           )
         }
         else {
-          return row.original.part
+          return (
+            <Typography sx={{ minWidth: 150 }}>
+              {row.original.part}
+            </Typography>
+          )
         }
       },
       Filter: TextFilter,

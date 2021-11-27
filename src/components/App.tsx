@@ -8,6 +8,7 @@ import { getPalette } from 'utils/palette'
 import storage from 'utils/storage'
 
 
+
 const Navigation = lazy(() => import('./Navigation/Navigation'))
 const NotFound = lazy(() => import('components/NotFound'))
 const Login = lazy(() => import('components/Login/Login'))
@@ -21,6 +22,7 @@ const MealDetail = lazy(() => import('components/Meals/MealDetail'))
 const Notifications = lazy(() => import('components/Notifications/Notifications'))
 const CartDetail = lazy(() => import('./Carts/CartDetail'))
 const Carts = lazy(() => import('./Carts/Carts'))
+const Footer = lazy(() => import('./Footer/Footer'))
 
 
 const App: React.FC = () => {
@@ -61,21 +63,24 @@ const App: React.FC = () => {
       <Router>
         <Route path="/" component={Navigation} />
         <Suspense fallback={<div style={{ textAlign: 'center', marginTop: '40vh' }}><CircularProgress /></div>}>
-          <Switch>
-            <Route exact path="/" component={Retreats} />
-            <Route exact path="/retreats" component={Retreats} />
-            <Route exact path="/retreats/:id" component={RetreatDetail} />
-            <Route exact path="/retreats/:id/:card" component={RetreatDetail} />
-            <Route exact path="/meals" component={Meals} />
-            <Route exact path="/meals/:id" component={MealDetail} />
-            <Route exact path="/dishes" component={Dishes} />
-            <Route exact path="/dishes/:id" component={DishesDetail} />
-            <Route exact path="/ingredients" component={Ingredients} />
-            <Route exact path="/carts" component={Carts} />
-            <Route exact path="/carts/:id" component={CartDetail} />
-            <Route path="/" component={NotFound} />
-          </Switch>
+          <div style={{ flex: '1 1 auto' }}>
+            <Switch>
+              <Route exact path="/" component={Retreats} />
+              <Route exact path="/retreats" component={Retreats} />
+              <Route exact path="/retreats/:id" component={RetreatDetail} />
+              <Route exact path="/retreats/:id/:card" component={RetreatDetail} />
+              <Route exact path="/meals" component={Meals} />
+              <Route exact path="/meals/:id" component={MealDetail} />
+              <Route exact path="/dishes" component={Dishes} />
+              <Route exact path="/dishes/:id" component={DishesDetail} />
+              <Route exact path="/ingredients" component={Ingredients} />
+              <Route exact path="/carts" component={Carts} />
+              <Route exact path="/carts/:id" component={CartDetail} />
+              <Route path="/" component={NotFound} />
+            </Switch>
+          </div>
         </Suspense>
+        <Route path="/" component={Footer} />
       </Router>
     )
   }

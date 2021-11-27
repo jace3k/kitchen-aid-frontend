@@ -1,9 +1,11 @@
 import React, { useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CellProps, Column, Row } from 'react-table'
+import { Typography } from '@mui/material'
 import { ApplicationState } from 'store'
 import { deleteDishInAMealRequest } from 'store/meals/actions'
 import { DishInaMeal } from 'utils/interfaces/dish-ina-meal.interface'
+import * as routes from 'utils/routes'
 import Token from 'components/Token'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
@@ -39,7 +41,11 @@ const MealDetailDishList = () => {
       },
       Header: <Token value="dishNameLabel" />,
       Cell: ({ row }: CellProps<DishInaMeal>) => {
-        return row.original.dish.name
+        return (
+          <Typography sx={{ minWidth: 150 }}>
+            {row.original.dish.name}
+          </Typography>
+        )
       },
       Filter: TextFilter,
       filter: (rows: Row<DishInaMeal>[], columnIds: String[], filterValue: string) => {
@@ -54,7 +60,11 @@ const MealDetailDishList = () => {
       },
       Header: <Token value="size" />,
       Cell: ({ row }: CellProps<DishInaMeal>) => {
-        return row.original.dish.size
+        return (
+          <Typography sx={{ minWidth: 150 }}>
+            {row.original.dish.size}
+          </Typography>
+        )
       },
       Filter: TextFilter,
       filter: (rows: Row<DishInaMeal>[], columnIds: String[], filterValue: string) => {
@@ -69,7 +79,7 @@ const MealDetailDishList = () => {
           <CellMore canOpenNewWindow canRemove
             handleOpenNewWindow={() => {
               const id = row.original.dish.id
-              window.open(`/dishes/${row.original.dish.id}`, '_blank')
+              window.open(`${routes.Dishes}/${id}`, '_blank')
             }}
             handleRemove={() => {
               setCurrentEdit(row.original)

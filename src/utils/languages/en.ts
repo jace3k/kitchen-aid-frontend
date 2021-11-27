@@ -103,4 +103,8 @@ export const en: ITranslations = {
   changeRowsPerPage: 'Change rows per page',
   all: 'All',
   toggleGroupByView: 'Toggle group view',
+  BR: 'Breakfast',
+  LU: 'Lunch',
+  FE: 'Feast',
+  openNewWindow: 'Open in new window',
 }

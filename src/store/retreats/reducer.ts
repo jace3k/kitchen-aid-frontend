@@ -44,7 +44,7 @@ const reducer: Reducer<RetreatsState, RetreatStateActionTypes> = (state = initia
         error: null,
         retreatDetail: action.retreatDetail,
         meals: action.retreatDetail.meal_ina_retreat,
-        carts: action.retreatDetail.cart.map(cartId => ({ id: cartId, retreat: action.retreatDetail.id }))
+        carts: action.retreatDetail.cart.map(cartId => ({ id: cartId, retreat: action.retreatDetail }))
       }
     case RetreatActionTypes.CREATE_RETREAT_REQUEST:
       return {

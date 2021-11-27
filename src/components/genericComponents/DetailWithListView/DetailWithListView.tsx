@@ -130,9 +130,9 @@ const DetailWithListView = ({
                             onChange={(e) => setItemName(e.target.value)}
                           />
                         )
-                        : (
-                          <Typography>{itemName}</Typography>
-                        )}
+                        :
+                        typeof itemName === 'object' ? itemName : <Typography>{itemName}</Typography>
+                      }
                     </TableCell>
                     <TableCell>
                       {editMode ? (

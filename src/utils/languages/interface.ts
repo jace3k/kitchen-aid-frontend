@@ -101,4 +101,8 @@ export interface ITranslations {
   changeRowsPerPage: string,
   all: string,
   toggleGroupByView: string,
+  BR: string,
+  LU: string,
+  FE: string,
+  openNewWindow: string,
 }

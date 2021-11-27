@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react'
-import { Column, Row } from 'react-table'
+import { CellProps, Column, Row } from 'react-table'
 import { useSelector, useDispatch } from 'react-redux'
 import Token from 'components/Token'
 import { ApplicationState } from 'store'
@@ -7,6 +7,7 @@ import { fetchAllDishesRequest } from 'store/dishes/actions'
 import { Dish } from 'utils/interfaces/dish.interface'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
 import TextFilter from 'components/genericComponents/Filters/TextFilter'
+import { Typography } from '@mui/material'
 
 
 interface DishesTableProps {
@@ -26,6 +27,13 @@ const DishesTable = ({ onRowClick }: DishesTableProps) => {
 			id: '1',
 			Header: <Token value="name" />,
 			accessor: 'name',
+			Cell: ({ row }: CellProps<Dish>) => {
+				return (
+					<Typography sx={{ minWidth: 150 }}>
+						{row.original.name}
+					</Typography>
+				)
+			},
 			sortType: (a: Row<Dish>, b: Row<Dish>) => {
 				return a.original.name.toLowerCase().localeCompare(b.original.name.toLowerCase())
 			},
@@ -35,6 +43,13 @@ const DishesTable = ({ onRowClick }: DishesTableProps) => {
 			id: '2',
 			Header: <Token value="size" />,
 			accessor: 'size',
+			Cell: ({ row }: CellProps<Dish>) => {
+				return (
+					<Typography sx={{ minWidth: 150 }}>
+						{row.original.size}
+					</Typography>
+				)
+			},
 			Filter: TextFilter,
 		},
 	], [])

@@ -69,11 +69,7 @@ const RetreatDetailMealList = () => {
         return a.original.meal.type.localeCompare(b.original.meal.type)
       },
       Cell: ({ row }: CellProps<MealInaRetreat>) => {
-        return (
-          <Typography sx={{ minWidth: 150 }} variant="body2">
-            <MealName id={row.original.meal.id} type={row.original.meal.type} />
-          </Typography>
-        )
+        return <MealName id={row.original.meal.id} type={row.original.meal.type} />
       },
       Filter: TextFilter,
       filter: (rows: Row<MealInaRetreat>[], columnIds: String[], filterValue: string) => {
@@ -97,7 +93,11 @@ const RetreatDetailMealList = () => {
           )
         }
         else {
-          return row.original.servings
+          return (
+            <Typography sx={{ minWidth: 150 }}>
+              {row.original.servings}
+            </Typography>
+          )
         }
       },
       Filter: TextFilter,
@@ -128,7 +128,7 @@ const RetreatDetailMealList = () => {
           )
         }
         return (
-          <Typography variant="body2" sx={{ minWidth: 100 }}>
+          <Typography sx={{ minWidth: 100 }}>
             {moment(row.original.date).format(MOMENT_DATE_DISPLAY_FORMAT)}
           </Typography>
         )

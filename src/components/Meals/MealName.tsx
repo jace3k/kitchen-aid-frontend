@@ -2,6 +2,7 @@ import React from 'react'
 import { MEAL_TYPES_NAMES } from 'utils/constants'
 import { MealType } from 'utils/interfaces/meal.interface'
 import Token from 'components/Token'
+import { Typography } from '@mui/material'
 
 
 interface MealNameProps {
@@ -10,9 +11,11 @@ interface MealNameProps {
 }
 
 const MealName: React.FC<MealNameProps> = ({ id, type }) => {
-  return <>
-    <Token value={type ? MEAL_TYPES_NAMES[type] : "empty"} /> {`#${id}`}
-  </>
+  return (
+    <Typography sx={{ minWidth: 150 }}>
+      <Token value={type ? MEAL_TYPES_NAMES[type] : "empty"} /> {`#${id}`}
+    </Typography>
+  )
 }
 
 export default MealName
