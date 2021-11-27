@@ -62,7 +62,7 @@ const App: React.FC = () => {
     RouterComponent = () => (
       <Router>
         <Route path="/" component={Navigation} />
-        <Suspense fallback={<div style={{ textAlign: 'center', marginTop: '40vh' }}><CircularProgress /></div>}>
+        <Suspense fallback={<div style={{ textAlign: 'center', marginTop: '40vh', flex: '1 1 auto' }}><CircularProgress /></div>}>
           <div style={{ flex: '1 1 auto' }}>
             <Switch>
               <Route exact path="/" component={Retreats} />
