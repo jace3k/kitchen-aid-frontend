@@ -56,6 +56,7 @@ const IngredientEditDialog = ({ open, ingredient, onClose }: IngredientEditDialo
         <DialogTitle><Token value={ingredient ? "editIngredient" : "addNewIngredient"} /></DialogTitle>
         <DialogContent>
           <TextField
+            size="small"
             autoFocus
             margin="dense"
             label={<Token value="ingredientNameLabel" />}

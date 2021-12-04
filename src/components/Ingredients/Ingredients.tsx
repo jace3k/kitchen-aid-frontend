@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Fab, FabProps, Tooltip } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
+import { Container } from '@mui/material'
 import { ApplicationState } from 'store'
 import { Ingredient } from 'store/ingredients/types'
 import { deleteIngredientRequest } from 'store/ingredients/actions'
 import IngredientsTable from './IngredientsTable'
 import IngredientEditDialog from './IngredientEditDialog'
-import Token from 'components/Token'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import DialogRemoveDescription from 'components/genericComponents/DialogRemove/DialogRemoveDescription'
-import StyledFab from 'components/genericComponents/StyledFab/StyledFab'
+import MainHeader from 'components/genericComponents/MainHeader/MainHeader'
 
 
 const Ingredients = () => {
@@ -56,7 +54,11 @@ const Ingredients = () => {
 
   return (
     <Container style={{ minWidth: 300 }}>
-      <h1><Token value="ingredients" /></h1>
+      <MainHeader
+        title="ingredients"
+        addTitle="addNewIngredient"
+        onClickAddBtn={() => handleIngredientDialogEditOpen(null)}
+      />
       <IngredientsTable
         handleOpenConfirmDialogRemove={handleOpenConfirmDialogRemove}
       />
@@ -72,11 +74,6 @@ const Ingredients = () => {
         elementName={dialogIngredient ? dialogIngredient.name : ''}
         description={dialogRemoveDescription()}
       />
-      <Tooltip title={<Token value="addNewIngredient" />} placement='left'>
-        <StyledFab color="primary" onClick={() => handleIngredientDialogEditOpen(null)}>
-          <AddIcon />
-        </StyledFab>
-      </Tooltip>
     </Container>
   )
 }

@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Row } from 'react-table'
-import { Container, Fab, Tooltip } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
+import { Container } from '@mui/material'
 import { Retreat } from 'utils/interfaces/retreat.interface'
 import * as routes from 'utils/routes'
-import Token from 'components/Token'
 import RetreatDialogEdit from './RetreatDialogEdit'
 import RetreatTable from './RetreatTable'
-import StyledFab from 'components/genericComponents/StyledFab/StyledFab'
+import MainHeader from 'components/genericComponents/MainHeader/MainHeader'
 
 
 const Retreats: React.FC<RouteComponentProps> = ({ history }) => {
@@ -23,13 +21,12 @@ const Retreats: React.FC<RouteComponentProps> = ({ history }) => {
 
   return (
     <Container style={{ minWidth: 300 }}>
-      <h1><Token value="retreats" /></h1>
+      <MainHeader
+        title="retreats"
+        addTitle="addNewRetreat"
+        onClickAddBtn={openRetreatDialogCreate}
+      />
       <RetreatTable onRowClick={onRowClick} />
-      <Tooltip title={<Token value="addNewRetreat" />} placement='left'>
-        <StyledFab color="primary" onClick={openRetreatDialogCreate}>
-          <AddIcon />
-        </StyledFab>
-      </Tooltip>
       <RetreatDialogEdit onClose={onRetreatDialogClose} open={newRetreatOpen} />
     </Container>
   )

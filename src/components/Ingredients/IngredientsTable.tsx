@@ -62,7 +62,7 @@ const IngredientsTable = ({ handleOpenConfirmDialogRemove }: IngredientsTablePro
         }
         else {
           return (
-            <Typography variant="body2" sx={{ minWidth: 150 }}>
+            <Typography variant="body1" sx={{ minWidth: 150 }}>
               {row.original.name}
             </Typography>
           )

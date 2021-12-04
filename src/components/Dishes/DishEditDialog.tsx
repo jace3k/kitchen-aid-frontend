@@ -25,6 +25,7 @@ const DishEditDialog = ({ open, dish, onClose }: DishEditDialogProps) => {
         </DialogTitle>
         <DialogContent>
           <TextField
+            size="small"
             autoFocus
             margin="dense"
             label={<Token value="dishNameLabel" />}
@@ -33,6 +34,7 @@ const DishEditDialog = ({ open, dish, onClose }: DishEditDialogProps) => {
             fullWidth
           />
           <TextField
+            size="small"
             margin="dense"
             label={<Token value="dishSizeLabel" />}
             value={size}

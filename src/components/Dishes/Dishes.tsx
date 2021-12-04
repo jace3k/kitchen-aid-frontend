@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Row } from 'react-table'
-import { Tooltip, Container } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
+import { Container } from '@mui/material'
 import { Dish } from 'utils/interfaces/dish.interface'
 import * as routes from 'utils/routes'
 import DishesTable from './DishesTable'
-import Token from 'components/Token'
 import DishEditDialog from './DishEditDialog'
-import StyledFab from 'components/genericComponents/StyledFab/StyledFab'
+import MainHeader from 'components/genericComponents/MainHeader/MainHeader'
 
 
 const Dishes: React.FC<RouteComponentProps> = ({ history }) => {
@@ -28,14 +26,13 @@ const Dishes: React.FC<RouteComponentProps> = ({ history }) => {
 
   return (
     <Container style={{ minWidth: 300 }}>
-      <h1><Token value="dishes" /></h1>
+      <MainHeader
+        title="dishes"
+        addTitle="addNewDish"
+        onClickAddBtn={openDishDialogCreate}
+      />
       <DishesTable onRowClick={onRowClick} />
       <DishEditDialog open={editDialogOpen} onClose={onDishDialogClose} />
-      <Tooltip title={<Token value="addNewDish" />} placement='left'>
-        <StyledFab color="primary" onClick={openDishDialogCreate}>
-          <AddIcon />
-        </StyledFab>
-      </Tooltip>
     </Container>
   )
 }

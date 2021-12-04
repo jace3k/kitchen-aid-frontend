@@ -2,13 +2,11 @@ import React, { useState } from 'react'
 import { Row } from 'react-table'
 import { RouteComponentProps } from 'react-router-dom'
 import * as routes from 'utils/routes'
-import { Container, Tooltip } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
+import { Container } from '@mui/material'
 import { Meal } from 'utils/interfaces/meal.interface'
 import MealsTable from './MealsTable'
-import Token from 'components/Token'
-import StyledFab from 'components/genericComponents/StyledFab/StyledFab'
 import MealEditDialog from './MealEditDialog'
+import MainHeader from 'components/genericComponents/MainHeader/MainHeader'
 
 
 const Meals: React.FC<RouteComponentProps> = ({ history }) => {
@@ -31,13 +29,12 @@ const Meals: React.FC<RouteComponentProps> = ({ history }) => {
 
   return (
     <Container style={{ minWidth: 300 }}>
-      <h1><Token value="meals" /></h1>
+      <MainHeader
+        title="meals"
+        addTitle="addNewMeal"
+        onClickAddBtn={openMealDialogCreate}
+      />
       <MealsTable onRowClick={onRowClick} />
-      <Tooltip title={<Token value="addNewMeal" />} placement='left'>
-        <StyledFab color="primary" onClick={openMealDialogCreate}>
-          <AddIcon />
-        </StyledFab>
-      </Tooltip>
       <MealEditDialog open={newMealOpen} onClose={onMealDialogClose} />
     </Container>
   )

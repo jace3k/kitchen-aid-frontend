@@ -5,8 +5,28 @@ html, body, #root {
 
 #root {
   overflow-y: hidden;
-  overflow: auto;
+  overflow: overlay;
   margin-bottom: 1rem;
   display: flex;
   flex-flow: column;
+}
+
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: gray;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.5);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(128, 128, 128, 0.8);
 }
