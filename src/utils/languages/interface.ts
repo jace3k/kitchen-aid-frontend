@@ -105,4 +105,7 @@ export interface ITranslations {
   LU: string,
   FE: string,
   openNewWindow: string,
+  mealTypeLabel: string,
+  mealType: string,
+  closestDate: string,
 }

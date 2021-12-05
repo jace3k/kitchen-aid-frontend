@@ -24,7 +24,7 @@ const reducer: Reducer<IngredientsState, IngredientStateActionTypes> = (state = 
         ...state,
         loading: false,
         error: null,
-        ingredients: action.ingredients,
+        ingredients: action.ingredients.reverse(),
       }
     case IngredientActionTypes.CREATE_INGREDIENT_REQUEST:
       return {

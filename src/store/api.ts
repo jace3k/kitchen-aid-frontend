@@ -76,6 +76,9 @@ export const MealsApi = {
   createMeal: (meal: MealDto) => {
     return axios.post('meal/', meal)
   },
+  updateMeal: (meal: MealDto) => {
+    return axios.put(`meal/${meal.id}/`, meal)
+  },
   deleteMeal: (id: number) => {
     return axios.delete(`meal/${id}/`)
   },

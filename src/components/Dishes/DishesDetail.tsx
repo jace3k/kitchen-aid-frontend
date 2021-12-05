@@ -11,7 +11,6 @@ import { IngredientInaDishDto } from 'utils/interfaces/ingredient-ina-dish.inter
 import DishDetailIngredientsList from './DishDetailIngredientsList'
 import AddToListModal from './AddToListModal'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
-import MealName from 'components/Meals/MealName'
 import DialogRemoveDescription from 'components/genericComponents/DialogRemove/DialogRemoveDescription'
 import Token from 'components/Token'
 
@@ -49,9 +48,9 @@ const DishesDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
   }
 
   const dialogRemoveDescription = () => {
-    const usedInMeals = dishDetail?.dish_ina_meal.map(dish => <MealName id={dish.meal.id} type={dish.meal.type} />)
+    const usedInMeals = dishDetail?.dish_ina_meal.map(dish => dish.meal.name)
     return <DialogRemoveDescription
-      usedInElementsJsx={usedInMeals}
+      usedInElements={usedInMeals}
       loading={false}
       headerUsed="warningDishUsed"
       headerUnused="dishNotUsed"

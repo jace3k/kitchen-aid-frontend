@@ -25,7 +25,7 @@ const reducer: Reducer<CartsState, CartStateActionTypes> = (state = initialState
         ...state,
         loading: false,
         error: null,
-        carts: action.carts,
+        carts: action.carts.reverse(),
         removed: false,
       }
     case CartActionTypes.FETCH_CART_DETAIL_REQUEST:
@@ -42,7 +42,7 @@ const reducer: Reducer<CartsState, CartStateActionTypes> = (state = initialState
         loading: false,
         error: null,
         cartDetail: action.cartDetail,
-        cartItems: action.cartDetail.cart_item,
+        cartItems: action.cartDetail.cart_item.reverse(),
       }
     case CartActionTypes.CREATE_CART_REQUEST:
       return {

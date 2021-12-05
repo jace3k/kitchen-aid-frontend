@@ -107,4 +107,7 @@ export const pl: ITranslations = {
   LU: 'Lunch',
   FE: 'Uczta',
   openNewWindow: 'Otwórz na osobnej karcie',
+  mealTypeLabel: 'Typ posiłku',
+  mealType: 'Typ',
+  closestDate: 'Najbliższa data',
 }

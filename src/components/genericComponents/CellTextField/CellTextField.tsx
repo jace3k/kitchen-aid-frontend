@@ -16,7 +16,7 @@ const CellTextField: React.FC<CellTextFieldProps> = ({ value, onChange, handleUp
       value={value}
       onChange={onChange}
       size="small"
-      sx={{ minWidth: 150 }}
+      sx={{ minWidth: 100 }}
       onKeyPress={e => {
         if (e.key === 'Enter')
           handleUpdate()

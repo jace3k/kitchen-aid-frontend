@@ -71,7 +71,7 @@ interface CreateCartSuccessType {
 // DELETE
 export interface DeleteCartRequestType {
   type: typeof CartActionTypes.DELETE_CART_REQUEST,
-  cart: Cart,
+  cart: CartDto,
 }
 
 interface DeleteCartSuccessType {

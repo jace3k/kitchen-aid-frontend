@@ -26,7 +26,7 @@ const reducer: Reducer<MealsState, MealStateActionTypes> = (state = initialState
         ...state,
         loading: false,
         error: null,
-        meals: action.meals,
+        meals: action.meals.reverse()
       }
     case MealActionTypes.CREATE_MEAL_REQUEST:
       return {
@@ -42,6 +42,25 @@ const reducer: Reducer<MealsState, MealStateActionTypes> = (state = initialState
         error: null,
         meals: [action.meal, ...state.meals],
         successMessage: action.msg,
+      }
+    case MealActionTypes.UPDATE_MEAL_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        successMessage: null,
+        // mealDetail: null,
+      }
+    case MealActionTypes.UPDATE_MEAL_SUCCESS:
+      return {
+        ...state,
+        mealDetail: {
+          id: state.mealDetail?.id || action.meal.id,
+          name: action.meal.name,
+          type: state.mealDetail?.type || action.meal.type,
+          dish_ina_meal: state.mealDetail?.dish_ina_meal || [],
+          meal_ina_retreat: state.mealDetail?.meal_ina_retreat || [],
+        }
       }
     case MealActionTypes.DELETE_MEAL_REQUEST:
       return {
@@ -71,7 +90,7 @@ const reducer: Reducer<MealsState, MealStateActionTypes> = (state = initialState
         ...state,
         loading: false,
         error: null,
-        dishes: action.mealDetail.dish_ina_meal,
+        dishes: action.mealDetail.dish_ina_meal.reverse(),
         mealDetail: action.mealDetail,
       }
     case MealActionTypes.CREATE_DISH_REQUEST:

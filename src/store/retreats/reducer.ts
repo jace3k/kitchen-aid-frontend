@@ -27,7 +27,7 @@ const reducer: Reducer<RetreatsState, RetreatStateActionTypes> = (state = initia
         ...state,
         loading: false,
         error: null,
-        retreats: action.retreats,
+        retreats: action.retreats.reverse(),
         removed: false,
       }
     case RetreatActionTypes.FETCH_RETREAT_DETAIL_REQUEST:
@@ -43,8 +43,13 @@ const reducer: Reducer<RetreatsState, RetreatStateActionTypes> = (state = initia
         loading: false,
         error: null,
         retreatDetail: action.retreatDetail,
-        meals: action.retreatDetail.meal_ina_retreat,
-        carts: action.retreatDetail.cart.map(cartId => ({ id: cartId, retreat: action.retreatDetail }))
+        meals: action.retreatDetail.meal_ina_retreat.reverse(),
+        // we do not have a closest_date in retreat detail
+        carts: action
+          .retreatDetail
+          .cart
+          .map(cartId => ({ id: cartId, retreat: action.retreatDetail, closest_date: '-' }))
+          .reverse()
       }
     case RetreatActionTypes.CREATE_RETREAT_REQUEST:
       return {

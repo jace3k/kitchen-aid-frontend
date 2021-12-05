@@ -119,10 +119,11 @@ const Notifications = () => {
         vertical: 'bottom',
         horizontal: 'center',
       }}
-      autoHideDuration={5000}
+      autoHideDuration={3000}
       onClose={handleCloseNotification}
+      sx={{ marginBottom: 6 }}
     >
-      <Alert variant="filled" severity={severity}>
+      <Alert severity={severity} variant="outlined">
         <Token value={currentMessage} />
       </Alert>
     </Snackbar>

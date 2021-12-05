@@ -8,7 +8,8 @@ import {
   DeleteMealType,
   FetchAllMealsType,
   FetchMealDetailType,
-  MealActionTypes
+  MealActionTypes,
+  UpdateMealType
 } from "./types"
 
 export const fetchAllMealsRequest = (): FetchAllMealsType => ({ type: MealActionTypes.FETCH_ALL_REQUEST })
@@ -20,9 +21,8 @@ export const createMealSuccess = (meal: Meal, msg: string): CreateMealType => ({
 export const deleteMealRequest = (id: number): DeleteMealType => ({ type: MealActionTypes.DELETE_MEAL_REQUEST, id })
 export const deleteMealSuccess = (id: number, msg: string): DeleteMealType => ({ type: MealActionTypes.DELETE_MEAL_SUCCESS, id, msg })
 
-// export const updateMealRequest = (id: number, name: string, size: number): UpdateMealType => ({ type: MealActionTypes.UPDATE_MEAL_REQUEST, id, name, size })
-// export const updateMealSuccess = (meal: Meal): UpdateMealType => ({ type: MealActionTypes.UPDATE_MEAL_SUCCESS, meal })
-
+export const updateMealRequest = (meal: MealDto): UpdateMealType => ({ type: MealActionTypes.UPDATE_MEAL_REQUEST, meal })
+export const updateMealSuccess = (meal: Meal, msg: string): UpdateMealType => ({ type: MealActionTypes.UPDATE_MEAL_SUCCESS, meal, msg })
 
 export const fetchMealDetailRequest = (mealId: number): FetchMealDetailType => ({ type: MealActionTypes.FETCH_MEAL_DETAIL_REQUEST, mealId })
 export const fetchMealDetailSuccess = (mealDetail: MealDetail): FetchMealDetailType => ({ type: MealActionTypes.FETCH_MEAL_DETAIL_SUCCESS, mealDetail })

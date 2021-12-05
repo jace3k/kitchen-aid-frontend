@@ -4,10 +4,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import { ApplicationState } from 'store'
 import { fetchAllMealsRequest } from 'store/meals/actions'
 import { Meal } from 'utils/interfaces/meal.interface'
-import MealName from './MealName'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
 import Token from 'components/Token'
 import TextFilter from 'components/genericComponents/Filters/TextFilter'
+import MealType from './MealType'
+import { Typography } from '@mui/material'
+import MealTypeFilter from 'components/genericComponents/Filters/MealTypeFilter'
+import { TYPE_MAP } from 'utils/constants'
 
 
 interface MealsTableProps {
@@ -26,15 +29,31 @@ const MealsTable = ({ onRowClick }: MealsTableProps) => {
     {
       id: '1',
       Header: <Token value="mealLabel" />,
-      accessor: 'id',
+      accessor: 'name',
       Cell: ({ row }: CellProps<Meal>) => {
-        return <MealName id={row.original.id} type={row.original.type} />
+        return (
+          <Typography>
+            {row.original.name}
+          </Typography>
+        )
       },
       sortType: (a: Row<Meal>, b: Row<Meal>) => {
-        return a.original.type.localeCompare(b.original.type)
+        return a.original.name.toLowerCase().localeCompare(b.original.name.toLowerCase())
       },
       Filter: TextFilter,
-    }
+    },
+    {
+      id: '2',
+      Header: <Token value="mealTypeLabel" />,
+      accessor: 'type',
+      Cell: ({ row }: CellProps<Meal>) => {
+        return <MealType type={row.original.type} />
+      },
+      sortType: (a: Row<Meal>, b: Row<Meal>) => {
+        return TYPE_MAP[a.original.type] - TYPE_MAP[b.original.type]
+      },
+      Filter: MealTypeFilter,
+    },
   ], [])
 
   return <GenericTable columns={columns} data={meals} loading={loading} onRowClick={onRowClick} />

@@ -17,7 +17,8 @@ import {
   DeleteDishRequestType,
   DeleteMealRequestType,
   FetchMealDetailRequestType,
-  MealActionTypes
+  MealActionTypes,
+  UpdateMealRequestType
 } from "./types";
 
 function* fetchAllMeals() {
@@ -37,6 +38,16 @@ function* createMeal({ meal }: CreateMealRequestType) {
   }
   catch (err: any) {
     yield put(handleError('Failed to create meal', err))
+  }
+}
+
+function* updateMeal({ meal }: UpdateMealRequestType) {
+  try {
+    const response: AxiosResponse = yield call(MealsApi.updateMeal, meal)
+    yield put(createMealSuccess(response.data, 'Meal updated successfully!'))
+  }
+  catch (err: any) {
+    yield put(handleError('Failed to update meal', err))
   }
 }
 
@@ -86,7 +97,7 @@ export default function* watch() {
   yield takeLatest(MealActionTypes.FETCH_ALL_REQUEST, fetchAllMeals)
   yield takeLatest(MealActionTypes.CREATE_MEAL_REQUEST, createMeal)
   yield takeLatest(MealActionTypes.DELETE_MEAL_REQUEST, deleteMeal)
-  // yield takeLatest(MealActionTypes.UPDATE_MEAL_REQUEST, updateMeal)
+  yield takeLatest(MealActionTypes.UPDATE_MEAL_REQUEST, updateMeal)
   yield takeLatest(MealActionTypes.FETCH_MEAL_DETAIL_REQUEST, fetchMealDetail)
   // yield takeLatest(MealActionTypes.UPDATE_DISH_REQUEST, updateDish)
   yield takeLatest(MealActionTypes.CREATE_DISH_REQUEST, addDish)

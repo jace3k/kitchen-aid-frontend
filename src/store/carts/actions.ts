@@ -24,7 +24,7 @@ export const fetchCartDetailSuccess = (cartDetail: CartDetail): FetchCartDetailT
 export const createCartRequest = (cartDto: CartDto): CreateCartType => ({ type: CartActionTypes.CREATE_CART_REQUEST, cartDto })
 export const createCartSuccess = (cart: Cart, msg: string): CreateCartType => ({ type: CartActionTypes.CREATE_CART_SUCCESS, cart, msg })
 
-export const deleteCartRequest = (cart: Cart): DeleteCartType => ({ type: CartActionTypes.DELETE_CART_REQUEST, cart })
+export const deleteCartRequest = (cart: CartDto): DeleteCartType => ({ type: CartActionTypes.DELETE_CART_REQUEST, cart })
 export const deleteCartSuccess = (id: number, msg: string): DeleteCartType => ({ type: CartActionTypes.DELETE_CART_SUCCESS, id, msg })
 
 export const addCartItemRequest = (cartItem: CartItemDto): AddCartItemType => ({ type: CartActionTypes.ADD_CART_ITEM_REQUEST, cartItem })

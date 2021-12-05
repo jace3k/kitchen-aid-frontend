@@ -11,6 +11,8 @@ import GenericTable from 'components/genericComponents/GenericTable/GenericTable
 import Token from 'components/Token'
 import CartName from './CartName'
 import TextFilter from 'components/genericComponents/Filters/TextFilter'
+import moment from 'moment'
+import { MOMENT_DATE_DISPLAY_FORMAT } from 'utils/constants'
 
 
 const Carts: React.FC<RouteComponentProps> = ({ history }) => {
@@ -38,6 +40,41 @@ const Carts: React.FC<RouteComponentProps> = ({ history }) => {
     },
     {
       id: '2',
+      accessor: 'closest_date',
+      Header: <Token value="closestDate" />,
+      sortType: (a: Row<Cart>, b: Row<Cart>) => {
+        if (new Date(a.original.closest_date) > new Date(b.original.closest_date))
+          return 1
+        return -1
+      },
+      Cell: ({ row }: CellProps<Cart>) => {
+        const date = row.original.closest_date
+        if (date)
+          return (
+            <Typography sx={{ minWidth: 100 }}>
+              {moment(date).format(MOMENT_DATE_DISPLAY_FORMAT)}
+            </Typography>
+          )
+
+        return (
+          <Typography sx={{ minWidth: 100 }}>
+            -
+          </Typography>
+        )
+      },
+      Filter: TextFilter,
+      filter: (rows: Row<Cart>[], columnIds: String[], filterValue: string) => {
+        return rows.filter(row => {
+          const date = row.original.closest_date
+          if (date)
+            return moment(date).format(MOMENT_DATE_DISPLAY_FORMAT).includes(filterValue)
+
+          return '-'.includes(filterValue)
+        })
+      },
+    },
+    {
+      id: '3',
       accessor: 'retreat',
       Header: <Token value="retreatName" />,
       sortType: (a: Row<Cart>, b: Row<Cart>) => {

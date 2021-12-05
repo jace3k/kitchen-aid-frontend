@@ -8,15 +8,16 @@ import AdapterMoment from '@mui/lab/AdapterMoment';
 import { ApplicationState } from 'store'
 import { removeMealRequest, updateMealRequest } from 'store/retreats/actions'
 import { MealInaRetreat, MealInaRetreatDto } from 'utils/interfaces/meal-ina-retreat.interface'
-import { DATE_PICKER_MASK, MOMENT_DATE_DISPLAY_FORMAT, MOMENT_DATE_SAVE_FORMAT } from 'utils/constants';
+import { DATE_PICKER_MASK, MOMENT_DATE_DISPLAY_FORMAT, MOMENT_DATE_SAVE_FORMAT, TYPE_MAP } from 'utils/constants';
 import Token from 'components/Token'
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
-import MealName from 'components/Meals/MealName'
 import GenericTable from 'components/genericComponents/GenericTable/GenericTable'
 import TextFilter from 'components/genericComponents/Filters/TextFilter';
 import { v } from 'utils/helper';
 import CellTextField from 'components/genericComponents/CellTextField/CellTextField'
 import CellMore from 'components/genericComponents/CellMore/CellMore'
+import MealType from 'components/Meals/MealType';
+import MealTypeFilter from 'components/genericComponents/Filters/MealTypeFilter';
 
 const RetreatDetailMealList = () => {
   const dispatch = useDispatch()
@@ -66,18 +67,34 @@ const RetreatDetailMealList = () => {
       Header: <Token value="mealLabel" />,
       accessor: 'meal',
       sortType: (a: Row<MealInaRetreat>, b: Row<MealInaRetreat>) => {
-        return a.original.meal.type.localeCompare(b.original.meal.type)
+        return a.original.meal.name.toLowerCase().localeCompare(b.original.meal.name.toLowerCase())
       },
       Cell: ({ row }: CellProps<MealInaRetreat>) => {
-        return <MealName id={row.original.meal.id} type={row.original.meal.type} />
+        return (
+          <Typography sx={{ minWidth: 150 }}>
+            {row.original.meal.name}
+          </Typography>
+        )
       },
       Filter: TextFilter,
-      filter: (rows: Row<MealInaRetreat>[], columnIds: String[], filterValue: string) => {
-        return rows.filter(row => row.original.meal.id.toString().includes(filterValue.toLowerCase()))
-      }
     },
     {
       id: '2',
+      Header: <Token value="mealTypeLabel" />,
+      accessor: 'meal',
+      Cell: ({ row }: CellProps<MealInaRetreat>) => {
+        return <MealType type={row.original.meal.type} />
+      },
+      sortType: (a: Row<MealInaRetreat>, b: Row<MealInaRetreat>) => {
+        return TYPE_MAP[a.original.meal.type] - TYPE_MAP[b.original.meal.type]
+      },
+      Filter: MealTypeFilter,
+      filter: (rows: Row<MealInaRetreat>[], columnIds: String[], filterValue: string) => {
+        return rows.filter(row => row.original.meal.type === filterValue)
+      }
+    },
+    {
+      id: '3',
       Header: <Token value="servings" />,
       accessor: 'servings',
       Cell: ({ row }: CellProps<MealInaRetreat>) => {
@@ -94,7 +111,7 @@ const RetreatDetailMealList = () => {
         }
         else {
           return (
-            <Typography sx={{ minWidth: 150 }}>
+            <Typography>
               {row.original.servings}
             </Typography>
           )
@@ -103,7 +120,7 @@ const RetreatDetailMealList = () => {
       Filter: TextFilter,
     },
     {
-      id: '3',
+      id: '4',
       Header: <Token value="date" />,
       accessor: 'date',
       sortType: (a: Row<MealInaRetreat>, b: Row<MealInaRetreat>) => {
@@ -170,7 +187,7 @@ const RetreatDetailMealList = () => {
         open={mealRemoveDialogOpen}
         handleRemove={handleMealRemove}
         onClose={onCloseMealRemove}
-        elementName={<MealName id={currentEdit.meal.id} type={currentEdit.meal.type} />}
+        elementName={currentEdit.meal.name}
       />}
     </>
   )

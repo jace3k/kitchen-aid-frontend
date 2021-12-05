@@ -4,6 +4,7 @@ import { Retreat } from "./retreat.interface";
 export interface Cart {
   id: number
   retreat: Retreat
+  closest_date: string
 }
 
 export interface CartDto {

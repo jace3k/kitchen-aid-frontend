@@ -27,7 +27,7 @@ const reducer: Reducer<DishesState, DishStateActionTypes> = (state = initialStat
 				...state,
 				loading: false,
 				error: null,
-				dishes: action.dishes,
+				dishes: action.dishes.reverse(),
 			}
 		case DishActionTypes.CREATE_DISH_REQUEST:
 			return {
@@ -94,7 +94,7 @@ const reducer: Reducer<DishesState, DishStateActionTypes> = (state = initialStat
 				...state,
 				loading: false,
 				error: null,
-				ingredients: action.dishDetail.ingredient_ina_dish,
+				ingredients: action.dishDetail.ingredient_ina_dish.reverse(),
 				dishDetail: action.dishDetail,
 			}
 		case DishActionTypes.UPDATE_INGREDIENT_REQUEST:

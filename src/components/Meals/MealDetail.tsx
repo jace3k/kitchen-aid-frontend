@@ -10,10 +10,10 @@ import DetailWithListView from 'components/genericComponents/DetailWithListView/
 import DialogRemove from 'components/genericComponents/DialogRemove/DialogRemove'
 import DialogRemoveDescription from 'components/genericComponents/DialogRemove/DialogRemoveDescription'
 import Token from 'components/Token'
-import { addDishInAMealRequest, deleteMealRequest, fetchMealDetailRequest } from 'store/meals/actions'
+import { addDishInAMealRequest, deleteMealRequest, fetchMealDetailRequest, updateMealRequest } from 'store/meals/actions'
 import AddToListModal from './AddToListModal'
 import MealDetailDishList from './MealDetailDishList'
-import MealName from './MealName'
+import MealType from './MealType'
 
 
 const MealDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
@@ -65,17 +65,36 @@ const MealDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
     setAddToListModalOpen(false)
   }
 
+  const handleUpdateMeal = (name: string) => {
+    if (!mealDetail)
+      return
+
+    if (mealDetail.name === name)
+      return
+
+    dispatch(updateMealRequest({
+      id: mealDetail.id,
+      type: mealDetail.type,
+      name
+    }))
+  }
+
   return (
     <div>
       <DetailWithListView
         loading={loading}
-        disableEditMode
-        name={<MealName id={mealDetail?.id} type={mealDetail?.type} />}
+        name={mealDetail?.name}
         notFound={!mealDetail}
+        onCloseEditMode={handleUpdateMeal}
         generateContent={(editMode) => {
           return <div>
             <Table>
               <TableBody>
+                <TableRow>
+                  <TableCell>
+                    <MealType type={mealDetail?.type} />
+                  </TableCell>
+                </TableRow>
                 {editMode && (
                   <TableRow>
                     <TableCell colSpan={2} align="right" onClick={() => setDialogRemoveOpen(true)}>
@@ -110,7 +129,7 @@ const MealDetail: React.FC<RouteComponentProps<{ id: string }>> = props => {
             open={dialogRemoveOpen}
             handleRemove={handleRemoveMeal}
             onClose={onCloseRemoveMealDialog}
-            elementName={<MealName id={mealDetail?.id} type={mealDetail?.type} />}
+            elementName={mealDetail.name}
             description={dialogRemoveDescription()}
           />
         </>

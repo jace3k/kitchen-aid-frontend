@@ -27,3 +27,9 @@ export const STATUS_MAP = {
   'BO': 2,
   'SE': 3,
 }
+
+export const TYPE_MAP = {
+  'BR': 1,
+  'LU': 2,
+  'FE': 3,
+}

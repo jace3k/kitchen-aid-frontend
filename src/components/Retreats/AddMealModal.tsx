@@ -7,8 +7,8 @@ import AdapterMoment from '@mui/lab/AdapterMoment'
 import { ApplicationState } from 'store'
 import { MealInaRetreatDto } from 'utils/interfaces/meal-ina-retreat.interface'
 import { DATE_PICKER_MASK, MOMENT_DATE_DISPLAY_FORMAT, MOMENT_DATE_SAVE_FORMAT } from 'utils/constants'
-import MealName from 'components/Meals/MealName'
 import Token from 'components/Token'
+import MealType from 'components/Meals/MealType'
 
 
 interface AddMealModalProps {
@@ -56,7 +56,7 @@ const AddMealModal = ({ open, onClose, onCreateMeal, retreatId }: AddMealModalPr
             >
               {mealsList.map(meal => (
                 <MenuItem value={meal.id} key={meal.id}>
-                  <MealName id={meal.id} type={meal.type} />
+                  <MealType type={meal.type} name={meal.name} />
                 </MenuItem>
               ))}
             </Select>

@@ -1,10 +1,12 @@
 import React, { FormEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Card, CardActions, CardContent, TextField, Typography, Snackbar } from '@mui/material'
+import { Button, Card, CardActions, CardContent, TextField, Typography, Snackbar, Stack, Tooltip } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { ApplicationState } from 'store'
 import { loginRequest } from 'store/user/actions'
 import Token from 'components/Token'
+import { Box } from '@mui/system'
+import DarkModeSwitcher from 'components/DarkModeSwitcher/DarkModeSwitcher'
 
 const LoginContainer = styled('div')(({ theme }) => {
   return {
@@ -60,18 +62,19 @@ const Login = () => {
         </div>
       </Title>
       <div />
-      <Card>
+      <Card variant="outlined">
         <form onSubmit={handleSubmit} noValidate autoComplete="off">
           <CardContent sx={{
             display: 'flex',
             flexDirection: 'column',
           }}>
-            <Typography sx={{
-              textAlign: 'center',
-              marginBottom: '30px',
-            }}>
-              <Token value="kitchenAid" />
-            </Typography>
+            <Stack direction="row" justifyContent="space-around" alignItems="center">
+              <Typography>
+                <Token value="kitchenAid" />
+              </Typography>
+              <DarkModeSwitcher />
+            </Stack>
+
             <TextField
               label={<Token value="username" />}
               variant='outlined'
@@ -80,7 +83,7 @@ const Login = () => {
               value={username}
               onChange={handleChangeUsername}
               disabled={loading}
-            // autoFocus
+              autoFocus
             />
 
             <TextField

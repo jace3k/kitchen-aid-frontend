@@ -12,8 +12,8 @@ export enum MealActionTypes {
   DELETE_MEAL_REQUEST = '@@meals/DELETE_MEAL_REQUEST',
   DELETE_MEAL_SUCCESS = '@@meals/DELETE_MEAL_SUCCESS',
 
-  // UPDATE_MEAL_REQUEST = '@@meals/UPDATE_MEAL_REQUEST',
-  // UPDATE_MEAL_SUCCESS = '@@meals/UPDATE_MEAL_SUCCESS',
+  UPDATE_MEAL_REQUEST = '@@meals/UPDATE_MEAL_REQUEST',
+  UPDATE_MEAL_SUCCESS = '@@meals/UPDATE_MEAL_SUCCESS',
 
   FETCH_MEAL_DETAIL_REQUEST = '@@meals/FETCH_MEAL_DETAIL_REQUEST',
   FETCH_MEAL_DETAIL_SUCCESS = '@@meals/FETCH_MEAL_DETAIL_SUCCESS',
@@ -52,6 +52,17 @@ interface CreateMealSuccessType {
   type: typeof MealActionTypes.CREATE_MEAL_SUCCESS,
   meal: Meal,
   msg: string,
+}
+
+export interface UpdateMealRequestType {
+  type: typeof MealActionTypes.UPDATE_MEAL_REQUEST,
+  meal: MealDto
+}
+
+interface UpdateMealSuccessType {
+  type: typeof MealActionTypes.UPDATE_MEAL_SUCCESS,
+  meal: Meal
+  msg: string
 }
 
 
@@ -109,7 +120,7 @@ interface DeleteDishSuccessType {
 export type FetchAllMealsType = FetchAllMealsRequestType | FetchAllMealsSuccessType
 export type CreateMealType = CreateMealRequestType | CreateMealSuccessType
 export type DeleteMealType = DeleteMealRequestType | DeleteMealSuccessType
-// export type UpdateMealType = UpdateMealRequestType | UpdateMealSuccessType
+export type UpdateMealType = UpdateMealRequestType | UpdateMealSuccessType
 export type FetchMealDetailType = FetchMealDetailRequestType | FetchMealDetailSuccessType
 // export type UpdateDishType = UpdateDishRequestType | UpdateDishSuccessType
 export type AddDishType = AddDishRequestType | AddDishSuccessType
@@ -119,7 +130,7 @@ export type MealStateActionTypes =
   FetchAllMealsType |
   CreateMealType |
   DeleteMealType |
-  // UpdateMealType | 
+  UpdateMealType | 
   FetchMealDetailType |
   // UpdateDishType | 
   AddDishType |
