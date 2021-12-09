@@ -12,6 +12,7 @@ interface MultiListViewProps {
 }
 
 interface TabPanelProps {
+  id?: string
   children?: React.ReactNode
   dir?: string
   index: any
@@ -49,13 +50,14 @@ const MultiListView: React.FC<MultiListViewProps> = ({ generateItemsList }) => {
     <div>
       <AppBar position="static" color="transparent" elevation={0}>
         <Tabs
+          id="detail-multi-list-tabs"
           value={currentTab}
           indicatorColor="primary"
           textColor="primary"
           variant="fullWidth"
         >
           {generateItemsList.map((item, i) => (
-            <Tab label={<Token value={item.name} />} key={`tab-${i}`}
+            <Tab id={`detail-multi-list-tab-${item.name}`} label={<Token value={item.name} />} key={`tab-${i}`}
               onClick={() => {
                 history.push(item.tabUrl || history.location.pathname)
                 setCurrentTab(i)
@@ -66,7 +68,7 @@ const MultiListView: React.FC<MultiListViewProps> = ({ generateItemsList }) => {
       </AppBar>
       <div>
         {generateItemsList.map((item, i) => (
-          <TabPanel value={currentTab} index={i} key={`tab-panel-${i}`}>
+          <TabPanel id={`detail-multi-list-tab-content-${item.name}`} value={currentTab} index={i} key={`tab-panel-${i}`}>
             <SingleListView generateItem={item} />
           </TabPanel>
         ))}

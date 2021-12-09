@@ -12,6 +12,7 @@ interface GenericRowProps {
 const GenericRow: React.FC<GenericRowProps> = ({ row, loading, lastUpdatedId, onRowClick }) => {
   return (
     <TableRow
+      id={`table-row-el-${row.id}`}
       {...row.getRowProps()}
       hover
       onClick={() => {

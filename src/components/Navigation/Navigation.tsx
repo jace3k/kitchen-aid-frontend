@@ -63,7 +63,7 @@ const Navigation: React.FC<RouteComponentProps> = props => {
               )}
             </Tabs>
           )}
-          <DarkModeSwitcher />
+          <DarkModeSwitcher id="nav-dark-mode-switcher" />
           <SettingsMenuButton />
         </Toolbar>
       </Paper>

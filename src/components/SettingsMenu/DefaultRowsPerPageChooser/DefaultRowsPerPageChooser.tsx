@@ -16,18 +16,19 @@ const DefaultRowsPerPageChooser = () => {
   }
 
   return (
-    <FormControl size="small" variant='outlined' fullWidth>
+    <FormControl id="def-rows-per-page-chooser" size="small" variant='outlined' fullWidth>
       <InputLabel id="lang-selector">
         <Token value='rowsPerPage' />
       </InputLabel>
       <Select
+        id="def-rows-per-page-select"
         labelId='lang-selector'
         label={<Token value='rowsPerPage' />}
         value={currentRowsPerPage}
         onChange={handleChange}
       >
         {ROWS_PER_PAGE_OPTIONS.map(num => (
-          <MenuItem value={num} key={`key-${num}`}>
+          <MenuItem id={`def-rows-per-page-menu-item-${num}`} value={num} key={`key-${num}`}>
             {num}
           </MenuItem>
         ))}

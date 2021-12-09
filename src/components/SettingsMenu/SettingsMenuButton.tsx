@@ -38,19 +38,19 @@ const SettingsMenuButton = () => {
 
   return (
     <>
-      <IconButton onClick={handleMenuOpen}>
+      <IconButton id="nav-settings-button" onClick={handleMenuOpen}>
         <SettingsIcon />
       </IconButton>
       <Menu
-        id='settings-menu-button'
+        id='nav-settings-menu'
         anchorEl={anchorEl}
         open={menuOpen}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={handleSettingsOpen}>
+        <MenuItem id='nav-settings-menu-item-settings' onClick={handleSettingsOpen}>
           <Token value="settings" />
         </MenuItem>
-        <MenuItem onClick={handleLogout}>
+        <MenuItem id='nav-settings-menu-item-logout' onClick={handleLogout}>
           <Token value="logout" />
         </MenuItem>
       </Menu>

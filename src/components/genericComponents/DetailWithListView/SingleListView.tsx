@@ -14,7 +14,7 @@ const SingleListView: React.FC<SingleListViewProps> = ({ generateItem }) => {
   const { name, list, onAddToListClick } = generateItem
 
   return (
-    <div>
+    <div id={`detail-single-list-content-${generateItem.name}`}>
       <Table>
         <TableBody>
           <TableRow>
@@ -22,8 +22,14 @@ const SingleListView: React.FC<SingleListViewProps> = ({ generateItem }) => {
               <h2><Token value={name} /></h2>
             </TableCell>
             <TableCell>
-              <Tooltip title={<Token value="add"/>} placement="top" >
-                <Fab onClick={onAddToListClick} size="small" color="primary" sx={{ float: 'right' }}>
+              <Tooltip title={<Token value="add" />} placement="top" >
+                <Fab
+                  id={`detail-single-list-item-add-button-${generateItem.name}`}
+                  onClick={onAddToListClick}
+                  size="small"
+                  color="primary"
+                  sx={{ float: 'right' }}
+                >
                   <PlusButton />
                 </Fab>
               </Tooltip>
@@ -32,7 +38,7 @@ const SingleListView: React.FC<SingleListViewProps> = ({ generateItem }) => {
         </TableBody>
       </Table>
       <Divider />
-      { list() }
+      {list()}
     </div >
   )
 }

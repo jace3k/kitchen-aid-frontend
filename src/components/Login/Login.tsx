@@ -54,7 +54,7 @@ const Login = () => {
   }
 
   return (
-    <LoginContainer>
+    <LoginContainer id="login-container">
       <Title variant="h1">
         <Token value="welcomeIn" />
         <div style={{ fontWeight: 'bold' }}>
@@ -69,13 +69,14 @@ const Login = () => {
             flexDirection: 'column',
           }}>
             <Stack direction="row" justifyContent="space-around" alignItems="center">
-              <Typography>
+              <Typography id="login-box-title">
                 <Token value="kitchenAid" />
               </Typography>
-              <DarkModeSwitcher />
+              <DarkModeSwitcher id="login-box-button-dark-mode" />
             </Stack>
 
             <TextField
+              id="login-box-input-username"
               label={<Token value="username" />}
               variant='outlined'
               sx={{ margin: '5px' }}
@@ -87,6 +88,7 @@ const Login = () => {
             />
 
             <TextField
+              id="login-box-input-password"
               label={<Token value="password" />}
               type='password'
               variant='outlined'
@@ -99,6 +101,7 @@ const Login = () => {
           </CardContent>
           <CardActions>
             <Button
+              id="login-box-button-login"
               sx={{ width: '100%' }}
               variant='contained'
               type='submit'

@@ -12,7 +12,7 @@ interface AppSettingsDialogProps {
 
 const AppSettingsDialog: React.FC<AppSettingsDialogProps> = ({ open, onClose }) => {
   return (
-    <Dialog open={open} onClose={onClose} fullWidth>
+    <Dialog open={open} onClose={onClose} fullWidth id="app-settings-dialog">
       <DialogTitle><Token value="settings" /></DialogTitle>
       <DialogContent>
         <Table>
@@ -37,7 +37,7 @@ const AppSettingsDialog: React.FC<AppSettingsDialogProps> = ({ open, onClose }) 
         </Table>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
+        <Button id="app-settings-button-ok" onClick={onClose} color="primary">
           <Token value="ok" />
         </Button>
       </DialogActions>

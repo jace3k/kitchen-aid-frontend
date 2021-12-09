@@ -111,8 +111,8 @@ const DetailWithListView = ({
 
 
   return (
-    <StyledContainer wide={wide}>
-      <DetailInfoCard wide={wide}>
+    <StyledContainer wide={wide} id="detail-container">
+      <DetailInfoCard wide={wide} id="detail-info-card">
         <CardContent>
           {loading ? (
             <h2><Token value="loadingData" /></h2>
@@ -121,10 +121,11 @@ const DetailWithListView = ({
               <Table>
                 <TableBody>
                   <TableRow>
-                    <TableCell>
+                    <TableCell id="detail-name">
                       {!disableEditMode && editMode
                         ? (
                           <TextField
+                            id="detail-input-edit-name"
                             size="small"
                             value={itemName}
                             onChange={(e) => setItemName(e.target.value)}
@@ -141,13 +142,13 @@ const DetailWithListView = ({
                           if (onCloseEditMode)
                             onCloseEditMode(itemName)
                         }}>
-                          <IconButton size="small" style={{ float: 'right' }} >
+                          <IconButton id="detail-edit-close-button" size="small" style={{ float: 'right' }} >
                             <CloseIcon color="success" />
                           </IconButton>
                         </span>
                       ) : (
                         <span onClick={() => setEditMode(true)}>
-                          <IconButton size="small" style={{ float: 'right' }}>
+                          <IconButton id="detail-edit-edit-button" size="small" style={{ float: 'right' }}>
                             <EditIcon />
                           </IconButton>
                         </span>
@@ -162,7 +163,7 @@ const DetailWithListView = ({
           )}
         </CardContent>
       </DetailInfoCard>
-      <ItemsListCard>
+      <ItemsListCard id="detail-items-list-card">
         <CardContent sx={{ padding: 0 }}>
           {generateItemsList.length > 1 ? (
             <MultiListView generateItemsList={generateItemsList} />

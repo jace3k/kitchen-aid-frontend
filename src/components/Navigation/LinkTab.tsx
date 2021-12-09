@@ -13,6 +13,7 @@ interface LinkTabProps {
 const LinkTab: React.FC<LinkTabProps> = props => {
   return (
     <Tab
+      id={`navigation-tab-${props.label}`}
       style={{ fontWeight: 'bolder' }}
       label={<Token value={props.label} />}
       onClick={(event: any) => {

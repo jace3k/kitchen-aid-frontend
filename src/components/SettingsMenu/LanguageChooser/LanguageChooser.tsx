@@ -26,18 +26,19 @@ const LanguageChooser = () => {
   }
 
   return (
-    <FormControl size="small" variant='outlined' fullWidth>
+    <FormControl id="app-settings-lang-chooser" size="small" variant='outlined' fullWidth>
       <InputLabel id="lang-selector">
         <Token value='language' />
       </InputLabel>
       <Select
+        id="app-settings-lang-chooser-select"
         labelId='lang-selector'
         label={<Token value='language' />}
         value={currentLanguage}
         onChange={handleChange}
       >
         {languages.map(lang => (
-          <MenuItem value={lang.language} key={lang.language}>
+          <MenuItem id={`app-settings-lang-chooser-menu-item-${lang.token}`} value={lang.language} key={lang.language}>
             <Token value={lang.token} />
           </MenuItem>
         ))}

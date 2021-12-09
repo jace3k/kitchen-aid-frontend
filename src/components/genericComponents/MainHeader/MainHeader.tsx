@@ -15,16 +15,18 @@ interface MainHeaderProps {
 
 const MainHeader: React.FC<MainHeaderProps> = ({ title, addTitle, onClickAddBtn }) => {
   return (
-    <Box sx={{
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+    <Box
+      id={`main-header-${title}`}
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
 
-    }}>
+      }}>
       <h1><Token value={title} /></h1>
       <Tooltip title={<Token value={addTitle} />} placement='left'>
-        <StyledFab color="primary" onClick={onClickAddBtn}>
+        <StyledFab color="primary" onClick={onClickAddBtn} id={`main-header-${title}-button-add`}>
           <AddIcon />
         </StyledFab>
       </Tooltip>

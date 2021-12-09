@@ -86,16 +86,16 @@ const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId, hasGr
   const isGroupByView = rows.some(x => x.isGrouped)
 
   return (
-    <TableContainer component={Paper} variant="elevation">
+    <TableContainer component={Paper} variant="elevation" id="table-container">
       <Table {...getTableProps()} size='small'>
-        <TableHead>
+        <TableHead id="table-header-options">
           <TableRow>
             <TableCell colSpan={columns.length}>
               <Stack direction="row" justifyContent="space-between" alignItems="center">
                 <Stack direction="row" spacing={3}>
                   <Tooltip placement="top" title={<Token value="onOffFilters" />}>
                     <StyledBadge badgeContent={isFilterRowOn ? "ON" : "OFF"} color={isFilterRowOn ? "success" : "primary"}>
-                      <IconButton disabled={loading} size="small" onClick={() => setIsFilterRowOn(!isFilterRowOn)}>
+                      <IconButton id="table-filter-button" disabled={loading} size="small" onClick={() => setIsFilterRowOn(!isFilterRowOn)}>
                         <FilterIcon />
                       </IconButton>
                     </StyledBadge>
@@ -103,7 +103,7 @@ const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId, hasGr
                   {hasGroupBy && (
                     <Tooltip placement="top" title={<Token value="toggleGroupByView" />}>
                       <StyledBadge badgeContent={isGroupByView ? "ON" : "OFF"} color={isGroupByView ? "success" : "primary"}>
-                        <IconButton disabled={loading} size="small" onClick={() => {
+                        <IconButton id="table-grouping-button" disabled={loading} size="small" onClick={() => {
                           dispatch(setGroupByView(location.pathname, !isGroupByView))
                           toggleGroupBy(hasGroupBy, !isGroupByView)
                         }}>
@@ -114,7 +114,7 @@ const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId, hasGr
                   )}
                   <Tooltip placement="top" title={<Token value="changeRowsPerPage" />}>
                     <StyledBadge badgeContent={rowsPerPage} color="primary" max={100}>
-                      <IconButton disabled={loading} size="small" onClick={() => {
+                      <IconButton id="table-rows-button" disabled={loading} size="small" onClick={() => {
                         const index = ROWS_PER_PAGE_OPTIONS.findIndex(v => v === rowsPerPage)
 
                         if (index === ROWS_PER_PAGE_OPTIONS.length - 1) {
@@ -130,6 +130,7 @@ const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId, hasGr
                   </Tooltip>
                 </Stack >
                 <Pagination
+                  id="table-pagination"
                   color="primary"
                   count={Math.ceil(rows.length / rowsPerPage)}
                   page={currentPage}
@@ -143,7 +144,7 @@ const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId, hasGr
           </TableRow>
         </TableHead>
 
-        <TableHead>
+        <TableHead id="table-header-columns">
           {
             headerGroups.map((headerGroup, i) => (
               <React.Fragment key={`table-head-keyx-${i}`}>
@@ -184,7 +185,7 @@ const GenericTable = ({ columns, data, loading, onRowClick, lastUpdatedId, hasGr
           }
         </TableHead>
 
-        <TableBody {...getTableBodyProps()}>
+        <TableBody {...getTableBodyProps()} id="table-body-elements">
           {(loading && !rows.length)
             ? <LoadingDataRow colSpan={columns.length} />
             : !rows.length

@@ -7,7 +7,7 @@ import GenericRow from './GenericRow'
 import moment from 'moment'
 import { MOMENT_DATE_DISPLAY_FORMAT } from 'utils/constants'
 
-interface GenericRowGroup {
+interface GenericRowGroupProps {
   row: Row
   columns: Column<any>[]
   prepareRow: (row: Row) => void
@@ -17,11 +17,11 @@ interface GenericRowGroup {
   onRowClick?: (row: Row) => void
 }
 
-const GenericRowGroup: React.FC<GenericRowGroup> = ({ row, columns, prepareRow, getTableBodyProps, loading, lastUpdatedId, onRowClick }) => {
+const GenericRowGroup: React.FC<GenericRowGroupProps> = ({ row, columns, prepareRow, getTableBodyProps, loading, lastUpdatedId, onRowClick }) => {
   const [expanded, setExpanded] = useState(false)
   return (
-    <TableRow {...row.getRowProps()}>
-      <TableCell colSpan={columns.length} sx={{ padding: 0 }}>
+    <TableRow {...row.getRowProps()} id={`table-row-grouping-${row.id}`}>
+      <TableCell colSpan={columns.length} sx={{ padding: 0 }} id={`table-cell-grouping-${row.id}`}>
         <Paper elevation={2} square
           sx={{
             height: 40,
@@ -33,7 +33,7 @@ const GenericRowGroup: React.FC<GenericRowGroup> = ({ row, columns, prepareRow, 
           <Stack justifyContent="start" direction="row" alignItems="center" height={40} spacing={1}>
             {expanded ? <ArrowDropDown /> : <ArrowDropUp />}
             <div>
-              <Typography variant="overline" sx={{ fontSize: '.95rem' }}>
+              <Typography variant="overline" sx={{ fontSize: '.95rem' }} id={`table-cell-grouping-text-${row.id}`}>
                 {/* Change required here when more group by columns will be implemented */}
                 {moment(row.groupByVal).format(MOMENT_DATE_DISPLAY_FORMAT)} ({row.subRows.length})
               </Typography>
@@ -43,7 +43,7 @@ const GenericRowGroup: React.FC<GenericRowGroup> = ({ row, columns, prepareRow, 
 
         <Collapse in={expanded}>
           <Table size='small'>
-            <TableBody {...getTableBodyProps()}>
+            <TableBody {...getTableBodyProps()} id={`table-cell-grouping-content-body-${row.id}`}>
               {row.subRows.map((subRow, i) => {
                 prepareRow(subRow)
                 return (

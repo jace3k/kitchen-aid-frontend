@@ -6,13 +6,16 @@ import { toggleDarkMode } from 'store/user/actions'
 import DarkModeIcon from '@mui/icons-material/Brightness7'
 import LightModeIcon from '@mui/icons-material/Brightness4'
 
+interface DarkModeSwitcherProps {
+  id?: string
+}
 
-const DarkModeSwitcher = () => {
+const DarkModeSwitcher: React.FC<DarkModeSwitcherProps> = ({ id }) => {
   const isDarkMode = useSelector((state: ApplicationState) => state.user.darkMode)
   const dispatch = useDispatch()
   const handleDarkModeChange = () => dispatch(toggleDarkMode(!isDarkMode))
   return (
-    <IconButton onClick={handleDarkModeChange}>
+    <IconButton onClick={handleDarkModeChange} id={id}>
       {
         isDarkMode
           ? <DarkModeIcon />
