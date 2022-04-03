@@ -48,7 +48,6 @@ const reducer: Reducer<RetreatsState, RetreatStateActionTypes> = (state = initia
         carts: action
           .retreatDetail
           .cart
-          .map(cartId => ({ id: cartId, retreat: action.retreatDetail, closest_date: '-' }))
           .reverse()
       }
     case RetreatActionTypes.CREATE_RETREAT_REQUEST:
